@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Error al verificar cuenta</title>
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+	<style>
+		body {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+		h1 {
+			font-weight: 700; /* bold */
+			color: #2b2d2f;
+		}
+
+		h2 {
+			font-weight: 600; /* semibold */
+			color: #2b2d2f;
+		}
+
+		h4 {
+			font-weight: 500;  /* medium */
+			color: #2b2d2f;
+		}
+
+		.thin {
+			font-weight: 300;
+			color: #2b2d2f;
+		}
+
+		.verification-success {
+			min-height: 100vh;
+			padding: 20px;
+			background-color: white;
+		}
+
+		.icon-circle {
+			width: 100px;
+			height: 100px;
+			background-color: #dacd9e;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.subtitle {
+			color: #6b6f73;
+		}
+
+		.btnHome {
+			background-color: #489dba;
+			width: 292px;
+			padding: 16px;
+			font-weight: 700;
+			font-size: 16px;
+			color: white;
+			height: 54px;
+			border-radius: 8px;
+			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+		}
+
+		.btnHome:hover {
+			background-color: #3787a3;
+			color: white;
+		}
+
+		.btn.btnHome:active{
+			background-color: #3787a3;
+			color: white;
+			outline: none;
+			box-shadow: none;
+		}
+
+		.btnResendCode {
+			background-color: #489dba;
+			padding: 16px;
+			font-weight: 700;
+			font-size: 16px;
+			color: white;
+			height: 54px;
+			border-radius: 8px;
+		}
+
+		.btnResendCode:hover {
+			background-color: #3787a3;
+			color: white;
+		}
+
+		.btn.btnResendCode:active {
+			background-color: #3787a3;
+			color: white;
+			outline: none;
+			box-shadow: none;
+		}
+
+		a {
+			text-decoration: none;
+			color: #2b2d2f;
+			font-weight: 700;
+		}
+	</style>
+</head>
+<body>
+
+<div class="verification-success d-flex flex-column justify-content-center align-items-center text-center">
+  <div class="icon-circle mb-4">
+    <img src="{{ asset('storage/mail-cancel.svg') }}" alt="Mail cancel" class="img-fluid" style="width: 55px; height: 55px; color: white;">
+  </div>
+
+  <h3 class="mb-2">Error al verificar cuenta 😿</h3>
+  <p class="mb-0 subtitle">{{ $message }}</p>
+  <p class="mb-4 subtitle">Solicita un nuevo correo de verificación.</p>
+  <div class="d-flex justify-content-center gap-3">
+  <button class="btn btnResendCode">Reenviar correo</button>
+  <a href="#" class="d-flex align-items-center gap-1">
+    Ir al inicio <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-narrow-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M15 16l4 -4" /><path d="M15 8l4 4" /></svg>
+  </a>
+</div>
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+</body>
+</html>
