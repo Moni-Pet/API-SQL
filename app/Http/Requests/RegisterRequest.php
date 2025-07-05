@@ -50,16 +50,16 @@ class RegisterRequest extends FormRequest
             'name.required' => 'El nombre es obligatorio.',
             'name.string' => 'El nombre debe tener un formato válido.',
             'name.max' => 'El nombre no puede tener más de 55 caracteres.',
-            'name.regex' => 'El nombre solo puede contener letras (incluyendo acentos) y sin espacios.',
+            'name.regex' => 'El nombre solo puede contener letras (incluyendo acentos).',
 
             'last_name.required' => 'El apellido paterno es obligatorio.',
             'last_name.string' => 'El apellido paterno debe tener un formato válido.',
             'last_name.max' => 'El apellido paterno no puede tener más de 55 caracteres.',
-            'last_name.regex' => 'El apellido paterno solo puede contener letras (incluyendo acentos) y sin espacios.',
+            'last_name.regex' => 'El apellido paterno solo puede contener letras (incluyendo acentos).',
 
             'last_name2.string' => 'El apellido materno debe tener un formato válido.',
             'last_name2.max' => 'El apellido materno no puede tener más de 55 caracteres.',
-            'last_name2.regex' => 'El apellido materno solo puede contener letras (incluyendo acentos) y sin espacios.',
+            'last_name2.regex' => 'El apellido materno solo puede contener letras (incluyendo acentos).',
 
             'email.required' => 'El correo electrónico es obligatorio.',
             'email.email' => 'El correo electrónico debe tener un formato válido.',
