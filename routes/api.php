@@ -3,7 +3,9 @@
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\EmailController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Laravel\Sanctum\Sanctum;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::prefix('auth')->group(function (){
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/email/verify', [EmailController::class, 'activateAccount'])->name('activate.account');
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::get('/email/verify', [EmailController::class, 'activateAccount'])->name('activate.account');
+    Route::post('/login',[AuthController::class, 'login'])->middleware('verifiedAcount');;
+    Route::post('/2af/verify', [AuthController::class, 'verify2af'])->middleware('verifiedAcount');
+    Route::post('/2af/send', [AuthController::class, 'resendVerificationCode']);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
+});

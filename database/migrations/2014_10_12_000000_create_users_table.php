@@ -22,6 +22,8 @@ return new class extends Migration
             $table->timestamp('account_verification')->nullable();
             $table->enum('gender', ['masculino', 'femenino', '39 tipos de gays']);
             $table->date('birth_date');
+            $table->string('two_factor_code')->nullable();
+            $table->timestamp('two_factor_expires_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

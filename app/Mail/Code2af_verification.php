@@ -9,19 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class Account_activation extends Mailable
+class Code2af_verification extends Mailable
 {
     use Queueable, SerializesModels;
-    public $url;    
+    public $code;
     public $name;
-
     /**
      * Create a new message instance.
      */
-    public function __construct($url, $name)
+    public function __construct($name,$code)
     {
-        $this->url = $url;
         $this->name = $name;
+        $this->code = $code;
     }
 
     /**
@@ -30,7 +29,7 @@ class Account_activation extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Activar cuenta',
+            subject: 'Code2Af Verification',
         );
     }
 
@@ -40,7 +39,7 @@ class Account_activation extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.Account_activation',
+            view: 'mails.Code2af',
         );
     }
 
@@ -56,10 +55,10 @@ class Account_activation extends Mailable
 
     public function build()
     {
-        return $this->view('mails.Account_activation')
+        return $this->view('mails.Code2af')
             ->with([
-                'url' => $this->url,
-                'name' => $this->name
+                'name'=> $this->name,
+                'code' => $this->code
             ]);
     }
 }

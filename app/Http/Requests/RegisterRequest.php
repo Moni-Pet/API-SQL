@@ -29,7 +29,12 @@ class RegisterRequest extends FormRequest
             'name' => 'required|string|max:55|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
             'last_name' => 'required|string|max:55|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
             'last_name2' => 'nullable|string|max:55|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
-            'email' => 'required|email|unique:users,email',
+            'email' => [
+                'required',
+                'email',
+                'unique:users,email',
+                'regex:/^[^@]+@[^@]+\.[^@]+$/'   
+            ],
             'password' => [
                 'required',
                 'string',
@@ -64,6 +69,7 @@ class RegisterRequest extends FormRequest
             'email.required' => 'El correo electrónico es obligatorio.',
             'email.email' => 'El correo electrónico debe tener un formato válido.',
             'email.unique' => 'El correo electrónico ya está registrado.',
+            'email.regex'=> 'El correo electronico debe tener un formato valido',
 
             'password.required' => 'La contraseña es obligatoria.',
             'password.string' => 'La contraseña debe tener un formato válido.',
