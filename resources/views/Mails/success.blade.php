@@ -83,8 +83,9 @@
   </div>
 
   <h3 class="mb-2">¡Cuenta verificada con éxito! 🎉</h3>
-  <p class="mb-0 subtitle">Has verificado tu cuenta correctamente. Te damos la bienvenida 🐾</p>
-  <a href="#" class="btn btnHome mt-4">Ir al inicio</a>
+  <p class="mb-0 subtitle">Has verificado tu cuenta correctamente.</p>
+  <p class="mb-0 subtitle">Ya puedes acceder a Monipet🐾</p>
+  <p class="mb-0 subtitle">Bienvenido!!!</p>
 
 </div>
 

@@ -32,10 +32,7 @@
          * @return mixed|\Illuminate\Http\JsonResponse
          */
         public function register(RegisterRequest $request){
-            $user_type_id = $request->user_type_id ?? 3;
-            
             $user = User::create([
-                'user_type_id' => $user_type_id,
                 'name' => $request->name,
                 'last_name' => $request->last_name,
                 'last_name2' => $request->last_name2,
@@ -49,7 +46,7 @@
 
             return response()->json([
                 'result' => true,
-                'msg' => "Usuario registrado correctamente",
+                'msg' => "Te has registrado correctamente $request->name",
                 'error_code' => null,
                 'data' => [
                     'user_type_id' => $user->user_type_id,
@@ -178,6 +175,7 @@
             $user->save();
 
             Mail::to($user->email)->send(new Code2af_verification($user->name, $twoFactorCode));
+            return null;
         }
 
         /**

@@ -25,7 +25,6 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_type_id' => 'sometimes|exists:types_user,id',
             'name' => 'required|string|max:55|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
             'last_name' => 'required|string|max:55|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
             'last_name2' => 'nullable|string|max:55|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
