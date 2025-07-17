@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class State extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name'
+    ];
+
+    public function cities()
+    {
+        return $this->hasMany(City::class, 'state_id');
+    }public function adopters()
+    {
+        return $this->hasMany(Adopter::class, 'state_id');
+    }
 }

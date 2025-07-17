@@ -8,4 +8,36 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id', 
+        'pet_id', 
+        'status', 
+        'descripcion', 
+        'total_price', 
+        'creation_date', 
+        'date', 
+        'transferce_code', 
+        'type_appointment'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function pet()
+    {
+        return $this->belongsTo(Pet::class, 'pet_id');
+    }
+
+    public function details()
+    {
+        return $this->hasMany(AppointmentDetail::class, 'apointment_id');
+    }
+
+    public function appointmentPets()
+    {
+        return $this->hasMany(AppointmentPet::class, 'apointment_id');
+    }
 }
