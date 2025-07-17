@@ -20,7 +20,7 @@ class AccountVerification
         if(!$user || ! $user->account_verification){
             return response()->json([
                 'result' => false,
-                'msj' => 'La cuenta no esta verificada.',
+                'msg' => 'La cuenta no esta verificada.',
                 'error_code' => 1006,
                 'data'=> null
             ], 403);

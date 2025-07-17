@@ -87,7 +87,7 @@
                 ], 403);
             }
 
-            $this->sendVerificationCode($user->email);
+            $this->sendVerificationCode($user);
 
             return response()->json([
                 'result' => false,
@@ -113,7 +113,7 @@
          * @param \App\Http\Requests\TwoAfVerificationRequest $request
          * @return mixed|\Illuminate\Http\JsonResponse
          */
-        public function verify2af(TwoAfVerificationRequest $request)
+        public function verifyTAF(TwoAfVerificationRequest $request)
         {
             $user = User::where('email', $request->email)->first();
             if (! $user){
@@ -155,7 +155,7 @@
          * @param \App\Models\User $user
          * @return void
          */
-        public function sendActivationEmail(User $user){
+        private function sendActivationEmail(User $user){
             $url = URL::temporarySignedRoute(
                 'activate.account',
                 now()->addMinutes(30),
@@ -170,23 +170,14 @@
          * @param mixed $email
          * @return mixed|\Illuminate\Http\JsonResponse
          */
-        public function sendVerificationCode($email)
+        private function sendVerificationCode(User $user)
         {
-            $user = User::where('email', $email)->first();
-            if (! $user){
-                return response()->json([
-                    'result' => 'false',
-                    'msg' => 'El usuario no fue encontrado.',
-                    'code' => 1101,
-                    'data' => null
-                ],404);
-            }
             $twoFactorCode = rand(100000, 999999);
             $user->two_factor_code = Hash::make($twoFactorCode);
             $user->two_factor_expires_at = now()->addMinutes(10);
             $user->save();
 
-            Mail::to($email)->send(new Code2af_verification($user->name, $twoFactorCode));
+            Mail::to($user->email)->send(new Code2af_verification($user->name, $twoFactorCode));
         }
 
         /**
@@ -196,7 +187,16 @@
          */
         public function resendVerificationCode(Request $request)
         {
-            $this->sendVerificationCode($request->email);
+            $user = User::where('email', $request->email)->first();
+            if (! $user){
+                return response()->json([
+                    'result' => 'false',
+                    'msg' => 'El usuario no fue encontrado.',
+                    'code' => 1101,
+                    'data' => null
+                ],404);
+            }
+            $this->sendVerificationCode($user);
             return response()->json([
                 'result' => true,
                 'msg' => 'Codigo enviado correctamente.',

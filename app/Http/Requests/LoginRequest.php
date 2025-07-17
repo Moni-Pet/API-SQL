@@ -34,8 +34,6 @@ class LoginRequest extends FormRequest
             'password' => [
                 'required',
                 'string',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\W_]{8,}$/',
-                Password::min(8)->letters()->mixedCase()->numbers()->symbols()
             ]
         ];
     }

@@ -22,7 +22,7 @@ Route::prefix('auth')->group(function (){
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/email/verify', [EmailController::class, 'activateAccount'])->name('activate.account');
 
-    Route::post('/login',[AuthController::class, 'login'])->middleware('verifiedAcount');;
+    Route::post('/login',[AuthController::class, 'login']); 
     Route::post('/2af/verify', [AuthController::class, 'verify2af'])->middleware('verifiedAcount');
     Route::post('/2af/send', [AuthController::class, 'resendVerificationCode']);
 
