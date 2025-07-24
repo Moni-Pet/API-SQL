@@ -22,6 +22,7 @@
      * Controlador responsable de la autenticación de usuario
      * Metodos que incluye:
      * -
+     * 
      */
 
     class AuthController extends Controller
@@ -96,13 +97,25 @@
             ], 201);
         }
 
-        /**
-         * Summary of logout
-         * @return void
-         */
-        public function logout()
+        public function logout(Request $request)
         {
-            //
+            $user = $request->user();
+            if(! $user){
+                return response()->json([
+                    'result' => false,
+                    'msg' => 'El usuario no fue encontrado',
+                    'error_code' => 1101,
+                    'data' => null
+                ], 404);
+            }
+
+            $user->currentAccessToken()->delete();
+            return response()->json([
+                'response' => true,
+                'msg' => 'Sesion finalizada correctamente',
+                'error_code' => null,
+                'data' => null
+            ], 200);
         }
 
         /**

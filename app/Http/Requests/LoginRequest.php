@@ -43,7 +43,7 @@ class LoginRequest extends FormRequest
         return[
             'email.required' => 'El correo electronico es obligatorio',
             'email.email'=> 'El correo electronico debe tener un formato valido',
-            'email.exists:user.email'=> 'EL correo electronico no pertenece a ningun usuario registrado',
+            'email.exists'=> 'EL correo electronico no pertenece a ningun usuario registrado',
             'email.regex'=> 'El correo electronico debe tener un formato valido',
 
             'password.required' => 'La contraseña es obligatoria.',
