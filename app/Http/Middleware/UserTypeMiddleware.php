@@ -16,7 +16,7 @@ class UserTypeMiddleware
     public function handle(Request $request, Closure $next, $user_type): Response
     {
         $user = $request->user();
-         $allowedTypes = explode(',', $user_type);
+        $allowedTypes = explode(',', $user_type);
         if(!$user || !in_array($user->user_type_id, $allowedTypes)){
             return response()->json([
                 'result' => false,

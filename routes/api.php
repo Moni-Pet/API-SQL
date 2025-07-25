@@ -2,6 +2,11 @@
 
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\EmailController;
+use App\Http\Controllers\api\Pet\BreedController;
+use App\Http\Controllers\api\Pet\PetController;
+use App\Http\Controllers\api\Pet\PetTypeController;
+use App\Http\Controllers\api\Service\ServiceTypeController;
+use App\Models\ServiceType;
 use App\Http\Controllers\api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteRegistrar;
@@ -26,6 +31,10 @@ Route::prefix('auth')->group(function () {
     Route::get('/email/verify', [EmailController::class, 'activateAccount'])->name('activate.account');
     Route::post('/email/resend-verification', [AuthController::class, 'resendEmailVerification']);
 });
+
+//Services
+Route::get('/type_service', [ServiceTypeController::class, 'index']);
+Route::get('/type_service/{id}', [ServiceTypeController::class, 'show']);
 
 
 // Rutas protegidas
@@ -63,6 +72,24 @@ Route::group(
                 Route::post('/user', [UserController::class, 'store']);
                 Route::put('/user/{id}', [UserController::class, 'update']);
                 Route::delete('/user', [UserController::class, 'destroy']);
+                
+                route::get('/types_pet', [PetTypeController::class, 'index']);
+                route::get('/types_pet/{id}', [PetTypeController::class, 'show']);
+                Route::post('/types_pet', [PetTypeController::class, 'store']);
+                Route::put('/types_pet/{id}', [PetTypeController::class, 'update']);
+                Route::delete('/types_pet/{id}', [PetTypeController::class, 'destroy']);
+
+                route::get('/breeds', [BreedController::class, 'index']);
+                route::get('/breeds/{id}', [BreedController::class, 'show']);
+                Route::post('/breeds', [BreedController::class, 'store']);
+                Route::put('/breeds/{id}', [BreedController::class, 'update']);
+                Route::delete('/breeds/{id}', [BreedController::class, 'destroy']);
+
+                route::get('/pets', [PetController::class, 'index']);
+                route::get('/pets/{id}', [PetController::class, 'show']);
+                Route::post('/pets', [PetController::class, 'store']);
+                Route::put('/pets/{id}', [PetController::class, 'update']);
+                Route::delete('/pets/{id}', [PetController::class, 'destroy']);
             });
 
             // Rutas User
