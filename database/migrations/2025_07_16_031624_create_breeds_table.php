@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('breeds', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('type_pet_id');
-            $table->string('breed', 50);
+            $table->string('breed', 50)->unique();
             $table->timestamps();
 
             //relaciones    

@@ -1,4 +1,4 @@
-{<?php
+<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('types_pet', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->string('type_pet', '12');
+            $table->string('type_pet', '12')->unique();
             $table->string('icono', 2083);
             $table->timestamps();
         });
