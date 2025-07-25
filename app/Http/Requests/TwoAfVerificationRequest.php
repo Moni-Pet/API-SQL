@@ -24,17 +24,17 @@ class   TwoAfVerificationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|exists:users,email',
+            'email_' => 'required|email|exists:users,email',
             'code' => ['required', 'regex:/^\d{6}$/']
         ];
     }
     public function messages()
     {
         return[
-            'email.required' => 'El correo electronico es obligatorio',
-            'email.email'=> 'El correo electronico debe tener un formato valido',
-            'email.exists'=> 'EL correo electronico no pertenece a ningun usuario registrado',
-            'email.regex'=> 'El correo electronico debe tener un formato valido',
+            'email_.required' => 'El correo electronico es obligatorio',
+            'email_.email'=> 'El correo electronico debe tener un formato valido',
+            'email_.exists'=> 'EL correo electronico no pertenece a ningun usuario registrado',
+            'email_.regex'=> 'El correo electronico debe tener un formato valido',
 
             'code.required' => 'El codigo es obligatorio.',
             'code.regex' => 'El codigo dedbe contener exactamente 6 digitos.'

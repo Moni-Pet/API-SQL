@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rules\Password;
 
-class RegisterRequest extends FormRequest
+class CreateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,6 +25,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'user_type_id' => 'required|integer|exists:types_user,id',
             'name' => 'required|string|max:55|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
             'last_name' => 'required|string|max:55|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
             'last_name2' => 'nullable|string|max:55|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
@@ -32,7 +33,7 @@ class RegisterRequest extends FormRequest
                 'required',
                 'email',
                 'unique:users,email',
-                'regex:/^[^@]+@[^@]+\.[^@]+$/'   
+                'regex:/^[^@]+@[^@]+\.[^@]+$/'
             ],
             'password' => [
                 'required',
@@ -45,10 +46,12 @@ class RegisterRequest extends FormRequest
             'birth_date' => 'required|date'
         ];
     }
-
     public function messages()
     {
         return [
+            'user_type_id.integer' => 'El tipo de usuario debe ser un número válido.',
+            'user_type_id.exists' => 'El tipo de usuario seleccionado no es válido.',
+
             'name.required' => 'El nombre es obligatorio.',
             'name.string' => 'El nombre debe tener un formato válido.',
             'name.max' => 'El nombre no puede tener más de 55 caracteres.',
@@ -66,7 +69,7 @@ class RegisterRequest extends FormRequest
             'email.required' => 'El correo electrónico es obligatorio.',
             'email.email' => 'El correo electrónico debe tener un formato válido.',
             'email.unique' => 'El correo electrónico ya está registrado.',
-            'email.regex'=> 'El correo electronico debe tener un formato valido',
+            'email.regex' => 'El correo electronico debe tener un formato valido',
 
             'password.required' => 'La contraseña es obligatoria.',
             'password.string' => 'La contraseña debe tener un formato válido.',

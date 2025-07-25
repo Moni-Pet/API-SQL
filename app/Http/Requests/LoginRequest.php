@@ -65,7 +65,7 @@ class LoginRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'result' => false,
             'msg' => 'Los datos proporcionados no son  validos',
-            'error_code'=> 1205,
+            'error_code'=> 1206,
             'data' => $errors,
         ],422));
     }

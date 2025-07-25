@@ -16,7 +16,7 @@ class AccountVerification
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $email = $request->email;
+        $email = $request->email_;
         $user = null;
 
         if(! $email){
@@ -28,8 +28,8 @@ class AccountVerification
         if(! $user || ! $user->account_verification){
             return response()->json([
                 'result' => false,
-                'msg' => 'La cuenta no esta verificadas.',
-                'error_code' => 1006,
+                'msg' => 'La cuenta no ha sido verificada.',
+                'error_code' => 1004,
                 'data'=> null
             ], 403);
         }
