@@ -85,6 +85,26 @@ class PetController extends Controller
         ], 200);
     }
 
+    public function showUserPets(int $id) {
+        $pets = Pet::with('Breed.TypePet', 'user')->where('user_id', $id)->get();
+
+        if ($pets->isEmpty()) {
+            return response()->json([
+                'result' => false,
+                'msg' => "El recurso solicitado no fue encontrado.",
+                'error_code' => 1201,
+                'data' => null
+            ], 404);
+        }
+
+        return response()->json([
+            'result' => true,
+            'msg' => "Mascotas del usuario encontradas",
+            'error_code' => null,
+            'data' => $pets,
+        ], 200);
+    }
+
     /**
      * Update the specified resource in storage.
      */

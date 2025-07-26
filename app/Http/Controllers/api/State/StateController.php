@@ -1,53 +1,50 @@
 <?php
 
-namespace App\Http\Controllers\api\Service;
+namespace App\Http\Controllers\api\State;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\service\StoreServiceRequest;
-use App\Http\Requests\service\UpdateServiceRequest;
-use App\Models\Service;
+use App\Http\Requests\state\StoreStateRequest;
+use App\Http\Requests\state\UpdateStateRequest;
+use App\Models\State;
 use Illuminate\Http\Request;
 
-class ServiceController extends Controller
+class StateController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $services = Service::with('type')->get();
+        $states = State::all();
 
-        if ($services->count() === 0) {
+        if ($states->count() === 0) {
             return response()->json([
                 'result' => false,
-                'msg' => "El recurso solicitado no fue encontrado.",
+                'msg' => "No se encontraron estados registrados.",
                 'data' => null
             ], 404);
         }
 
         return response()->json([
             'result' => true,
-            'msg' => "Los servicios fueron encontrados",
+            'msg' => "Los estados fueron encontrados",
             'error_code' => null,
-            'data' => $services,
+            'data' => $states,
         ], 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreServiceRequest $request)
+    public function store(StoreStateRequest $request)
     {
-        $service = Service::create([
-            'type_service_id' => $request->type_service_id,
-            'service' => $request->service,
-            'price' => $request->price,
-            'discounts' => $request->discounts
+        $state = State::create([
+            'state' => $request->state
         ]);
 
         return response()->json([
             'result' => true,
-            'msg' => "Servicio creado correctamente.",
+            'msg' => "Estado creado correctamente.",
             'error_code' => null,
             'data' => null
         ], 201);
@@ -58,12 +55,12 @@ class ServiceController extends Controller
      */
     public function show(int $id)
     {
-        $service = Service::find($id);
+        $state = State::find($id);
 
-        if (!$service) {
+        if (!$state) {
             return response()->json([
                 'result' => false,
-                'msg' => "Servicio no está registrado.",
+                'msg' => "No se encontró estado especificado.",
                 'error_code' => 1201,
                 'data' => null
             ], 404);
@@ -71,38 +68,33 @@ class ServiceController extends Controller
 
         return response()->json([
             'result' => true,
-            'msg' => "Servicio encontrado",
+            'msg' => "Estado encontrado",
             'error_code' => null,
-            'data' => $service,
+            'data' => $state,
         ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateServiceRequest $request, int $id)
+    public function update(UpdateStateRequest $request, int $id)
     {
-        $service = Service::find($id);
+        $state = State::find($id);
 
-        if (!$service) {
+        if (!$state) {
             return response()->json([
                 'result' => false,
-                'msg' => "Servicio no está registrado.",
+                'msg' => "No se encontró estado especificado.",
                 'error_code' => 1201,
                 'data' => null
             ], 404);
         }
 
-        $service->update($request->only([
-            'type_service_id',
-            'service',
-            'price',
-            'discounts'
-        ]));
+        $state->update($request->only(['state'])); 
 
         return response()->json([
             'result' => true,
-            'msg' => "Servicio modificado correctamente.",
+            'msg' => "Estado modificado correctamente.",
             'error_code' => null,
             'data' => null,
         ], 200);
@@ -113,22 +105,22 @@ class ServiceController extends Controller
      */
     public function destroy(int $id)
     {
-        $service = Service::find($id);
+        $state = State::find($id);
 
-        if (!$service) {
+        if (!$state) {
             return response()->json([
                 'result' => false,
-                'msg' => "El servicio no está registrado.",
+                'msg' => "No se encontró estado especificado.",
                 'error_code' => 1201,
                 'data' => null
             ], 404);
         }
 
-        $service->delete();
+        $state->delete();
 
         return response()->json([
             'result' => true,
-            'msg' => "Servicio eliminado correctamente.",
+            'msg' => "Estado eliminado correctamente.",
             'error_code' => null,
             'data' => null,
         ], 200);

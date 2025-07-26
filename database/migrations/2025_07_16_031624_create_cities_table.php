@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->smallIncrements('id')->unsigned();
-            $table->string('city', 50);
+            $table->string('city', 150);
             $table->unsignedTinyInteger('state_id');
             $table->timestamps();
 

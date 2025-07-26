@@ -1,53 +1,51 @@
 <?php
 
-namespace App\Http\Controllers\api\Service;
+namespace App\Http\Controllers\api\City;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\service\StoreServiceRequest;
-use App\Http\Requests\service\UpdateServiceRequest;
-use App\Models\Service;
+use App\Http\Requests\cities\StoreCitiesRequest;
+use App\Http\Requests\cities\UpdateCitiesRequest;
+use App\Models\City;
 use Illuminate\Http\Request;
 
-class ServiceController extends Controller
+class CityController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $services = Service::with('type')->get();
+        $cities = City::with('state')->get();
 
-        if ($services->count() === 0) {
+        if ($cities->count() === 0) {
             return response()->json([
                 'result' => false,
-                'msg' => "El recurso solicitado no fue encontrado.",
+                'msg' => "No se encontraron ciudades registradas.",
                 'data' => null
             ], 404);
         }
 
         return response()->json([
             'result' => true,
-            'msg' => "Los servicios fueron encontrados",
+            'msg' => "Las ciudades fueron encontradas",
             'error_code' => null,
-            'data' => $services,
+            'data' => $cities,
         ], 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreServiceRequest $request)
+    public function store(StoreCitiesRequest $request)
     {
-        $service = Service::create([
-            'type_service_id' => $request->type_service_id,
-            'service' => $request->service,
-            'price' => $request->price,
-            'discounts' => $request->discounts
+        $city = City::create([
+            'city' => $request->city,
+            'state_id' => $request->state_id
         ]);
 
         return response()->json([
             'result' => true,
-            'msg' => "Servicio creado correctamente.",
+            'msg' => "Ciudad creada correctamente.",
             'error_code' => null,
             'data' => null
         ], 201);
@@ -58,12 +56,12 @@ class ServiceController extends Controller
      */
     public function show(int $id)
     {
-        $service = Service::find($id);
+        $city = City::with('state')->find($id);
 
-        if (!$service) {
+        if (!$city) {
             return response()->json([
                 'result' => false,
-                'msg' => "Servicio no está registrado.",
+                'msg' => "No se encontró la ciudad especificada.",
                 'error_code' => 1201,
                 'data' => null
             ], 404);
@@ -71,38 +69,36 @@ class ServiceController extends Controller
 
         return response()->json([
             'result' => true,
-            'msg' => "Servicio encontrado",
+            'msg' => "Ciudad encontrada",
             'error_code' => null,
-            'data' => $service,
+            'data' => $city,
         ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateServiceRequest $request, int $id)
+    public function update(UpdateCitiesRequest $request, int $id)
     {
-        $service = Service::find($id);
+        $city = City::find($id);
 
-        if (!$service) {
+        if (!$city) {
             return response()->json([
                 'result' => false,
-                'msg' => "Servicio no está registrado.",
+                'msg' => "No se encontró la ciudad especificada.",
                 'error_code' => 1201,
                 'data' => null
             ], 404);
         }
-
-        $service->update($request->only([
-            'type_service_id',
-            'service',
-            'price',
-            'discounts'
+        
+        $city->update($request->only([
+            'city',
+            'state_id'
         ]));
 
         return response()->json([
             'result' => true,
-            'msg' => "Servicio modificado correctamente.",
+            'msg' => "Ciudad modificada correctamente.",
             'error_code' => null,
             'data' => null,
         ], 200);
@@ -113,22 +109,22 @@ class ServiceController extends Controller
      */
     public function destroy(int $id)
     {
-        $service = Service::find($id);
+        $city = City::find($id);
 
-        if (!$service) {
+        if (!$city) {
             return response()->json([
                 'result' => false,
-                'msg' => "El servicio no está registrado.",
+                'msg' => "No se encontró la ciudad especificada.",
                 'error_code' => 1201,
                 'data' => null
             ], 404);
         }
-
-        $service->delete();
+        
+        $city->delete();
 
         return response()->json([
             'result' => true,
-            'msg' => "Servicio eliminado correctamente.",
+            'msg' => "Ciudad eliminada correctamente.",
             'error_code' => null,
             'data' => null,
         ], 200);
