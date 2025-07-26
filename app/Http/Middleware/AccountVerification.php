@@ -16,7 +16,7 @@ class AccountVerification
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $email = $request->email_;
+        $email = $request->email;
         $user = null;
 
         if(! $email){
@@ -25,7 +25,7 @@ class AccountVerification
             $user = User::where('email', $email)->first();
         }
 
-        if(! $user || ! $user->account_verification){
+        if(!$user || !$user->account_verification){
             return response()->json([
                 'result' => false,
                 'msg' => 'La cuenta no ha sido verificada.',

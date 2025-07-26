@@ -124,7 +124,7 @@ class AuthController extends Controller
      */
     public function verifyTAF(TwoAfVerificationRequest $request)
     {
-        $user = User::where('email', $request->email_)->first();
+        $user = User::where('email', $request->email)->first();
         if (! $user) {
             return response()->json([
                 'result' => false,
@@ -142,7 +142,9 @@ class AuthController extends Controller
             ], 403);
         }
 
-        $user->currentAccessToken()->delete();
+        if ($user->currentAccessToken()) {
+            $user->currentAccessToken()->delete();
+        }
         $token = $user->createToken('token_default')->plainTextToken;
 
         $user->two_factor_code = null;

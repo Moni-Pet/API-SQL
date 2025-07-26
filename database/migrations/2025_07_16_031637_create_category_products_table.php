@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('category_products', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->unsignedSmallInteger('type_category_id');
+            $table->unsignedSmallInteger('category_id');
             $table->unsignedSmallInteger('product_id');
             $table->timestamps();
 
             //relaciones
-            $table->foreign('type_category_id')
-                ->references('id')->on('types_category')
+            $table->foreign('category_id')
+                ->references('id')->on('categories')
                 ->onDelete('cascade');
 
             $table->foreign('product_id')

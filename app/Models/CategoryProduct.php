@@ -12,7 +12,7 @@ class CategoryProduct extends Model
     protected $table = 'category_products';
 
     protected $fillable = [
-        'type_category_id', 
+        'category_id', 
         'product_id'
     ];
 
@@ -21,8 +21,8 @@ class CategoryProduct extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
-    public function typeCategory()
+    public function category()
     {
-        return $this->belongsTo(CategoryType::class, 'type_category_id');
+        return $this->belongsTo(CategoryType::class, 'category_id');
     }
 }

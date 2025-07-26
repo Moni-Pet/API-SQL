@@ -9,6 +9,8 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $table = 'categories';
+
     protected $fillable = [
         'category', 
         'type_category_id'
@@ -21,6 +23,6 @@ class Category extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'categories_product', 'type_category_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'categories_products', 'category_id', 'product_id');
     }
 }

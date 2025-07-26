@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class StoreTypeCategoryRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,18 +24,21 @@ class StoreTypeCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type_category' => 'required|string|max:12|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/|unique:types_category,type_category'
+            'category' => 'sometimes|string|max:12|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
+            'type_category_id' => 'required|exists:types_category,id'
         ];
     }
 
     public function messages()
     {
         return [
-            'type_category.required' => 'El tipo de categoría es obligatorio.',
-            'type_category.string' => 'El tipo de categoría debe ser una cadena de texto.',
-            'type_category.max' => 'El tipo de categoría no debe exceder los 12 caracteres.',
-            'type_category.regex' => 'El tipo de categoría solo puede contener letras, espacios y comillas simples.',
-            'type_category.unique' => 'Ya existe un tipo de categoría con ese nombre.',
+            'category.string' => 'La categoría debe ser una cadena de texto.',
+            'category.max' => 'La categoría no debe exceder los 12 caracteres.',
+            'category.regex' => 'La categoría solo puede contener letras, espacios y comillas simples.',
+            'category.unique' => 'Ya existe una categoría con ese nombre.',
+
+            'type_category_id.required' => 'El tipo de categoría es obligatorio.',
+            'type_category_id.exists' => 'El tipo de categoría seleccionado no es válido.',
         ];
     }
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\api\EmailController;
 use App\Http\Controllers\api\Pet\BreedController;
 use App\Http\Controllers\api\Pet\PetController;
 use App\Http\Controllers\api\Pet\PetTypeController;
+use App\Http\Controllers\api\Product\CategoryController;
 use App\Http\Controllers\api\Product\CategoryTypeController;
 use App\Http\Controllers\api\Service\ServiceController;
 use App\Http\Controllers\api\Service\ServiceTypeController;
@@ -69,6 +70,10 @@ Route::get('/cities/{id}', [CityController::class, 'show']);
 //Categories Types
 Route::get('/types_products', [CategoryTypeController::class, 'index']);
 Route::get('/types_products/{id}', [CategoryTypeController::class, 'show']);
+
+//Categories
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/{id}', [CategoryController::class, 'show']);
 
 // Rutas protegidas
 Route::group(
@@ -137,6 +142,10 @@ Route::group(
                 Route::post('/types_products', [CategoryTypeController::class, 'store']);
                 Route::put('/types_products/{id}', [CategoryTypeController::class, 'update']);
                 Route::delete('/types_products/{id}', [CategoryTypeController::class, 'destroy']);
+
+                Route::post('/categories', [CategoryController::class, 'store']);
+                Route::put('/categories/{id}', [CategoryController::class, 'update']);
+                Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
             });
 
             // Rutas User

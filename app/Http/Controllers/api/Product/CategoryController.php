@@ -3,48 +3,49 @@
 namespace App\Http\Controllers\api\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\products\StoreTypeCategoryRequest;
-use App\Http\Requests\products\UpdateTypeCategoryRequest;
-use App\Models\CategoryType;
+use App\Http\Requests\products\StoreCategoryRequest;
+use App\Http\Requests\products\UpdateCategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class CategoryTypeController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categoryTypes = CategoryType::all();
+        $category = Category::all();
 
-        if ($categoryTypes->count() === 0) {
+        if ($category->count() === 0) {
             return response()->json([
                 'result' => false,
-                'msg' => "No se encontraron tipos de categorías de productos registrados.",
+                'msg' => "No se encontraron categorías registradas.",
                 'data' => null
             ], 404);
         }
 
         return response()->json([
             'result' => true,
-            'msg' => "Los tipos de categorías de productos fueron encontrados",
+            'msg' => "Las categorías fueron encontradas",
             'error_code' => null,
-            'data' => $categoryTypes,
+            'data' => $category,
         ], 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTypeCategoryRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $categoryType = CategoryType::create([
-            'type_category' => $request->type_category
+        $category = Category::create([
+            'category' => $request->category,
+            'type_category_id' => $request->type_category_id
         ]);
 
         return response()->json([
             'result' => true,
-            'msg' => "Tipo de categoría de productos creado correctamente.",
+            'msg' => "Categoría creada correctamente.",
             'error_code' => null,
             'data' => null
         ], 201);
@@ -55,12 +56,12 @@ class CategoryTypeController extends Controller
      */
     public function show(int $id)
     {
-        $categoryType = CategoryType::find($id);
+        $category = Category::find($id);
 
-        if (!$categoryType) {
+        if (!$category) {
             return response()->json([
                 'result' => false,
-                'msg' => "El tipo de categoría de productos no está registrado.",
+                'msg' => "La categoría no está registrado.",
                 'error_code' => 1201,
                 'data' => null
             ], 404);
@@ -68,33 +69,33 @@ class CategoryTypeController extends Controller
 
         return response()->json([
             'result' => true,
-            'msg' => "Tipo de categoría de productos encontrado",
+            'msg' => "Categoría encontrada.",
             'error_code' => null,
-            'data' => $categoryType,
+            'data' => $category,
         ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTypeCategoryRequest $request, int $id)
+    public function update(UpdateCategoryRequest $request, int $id)
     {
-        $categoryType = CategoryType::find($id);
+        $category = Category::find($id);
 
-        if (!$categoryType) {
+        if (!$category) {
             return response()->json([
                 'result' => false,
-                'msg' => "El tipo de categoría de productos no está registrado.",
+                'msg' => "La categoría no está registrado.",
                 'error_code' => 1201,
                 'data' => null
             ], 404);
         }
 
-        $categoryType->update($request->only(['type_category']));
+        $category->update($request->only(['category', 'type_category_id']));
 
         return response()->json([
             'result' => true,
-            'msg' => "Tipo de categoría de productos modificado correctamente.",
+            'msg' => "La categoría modificada correctamente.",
             'error_code' => null,
             'data' => null,
         ], 200);
@@ -105,22 +106,22 @@ class CategoryTypeController extends Controller
      */
     public function destroy(int $id)
     {
-        $categoryType = CategoryType::find($id);
+        $category = Category::find($id);
 
-        if (!$categoryType) {
+        if (!$category) {
             return response()->json([
                 'result' => false,
-                'msg' => "El tipo de categoría de productos no está registrado.",
+                'msg' => "La categoría no está registrado.",
                 'error_code' => 1201,
                 'data' => null
             ], 404);
         }
 
-        $categoryType->delete();
+        $category->delete();
 
         return response()->json([
             'result' => true,
-            'msg' => "Tipo de categoría de productos eliminado correctamente.",
+            'msg' => "Categoría eliminada correctamente.",
             'error_code' => null,
             'data' => null,
         ], 200);
