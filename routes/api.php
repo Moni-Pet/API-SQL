@@ -8,7 +8,9 @@ use App\Http\Controllers\api\Pet\BreedController;
 use App\Http\Controllers\api\Pet\PetController;
 use App\Http\Controllers\api\Pet\PetTypeController;
 use App\Http\Controllers\api\Product\CategoryController;
+use App\Http\Controllers\api\Product\CategoryProductController;
 use App\Http\Controllers\api\Product\CategoryTypeController;
+use App\Http\Controllers\api\Product\ProductController;
 use App\Http\Controllers\api\Service\ServiceController;
 use App\Http\Controllers\api\Service\ServiceTypeController;
 use App\Http\Controllers\api\State\StateController;
@@ -74,6 +76,15 @@ Route::get('/types_products/{id}', [CategoryTypeController::class, 'show']);
 //Categories
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/categories/{id}', [CategoryController::class, 'show']);
+
+//Productos con sus categorias
+Route::get('/categories_products', [CategoryProductController::class, 'index']);
+Route::get('/categories_products/{id}', [CategoryProductController::class, 'show']);
+
+//Products
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+
 
 // Rutas protegidas
 Route::group(
@@ -146,6 +157,14 @@ Route::group(
                 Route::post('/categories', [CategoryController::class, 'store']);
                 Route::put('/categories/{id}', [CategoryController::class, 'update']);
                 Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
+
+                Route::post('/categories_products', [CategoryProductController::class, 'store']);
+                Route::put('/categories_products/{id}', [CategoryProductController::class, 'update']);
+                Route::delete('/categories_products/{id}', [CategoryProductController::class, 'destroy']);
+
+                Route::post('/products', [ProductController::class, 'store']);
+                Route::put('/products/{id}', [ProductController::class, 'update']);
+                Route::delete('/products/{id}', [ProductController::class, 'destroy']);
             });
 
             // Rutas User

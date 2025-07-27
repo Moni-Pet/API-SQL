@@ -24,7 +24,7 @@ class Product extends Model
 
     public function productPhotos()
     {
-        return $this->hasMany(ProductPhoto::class, 'user_id');
+        return $this->hasMany(ProductPhoto::class, 'product_id');
     }
 
     public function detailsOrders()
@@ -34,6 +34,6 @@ class Product extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'categories_product', 'product_id', 'type_category_id');
+        return $this->belongsToMany(Category::class, 'category_products', 'product_id', 'category_id');
     }
 }

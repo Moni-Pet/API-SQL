@@ -66,7 +66,7 @@ class PetController extends Controller
      */
     public function show(int $id)
     {
-        $pet = Pet::with('Breed.TypePet', 'user', )->find($id);
+        $pet = Pet::with('Breed.TypePet', 'user', 'PetPhothos')->find($id);
 
         if ($pet->count() === 0) {
             return response()->json([
