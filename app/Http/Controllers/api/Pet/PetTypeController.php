@@ -99,7 +99,7 @@ class PetTypeController extends Controller
             'msg' => "Tipo de mascota modificada correctamente.",
             'error_code' => null,
             'data' => null,
-        ], 200);
+        ], 201);
     }
 
     /**

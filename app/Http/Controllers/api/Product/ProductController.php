@@ -50,7 +50,7 @@ class ProductController extends Controller
             'msg' => 'Producto creado correctamente.',
             'error_code' => null,
             'data' => null
-        ], 200);
+        ], 201);
     }
 
     /**
@@ -105,7 +105,7 @@ class ProductController extends Controller
             'msg' => "Producto modificado correctamente.",
             'error_code' => null,
             'data' => null,
-        ], 200);
+        ], 201);
     }
 
     /**

@@ -99,7 +99,7 @@ class ServiceTypeController extends Controller
             'msg' => "Tipo de servicio modificado correctamente.",
             'error_code' => null,
             'data' => null,
-        ], 200);
+        ], 201);
     }
 
     /**

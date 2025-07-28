@@ -78,7 +78,7 @@ class OrderDetailController extends Controller
             'msg' => 'Detalle de orden creado correctamente.',
             'error_code' => null,
             'data' => $createdItems
-        ], 200);
+        ], 201);
     }
 
     /**
@@ -208,7 +208,7 @@ class OrderDetailController extends Controller
             'msg' => "Detalles de orden modificados correctamente.",
             'error_code' => null,
             'data' => null,
-        ], 200);
+        ], 201);
     }
 
     /**

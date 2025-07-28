@@ -48,7 +48,7 @@ class GadgetUserController extends Controller
             'msg' => 'Gadget asignado correctamente al usuario.',
             'error_code' => null,
             'data' => null
-        ], 200);
+        ], 201);
     }
 
     /**
@@ -124,7 +124,7 @@ class GadgetUserController extends Controller
             'msg' => "Gadget modificado correctamente.",
             'error_code' => null,
             'data' => null,
-        ], 200);
+        ], 201);
     }
 
     /**

@@ -133,7 +133,7 @@ class AdoptionController extends Controller
             'msg' => 'Adopción modificada correctamente.',
             'error_code' => null,
             'data' => $adoption
-        ], 200);
+        ], 201);
     }
 
     /**

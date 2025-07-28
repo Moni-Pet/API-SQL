@@ -97,7 +97,7 @@ class CategoryTypeController extends Controller
             'msg' => "Tipo de categoría de productos modificado correctamente.",
             'error_code' => null,
             'data' => null,
-        ], 200);
+        ], 201);
     }
 
     /**

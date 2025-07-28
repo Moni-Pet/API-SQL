@@ -97,7 +97,7 @@ class StateController extends Controller
             'msg' => "Estado modificado correctamente.",
             'error_code' => null,
             'data' => null,
-        ], 200);
+        ], 201);
     }
 
     /**

@@ -111,7 +111,7 @@ class AdopterController extends Controller
             'msg' => 'Adoptante modificado correctamente.',
             'error_code' => null,
             'data' => null
-        ], 200);
+        ], 201);
     }
 
     /**

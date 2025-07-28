@@ -98,7 +98,7 @@ class CategoryController extends Controller
             'msg' => "La categoría modificada correctamente.",
             'error_code' => null,
             'data' => null,
-        ], 200);
+        ], 201);
     }
 
     /**

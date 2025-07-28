@@ -101,7 +101,7 @@ class CityController extends Controller
             'msg' => "Ciudad modificada correctamente.",
             'error_code' => null,
             'data' => null,
-        ], 200);
+        ], 201);
     }
 
     /**

@@ -47,7 +47,7 @@ class CategoryProductController extends Controller
             'msg' => 'Categorías asociadas correctamente al producto.',
             'error_code' => null,
             'data' => null
-        ], 200);
+        ], 201);
     }
 
     /**
@@ -100,7 +100,7 @@ class CategoryProductController extends Controller
             'msg' => 'La relación producto-categoría modificada correctamente',
             'error_code' => null,
             'data' => null
-        ], 200);
+        ], 201);
     }
 
     /**

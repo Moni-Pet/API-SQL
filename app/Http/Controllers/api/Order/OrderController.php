@@ -55,7 +55,7 @@ class OrderController extends Controller
             'msg' => 'Orden creada correctamente.',
             'error_code' => null,
             'data' => null
-        ], 200);
+        ], 201);
     }
 
     /**
@@ -135,7 +135,7 @@ class OrderController extends Controller
             'msg' => 'Orden modificada correctamente.',
             'error_code' => null,
             'data' => null
-        ], 200);
+        ], 201);
     }
 
     /**

@@ -105,7 +105,7 @@ class ServiceController extends Controller
             'msg' => "Servicio modificado correctamente.",
             'error_code' => null,
             'data' => null,
-        ], 200);
+        ], 201);
     }
 
     /**

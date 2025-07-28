@@ -99,7 +99,7 @@ class BreedController extends Controller
             'msg' => "Raza modificada correctamente.",
             'error_code' => null,
             'data' => null,
-        ], 200);
+        ], 201);
     }
 
     /**

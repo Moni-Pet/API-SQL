@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\Adoption\AdopterController;
 use App\Http\Controllers\api\Adoption\AdoptionController;
+use App\Http\Controllers\api\Adoption\AdoptionFollowupController;
 use App\Http\Controllers\api\Adoption\ReturnPetController;
 use App\Http\Controllers\api\Appointment\AppointmentController;
 use App\Http\Controllers\api\AuthController;
@@ -184,6 +185,13 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
                 Route::post('/return_pet', [ReturnPetController::class, 'store']);
                 Route::put('/return_pet/{id}', [ReturnPetController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/return_pet/{id}', [ReturnPetController::class, 'destroy'])->where('id', '[0-9]+');
+
+                Route::get('/adoption_followups', [AdoptionFollowupController::class, 'index']);
+                Route::get('/adoption_followups/{id}', [AdoptionFollowupController::class, 'show'])->where('id', '[0-9]+');
+                Route::get('/adoption_followups/adopter/{id}', [AdoptionFollowupController::class, 'showFollowupsByAdopter'])->where('id', '[0-9]+');
+                Route::post('/adoption_followups', [AdoptionFollowupController::class, 'store']);
+                Route::put('/adoption_followups/{id}', [AdoptionFollowupController::class, 'update'])->where('id', '[0-9]+');
+                Route::delete('/adoption_followups/{id}', [AdoptionFollowupController::class, 'destroy'])->where('id', '[0-9]+');
             });
 
             // Rutas User

@@ -98,7 +98,7 @@ class ReturnPetController extends Controller
             'msg' => 'Devolucion de mascota modificada correctamente.',
             'error_code' => null,
             'data' => $returnPet
-        ], 200);
+        ], 201);
     }
 
     /**
