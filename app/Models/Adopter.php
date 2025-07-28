@@ -9,13 +9,20 @@ class Adopter extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 
+        'user_id', 
         'phone', 
-        'email', 
-        'address', 
+        'street', 
+        'neighborhood', 
         'city_id',
-        'state_id'
+        'state_id',
+        'postal_code',
+        'reference'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     public function city()
     {

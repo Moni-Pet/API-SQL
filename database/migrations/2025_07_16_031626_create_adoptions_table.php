@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('adopter_id');
             $table->unsignedInteger('pet_id');
             $table->date('date');
-            $table->enum('adoption_status', ['En proceso', 'Cancelada', 'realiazada', 'revocada']);
+            $table->enum('adoption_status', ['En proceso', 'Cancelada', 'Realiazada', 'Revocada']);
             $table->string('notes', 250)->nullable();
             $table->dateTime('delivery_date');
             $table->timestamps();

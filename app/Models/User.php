@@ -57,4 +57,9 @@ class User extends Authenticatable
     protected $attributes = [
         'user_type_id' => 3,
     ];
+
+    public function adopter()
+    {
+        return $this->hasOne(Adopter::class, 'user_id');
+    }
 }

@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('adopters', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->string('phone', 20);
-            $table->string('streed', 250);
+            $table->string('phone', 10);
+            $table->string('street', 250);
             $table->string('neighborhood', 100);
             $table->unsignedSmallInteger('city_id');
             $table->unsignedTinyInteger('state_id');
-            $table->char('postal_code', 4);
+            $table->char('postal_code', 5);
             $table->string('reference', 250)->nullable();
             $table->timestamps();
 

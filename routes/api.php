@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\api\Adoption\AdopterController;
+use App\Http\Controllers\api\Adoption\AdoptionController;
+use App\Http\Controllers\api\Adoption\ReturnPetController;
 use App\Http\Controllers\api\Appointment\AppointmentController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\City\CityController;
@@ -17,9 +20,7 @@ use App\Http\Controllers\api\Product\ProductController;
 use App\Http\Controllers\api\Service\ServiceController;
 use App\Http\Controllers\api\Service\ServiceTypeController;
 use App\Http\Controllers\api\State\StateController;
-use App\Models\ServiceType;
 use App\Http\Controllers\api\UserController;
-use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Auth;
@@ -91,11 +92,7 @@ Route::get('/products/{id}', [ProductController::class, 'show'])->where('id', '[
 
 
 // Rutas protegidas
-Route::group(
-    [
-        'middleware' => ['verifiedaccount']
-    ],
-    function () {
+Route::group(['middleware' => ['verifiedaccount']], function () {
         // Rutas sin token
         Route::post('/auth/login', [AuthController::class, 'login']);
         Route::post('/auth/2af/verify', [AuthController::class, 'verifyTAF'])->middleware('verifiedaccount');
@@ -103,35 +100,27 @@ Route::group(
 
 
         //Rutas con token
-        Route::group([
-            'middleware' => ['auth:sanctum']
-        ], function () {
+        Route::group(['middleware' => ['auth:sanctum']], function () {
 
             // Rutas admin
-            Route::group([
-                'middleware' => ['usertype:1']
-            ], function () {
+            Route::group(['middleware' => ['usertype:1']], function () {
                 //
-
             });
 
             // Rutas Empleado y Admin
-            Route::group([
-                'middleware' => ['usertype:1,2']
-            ], function () {
-                //
+            Route::group(['middleware' => ['usertype:1,2']], function () {
                 Route::get('/user', [UserController::class, 'index']);
                 Route::get('/user/{id}', [UserController::class, 'show'])->where('id', '[0-9]+');
                 Route::post('/user', [UserController::class, 'store']);
                 Route::put('/user/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
-                Route::delete('/user', [UserController::class, 'destroy'])->where('id', '[0-9]+');
+                Route::delete('/user/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
 
                 Route::post('/states', [StateController::class, 'store']);
                 Route::put('/states/{id}', [StateController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/states/{id}', [StateController::class, 'destroy'])->where('id', '[0-9]+');
 
                 Route::post('/cities', [CityController::class, 'store']);
-                Route::put('/cities/{id}', [CityController::class, 'update'])->where('id', '[0-9]+');;
+                Route::put('/cities/{id}', [CityController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/cities/{id}', [CityController::class, 'destroy'])->where('id', '[0-9]+');
 
                 Route::post('/types_pet', [PetTypeController::class, 'store']);
@@ -176,21 +165,37 @@ Route::group(
                 Route::get('/order', [OrderController::class, 'index']);
 
                 Route::get('/details_order', [OrderDetailController::class, 'index']);
+
+                Route::get('adopter', [AdopterController::class, 'index']);
+                Route::get('adopter/{id}', [AdopterController::class, 'show'])->where('id', '[0-9]+');
+                Route::post('adopter', [AdopterController::class, 'store']);
+                Route::put('adopter/{id}', [AdopterController::class, 'update'])->where('id', '[0-9]+');
+                Route::delete('adopter/{id}', [AdopterController::class, 'destroy'])->where('id', '[0-9]+');
+
+                Route::get('/adoption', [AdoptionController::class, 'index']);
+                Route::get('/adoption/{id}', [AdoptionController::class, 'show'])->where('id', '[0-9]+');
+                Route::get('/adoption/adopter/{id}', [AdoptionController::class, 'showAdoptionByAdopter'])->where('id', '[0-9]+');
+                Route::post('/adoption', [AdoptionController::class, 'store']);
+                Route::put('/adoption/{id}', [AdoptionController::class, 'update'])->where('id', '[0-9]+');
+                Route::delete('/adoption/{id}', [AdoptionController::class, 'destroy'])->where('id', '[0-9]+');
+
+                Route::get('/return_pet', [ReturnPetController::class, 'index']);
+                Route::get('/return_pet/{id}', [ReturnPetController::class, 'show'])->where('id', '[0-9]+');
+                Route::post('/return_pet', [ReturnPetController::class, 'store']);
+                Route::put('/return_pet/{id}', [ReturnPetController::class, 'update'])->where('id', '[0-9]+');
+                Route::delete('/return_pet/{id}', [ReturnPetController::class, 'destroy'])->where('id', '[0-9]+');
             });
 
             // Rutas User
-            Route::group([
-                'middleware' => ['usertype:3']
-            ], function () {
+            Route::group(['middleware' => ['usertype:3']], function () {
                 //
             });
 
             // Rutas Adoptante
-            Route::group([
-                'middleware' => ['usertype:4']
-            ], function () {
+            Route::group(['middleware' => ['usertype:4']], function () {
                 //
             });
+
             // Rutas compartidas
             Route::post('/auth/logout', [AuthController::class, 'logout']);
             Route::post('/auth/me', [AuthController::class, 'me']);
