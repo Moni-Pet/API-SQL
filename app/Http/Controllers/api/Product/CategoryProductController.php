@@ -16,7 +16,7 @@ class CategoryProductController extends Controller
      */
     public function index()
     {
-        $categoryProducts = CategoryProduct::with('product', 'category')->get();
+        $categoryProducts = CategoryProduct::with('product', 'product.productPhotos', 'category')->get();
 
         if ($categoryProducts->count() === 0) {
             return response()->json([
@@ -55,7 +55,7 @@ class CategoryProductController extends Controller
      */
     public function show(int $id)
     {
-        $categoryProduct = CategoryProduct::with('product', 'category')->find($id);
+        $categoryProduct = CategoryProduct::with('product', 'product.productPhotos', 'category')->find($id);
 
         if (!$categoryProduct) {
             return response()->json([

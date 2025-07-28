@@ -15,7 +15,7 @@ return new class extends Migration
             $table->smallIncrements('id')->unsigned();
             $table->string('name', 249);
             $table->decimal('price', 6, 2);
-            $table->unsignedSmallInteger('exists');
+            $table->unsignedSmallInteger('stock');
             $table->decimal('discount', 6, 2)->default(0.00);
             $table->timestamps();
         });

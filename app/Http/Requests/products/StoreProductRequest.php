@@ -26,7 +26,7 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => 'required|string|min:3|max:249|regex:/^[A-Za-zÁÉÍÓÚÜÑñáéíóúü\s]+$/u',
             'price' => 'required|numeric|between:0,99999.99',
-            'exists' => 'required|integer|min:0|max:999',
+            'stock' => 'required|integer|min:0|max:999',
             'discount' => 'sometimes|nullable|numeric|between:0,100',
         ];
     }
@@ -44,10 +44,10 @@ class StoreProductRequest extends FormRequest
             'price.numeric' => 'El precio debe ser un valor numérico.',
             'price.between' => 'El precio debe estar entre 0 y 99,999.99.',
 
-            'exists.required' => 'La existencia es obligatoria.',
-            'exists.integer' => 'La existencia debe ser un número entero.',
-            'exists.min' => 'La existencia no puede ser menor que 0.',
-            'exists.max' => 'La existencia no puede ser mayor a 999.',
+            'stock.required' => 'La existencia es obligatoria.',
+            'stock.integer' => 'La existencia debe ser un número entero.',
+            'stock.min' => 'La existencia no puede ser menor que 0.',
+            'stock.max' => 'La existencia no puede ser mayor a 999.',
 
             'discount.numeric' => 'El descuento debe ser un valor numérico.',
             'discount.between' => 'El descuento debe estar entre 0% y 100%.',

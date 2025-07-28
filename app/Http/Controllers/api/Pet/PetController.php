@@ -15,7 +15,7 @@ class PetController extends Controller
      */
     public function index()
     {
-        $pets = Pet::with('Breed.TypePet', 'user', )->get();
+        $pets = Pet::with('Breed.TypePet', 'user', 'PetPhothos')->get();
 
         if ($pets->count() === 0) {
             return response()->json([
@@ -85,8 +85,10 @@ class PetController extends Controller
         ], 200);
     }
 
-    public function showUserPets(int $id) {
-        $pets = Pet::with('Breed.TypePet', 'user')->where('user_id', $id)->get();
+    public function showUserPets(?int $id = null) {
+        $userId = $id ?? auth()->id();
+
+        $pets = Pet::with('Breed.TypePet', 'user', 'PetPhothos')->where('user_id', $userId)->get();
 
         if ($pets->isEmpty()) {
             return response()->json([

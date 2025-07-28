@@ -41,7 +41,7 @@ class ProductController extends Controller
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
-            'exists' => $request->exists,
+            'stock' => $request->stock,
             'discount' => $request->filled('discount') ? $request->discount : 0.00
         ]);
 
@@ -96,7 +96,7 @@ class ProductController extends Controller
         $product->update($request->only([
             'name',
             'price',
-            'exists',
+            'stock',
             'discount'
         ]));
 
