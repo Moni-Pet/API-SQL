@@ -3,6 +3,8 @@
 namespace App\Http\Requests\photos;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class UpdatePetPhotoRequest extends FormRequest
 {
@@ -22,7 +24,36 @@ class UpdatePetPhotoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'pet_id' => 'sometimes|exists:pets,id',
+            'photo' => 'sometimes|image|mimes:jpeg,png,jpg,webp,svg|max:2048',
+            'photo_link' => 'sometimes|string|max:2083|regex:/^(https?:\/\/)?([a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,}(\/\S*)?$/'
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'pet_id.exists' => 'La mascota seleccionada no existe.',
+
+            'photo.image' => 'El archivo debe ser una imagen válida.',
+            'photo.mimes' => 'La imagen debe ser de tipo: jpeg, png, jpg, webp o svg.',
+            'photo.max' => 'La imagen no debe superar los 2MB.',
+
+            'photo_link.string' => 'El enlace debe ser una cadena de texto válida.',
+            'photo_link.max' => 'El enlace no debe exceder los 2083 caracteres.',
+            'photo_link.regex' => 'El enlace debe tener un formato URL válido.',
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+
+        throw new HttpResponseException(response()->json([
+            'result' => false,
+            'msg' => 'Los datos proporcionados no son válidos.',
+            'error_code' =>  1205,
+            'data' => $errors,
+        ], 422));
     }
 }
