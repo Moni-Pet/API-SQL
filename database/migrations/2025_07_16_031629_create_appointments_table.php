@@ -23,7 +23,7 @@ return new class extends Migration
             $table->dateTime('creation_date');
             $table->dateTime('date');
             
-            $table->string('transferce_code', 100);
+            $table->string('transferce_code', 100)->nullable();
             $table->enum('type_appointment', ['Estetica', 'Medica', 'Adoptiva']);
 
             $table->timestamps();

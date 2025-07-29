@@ -9,7 +9,7 @@ class AppointmentDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'apointment_details';
+    protected $table = 'appointment_details';
 
     protected $fillable = [
         'service_id', 
