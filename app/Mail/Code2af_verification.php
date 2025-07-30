@@ -29,7 +29,7 @@ class Code2af_verification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Code2Af Verification',
+            subject: 'Código de verificación',
         );
     }
 

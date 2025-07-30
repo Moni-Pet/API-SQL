@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Monipet codigo de verificacion 2af</title>
+  <title>Monipet código de verificación</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
     body, p, h1, h2, h3, a {

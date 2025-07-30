@@ -7,6 +7,7 @@ use App\Http\Requests\products\StoreProductRequest;
 use App\Http\Requests\products\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -44,6 +45,30 @@ class ProductController extends Controller
             'stock' => $request->stock,
             'discount' => $request->filled('discount') ? $request->discount : 0.00
         ]);
+
+        $productName = preg_replace('/\s+/', '_', strtolower($product->name));
+
+        $file = $request->file('photo');
+        $extension = $file->getClientOriginalExtension();
+        $filename = $productName . '_' . uniqid() . '.' . $extension;
+
+        $path = $file->storeAs('products', $filename, 'digitalocean');
+
+        if (!$path) {
+            return response()->json([
+                'result' => false,
+                'msg' => 'Error al subir la foto.',
+                'data' => null,
+            ], 500);
+        }
+
+        $url = Storage::url($path);
+
+        $product->productPhotos()->create([
+            'product_id' => $product->id,
+            'photo_link' => $url,
+        ]);
+
 
         return response()->json([
             'result' => true,

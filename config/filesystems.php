@@ -56,6 +56,18 @@ return [
             'throw' => false,
         ],
 
+        'digitalocean' => [
+            'driver' => 's3',
+            'key' => env('DIGITALOCEAN_SPACES_KEY'),
+            'secret' => env('DIGITALOCEAN_SPACES_SECRET'),
+            'endpoint' => env('DIGITALOCEAN_SPACES_ENDPOINT'), // https://sfo3.digitaloceanspaces.com
+            'region' => env('DIGITALOCEAN_SPACES_REGION'), // sfo3
+            'bucket' => env('DIGITALOCEAN_SPACES_BUCKET'),
+            'url' => env('DIGITALOCEAN_SPACES_URL'),
+            'visibility' => 'public',
+            'use_path_style_endpoint' => false,
+        ],
+
     ],
 
     /*

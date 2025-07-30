@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\pet\StorePetRequest;
 use App\Http\Requests\pet\UpdatePetRequest;
 use App\Models\Pet;
+use App\Models\PetPhoto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PetController extends Controller
 {
@@ -51,6 +53,29 @@ class PetController extends Controller
             'description' => $request->description,
             'status' => $request->status,
             'user_id' => $request->user_id
+        ]);
+
+        $petName = preg_replace('/\s+/', '_', strtolower($pet->name));
+
+        $file = $request->file('photo');
+        $extension = $file->getClientOriginalExtension();
+        $filename = $petName . '_' . uniqid() . '.' . $extension;
+
+        $path = $file->storeAs('pets', $filename, 'digitalocean');
+
+        if (!$path) {
+            return response()->json([
+                'result' => false,
+                'msg' => 'Error al subir la foto.',
+                'data' => null,
+            ], 500);
+        }
+
+        $url = Storage::url($path);
+
+        $petPhoto = PetPhoto::create([
+            'pet_id' => $pet->id,
+            'photo_link' => $url,
         ]);
 
         return response()->json([

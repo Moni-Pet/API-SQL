@@ -16,6 +16,7 @@ use App\Http\Controllers\api\Pet\BreedController;
 use App\Http\Controllers\api\Pet\PetController;
 use App\Http\Controllers\api\Pet\PetTypeController;
 use App\Http\Controllers\api\Photo\PetPhotoController;
+use App\Http\Controllers\api\Photo\ProductPhotoController;
 use App\Http\Controllers\api\Product\CategoryController;
 use App\Http\Controllers\api\Product\CategoryProductController;
 use App\Http\Controllers\api\Product\CategoryTypeController;
@@ -30,6 +31,7 @@ use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Sanctum;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +97,11 @@ Route::get('/categories/{id}', [CategoryController::class, 'show'])->where('id',
 Route::get('/categories_products', [CategoryProductController::class, 'index']);
 Route::get('/categories_products/{id}', [CategoryProductController::class, 'show'])->where('id', '[0-9]+');
 
+//Products Photos
+Route::get('/products_photos', [ProductPhotoController::class, 'index']);
+Route::get('/products_photos/{id}', [ProductPhotoController::class, 'show'])->where('id', '[0-9]+');
+Route::get('/products_photos/product/{id}', [ProductPhotoController::class, 'showProductPhotos'])->where('id', '[0-9]+');
+
 //Products
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show'])->where('id', '[0-9]+');
@@ -139,10 +146,6 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
                 Route::post('/breeds', [BreedController::class, 'store']);
                 Route::put('/breeds/{id}', [BreedController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/breeds/{id}', [BreedController::class, 'destroy'])->where('id', '[0-9]+');
-
-                Route::post('/pets', [PetController::class, 'store']);
-                Route::put('/pets/{id}', [PetController::class, 'update'])->where('id', '[0-9]+');
-                Route::delete('/pets/{id}', [PetController::class, 'destroy'])->where('id', '[0-9]+');
 
                 Route::post('/type_service', [ServiceTypeController::class, 'store']);
                 Route::put('/type_service/{id}', [ServiceTypeController::class, 'update'])->where('id', '[0-9]+');
@@ -209,9 +212,9 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
                 Route::put('/appointment_pets/{id}', [AppointmentPetController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/appointment_pets/{id}', [AppointmentPetController::class, 'destroy'])->where('id', '[0-9]+');
 
-                Route::post('/pet_photos', [PetPhotoController::class, 'store']);
-                Route::put('/pet_photos/{id}', [PetPhotoController::class, 'update'])->where('petPhoto', '[0-9]+');
                 Route::delete('/pet_photos/{id}', [PetPhotoController::class, 'destroy'])->where('id', '[0-9]+');
+
+                Route::delete('/products_photos/{id}', [ProductPhotoController::class, 'destroy'])->where('id', '[0-9]+');
             });
 
             // Rutas User
@@ -230,6 +233,9 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
 
             //Rutas compartidas por todos los tipos de usuarios (no publicas)
             Route::group(['middleware' => ['usertype:1,2,3,4']], function () {
+                Route::post('/pets', [PetController::class, 'store']);
+                Route::put('/pets/{id}', [PetController::class, 'update'])->where('id', '[0-9]+');
+                Route::delete('/pets/{id}', [PetController::class, 'destroy'])->where('id', '[0-9]+');
                 Route::get('/pets/adopter/{id?}', [PetController::class, 'showUserPets'])->where('id', '[0-9]+');
 
                 Route::get('/appointment', [AppointmentController::class, 'index']);
@@ -267,6 +273,12 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
                 Route::post('/appointment_details', [AppointmentDetailController::class, 'store']);
                 Route::put('/appointment_details/{id}', [AppointmentDetailController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/appointment_details/{id}', [AppointmentDetailController::class, 'destroy'])->where('id', '[0-9]+');
+
+                Route::post('/pet_photos', [PetPhotoController::class, 'store']);
+                Route::post('/pet_photos/{id}', [PetPhotoController::class, 'update'])->where('id', '[0-9]+');
+
+                Route::post('/products_photos', [ProductPhotoController::class, 'store']);
+                Route::post('/products_photos/{id}', [ProductPhotoController::class, 'update'])->where('id', '[0-9]+');
             });
         });
     }

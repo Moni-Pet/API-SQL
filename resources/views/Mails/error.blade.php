@@ -107,7 +107,7 @@
 
 <div class="verification-success d-flex flex-column justify-content-center align-items-center text-center">
   <div class="icon-circle mb-4">
-    <img src="{{ asset('storage/mail-cancel.svg') }}" alt="Mail cancel" class="img-fluid" style="width: 55px; height: 55px; color: white;">
+    <img src="https://monipetresources.sfo3.digitaloceanspaces.com/other/mail-cancel.svg" alt="Mail cancel" class="img-fluid" style="width: 55px; height: 55px; color: white;">
   </div>
 
   <h3 class="mb-2">Error al verificar cuenta 😿</h3>

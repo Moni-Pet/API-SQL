@@ -112,7 +112,7 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, int $id)
     {
-        $orden = Order::find($id);
+        $orden = Order::with('details.product')->find($id);
 
         if (!$orden) {
             return response()->json([
@@ -121,6 +121,19 @@ class OrderController extends Controller
                 'error_code' => 1201,
                 'data' => null
             ], 404);
+        }
+
+        $nuevoStatus = $request->status;
+        $statusAnterior = $orden->status;
+
+        if ($nuevoStatus === 'cancelado' && $statusAnterior !== 'cancelado') {
+            $detalles = $orden->details;
+            
+            foreach ($detalles as $detalle) {
+                $producto = $detalle->product;
+                $producto->stock += $detalle->quantity;
+                $producto->save();
+            }
         }
 
         $orden->update($request->only([

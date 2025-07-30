@@ -28,6 +28,7 @@ class StoreProductRequest extends FormRequest
             'price' => 'required|numeric|between:0,99999.99',
             'stock' => 'required|integer|min:0|max:999',
             'discount' => 'sometimes|nullable|numeric|between:0,100',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,webp,svg|max:2048',
         ];
     }
 
@@ -51,6 +52,11 @@ class StoreProductRequest extends FormRequest
 
             'discount.numeric' => 'El descuento debe ser un valor numérico.',
             'discount.between' => 'El descuento debe estar entre 0% y 100%.',
+
+            'photo.required' => 'La foto es obligatoria.',
+            'photo.image' => 'El archivo debe ser una imagen válida.',
+            'photo.mimes' => 'La imagen debe ser de tipo: jpeg, png, jpg, webp o svg.',
+            'photo.max' => 'La imagen no debe superar los 2MB.',
         ];
     }
 

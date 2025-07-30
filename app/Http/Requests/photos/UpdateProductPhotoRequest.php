@@ -3,6 +3,8 @@
 namespace App\Http\Requests\photos;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class UpdateProductPhotoRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdateProductPhotoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,31 @@ class UpdateProductPhotoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'product_id' => 'sometimes|exists:products,id',
+            'photo' => 'sometimes|image|mimes:jpeg,png,jpg,webp,svg|max:2048',
         ];
+    }
+
+    function messages()
+    {
+        return [
+            'product_id.exists' => 'El producto seleccionado no existe.',
+
+            'photo.image' => 'El archivo debe ser una imagen válida.',
+            'photo.mimes' => 'La imagen debe ser de tipo: jpeg, png, jpg, webp o svg.',
+            'photo.max' => 'La imagen no debe superar los 2MB.',
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+
+        throw new HttpResponseException(response()->json([
+            'result' => false,
+            'msg' => 'Los datos proporcionados no son válidos.',
+            'error_code' =>  1205,
+            'data' => $errors,
+        ], 422));
     }
 }

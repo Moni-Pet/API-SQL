@@ -26,7 +26,6 @@ class StorePetPhotoRequest extends FormRequest
         return [
             'pet_id' => 'required|exists:pets,id',
             'photo' => 'required|image|mimes:jpeg,png,jpg,webp,svg|max:2048',
-            'photo_link' => 'sometimes|string|max:2083|regex:/^(https?:\/\/)?([a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,}(\/\S*)?$/'
         ];
     }
 
@@ -40,10 +39,6 @@ class StorePetPhotoRequest extends FormRequest
             'photo.image' => 'El archivo debe ser una imagen válida.',
             'photo.mimes' => 'La imagen debe ser de tipo: jpeg, png, jpg, webp o svg.',
             'photo.max' => 'La imagen no debe superar los 2MB.',
-
-            'photo_link.string' => 'El enlace debe ser una cadena de texto válida.',
-            'photo_link.max' => 'El enlace no debe exceder los 2083 caracteres.',
-            'photo_link.regex' => 'El enlace debe tener un formato URL válido.',
         ];
     }
 
