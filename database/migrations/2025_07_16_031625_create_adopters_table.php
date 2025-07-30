@@ -22,6 +22,7 @@ return new class extends Migration
             $table->char('postal_code', 5);
             $table->string('reference', 250)->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('user_id')

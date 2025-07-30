@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('type_pet', '12')->unique();
             $table->string('icono', 2083);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

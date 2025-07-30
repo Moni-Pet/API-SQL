@@ -14,17 +14,18 @@ return new class extends Migration
         Schema::create('appointment_details', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->unsignedSmallInteger('service_id');
-            $table->unsignedInteger('apointment_id');
+            $table->unsignedInteger('appointment_id');
             $table->decimal('price_service', 7, 2);
             $table->decimal('discount', 7, 2)->default(0.00);
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('service_id')
                 ->references('id')->on('services')
                 ->onDelete('cascade');
 
-            $table->foreign('apointment_id')
+            $table->foreign('appointment_id')
                 ->references('id')->on('appointments')
                 ->onDelete('cascade');
         });

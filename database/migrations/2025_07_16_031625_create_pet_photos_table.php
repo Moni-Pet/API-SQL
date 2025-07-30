@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedInteger(column: 'pet_id');
             $table->string('photo_link', 2083);
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('pet_id')

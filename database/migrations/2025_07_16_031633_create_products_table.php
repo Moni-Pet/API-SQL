@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('stock');
             $table->decimal('discount', 6, 2)->default(0.00);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

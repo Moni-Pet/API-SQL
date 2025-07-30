@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Adoption extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'adoption';
 
@@ -38,5 +39,18 @@ class Adoption extends Model
     public function returnPet()
     {
         return $this->hasOne(ReturnPet::class, 'adoption_id');
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($adoption) {
+            $adoption->followups->each(function ($followup) {
+                $followup->delete();
+            });
+
+            if ($adoption->returnPet) {
+                $adoption->returnPet->delete();
+            }
+        });
     }
 }

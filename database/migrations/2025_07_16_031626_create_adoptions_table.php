@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('notes', 250)->nullable();
             $table->dateTime('delivery_date');
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('adopter_id')

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Appointment extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'user_id', 
@@ -33,11 +34,19 @@ class Appointment extends Model
 
     public function details()
     {
-        return $this->hasMany(AppointmentDetail::class, 'apointment_id');
+        return $this->hasMany(AppointmentDetail::class, 'appointment_id');
     }
 
     public function appointmentPets()
     {
-        return $this->hasMany(AppointmentPet::class, 'apointment_id');
+        return $this->hasMany(AppointmentPet::class, 'appointment_id');
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($appointment) {
+            $appointment->details->each->delete();
+            $appointment->appointmentPets->each->delete();
+        });
     }
 }

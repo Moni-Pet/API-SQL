@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('return_pets', function (Blueprint $table) {
-            $table->increments('id')->unsigned(); // UNSIGNED INTEGER auto-increment
+            $table->increments('id')->unsigned();
             $table->unsignedInteger('adoption_id');
             $table->dateTime('date');
             $table->string('comment', 250);
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('adoption_id')

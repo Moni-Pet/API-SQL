@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('appointment_pets', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->unsignedInteger('apointment_id');
+            $table->unsignedInteger('appointment_id');
             $table->unsignedInteger('pet_id');
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
-            $table->foreign('apointment_id')
+            $table->foreign('appointment_id')
                 ->references('id')->on('appointments')
                 ->onDelete('cascade');
 

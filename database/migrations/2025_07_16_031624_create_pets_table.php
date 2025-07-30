@@ -25,6 +25,7 @@ return new class extends Migration
             $table->enum('status', ['Adoptado', 'No adoptado', 'Pendiente', 'Personal']);
             $table->unsignedInteger('user_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('breed_id')

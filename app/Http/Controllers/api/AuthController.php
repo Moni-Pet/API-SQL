@@ -63,7 +63,34 @@ class AuthController extends Controller
 
     public function resendEmailVerification(Request $request)
     {
-        //
+        $user = User::where('email', $request->email)->first();
+        
+        if (! $user) {
+            return response()->json([
+                'result' => false,
+                'msg' => 'El usuario no fue encontrado.',
+                'error_code' => 1101,
+                'data' => null
+            ], 404);
+        }
+
+        if ($user->account_verification) {
+            return response()->json([
+                'result' => false,
+                'msg' => 'El correo electrónico ya ha sido verificado.',
+                'error_code' => 1002,
+                'data' => null
+            ], 400);
+        }
+
+        $this->sendActivationEmail($user);
+
+        return response()->json([
+            'result' => true,
+            'msg' => 'Correo de verificación enviado correctamente.',
+            'error_code' => null,
+            'data' => null
+        ]);
     }
 
     /**

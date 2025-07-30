@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('city', 150);
             $table->unsignedTinyInteger('state_id');
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('state_id')

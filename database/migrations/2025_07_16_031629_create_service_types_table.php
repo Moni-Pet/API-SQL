@@ -15,6 +15,7 @@ return new class extends Migration
             $table->smallIncrements('id')->unsigned();
             $table->string('type_service', 12);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

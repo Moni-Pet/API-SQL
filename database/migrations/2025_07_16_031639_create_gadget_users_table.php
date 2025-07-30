@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gadget_users', function (Blueprint $table) {
-            $table->increments('id')->unsigned(); // UNSIGNED INTEGER auto-increment
+            $table->increments('id')->unsigned();
             $table->unsignedSmallInteger('product_id');
             $table->unsignedInteger('user_id');
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('product_id')

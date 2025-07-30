@@ -27,7 +27,7 @@ class StoreOrderDetailRequest extends FormRequest
         return [
             'order_id' => 'required|exists:orders,id',
             'items' => 'required|array|min:1',
-            'items.*.producto_id' => 'required|exists:products,id',
+            'items.*.product_id' => 'required|exists:products,id',
             'items.*.quantity' => 'required|integer|min:1|max:999',
         ];
     }
@@ -42,8 +42,8 @@ class StoreOrderDetailRequest extends FormRequest
             'items.array' => 'Los productos deben enviarse como un arreglo.',
             'items.min' => 'Debes agregar al menos un producto.',
 
-            'items.*.producto_id.required' => 'El producto es obligatorio.',
-            'items.*.producto_id.exists' => 'El producto seleccionado no existe.',
+            'items.*.product_id.required' => 'El producto es obligatorio.',
+            'items.*.product_id.exists' => 'El producto seleccionado no existe.',
 
             'items.*.quantity.required' => 'La cantidad es obligatoria.',
             'items.*.quantity.integer' => 'La cantidad debe ser un número entero.',

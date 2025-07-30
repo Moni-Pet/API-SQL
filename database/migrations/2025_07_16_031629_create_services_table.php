@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('price', 6, 2);
             $table->decimal('discounts', 6, 2)->default(0.00);
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('type_service_id')

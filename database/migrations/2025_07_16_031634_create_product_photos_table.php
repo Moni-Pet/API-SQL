@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('product_id');
             $table->string('photo_link', 2083);
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('product_id')

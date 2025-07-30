@@ -14,11 +14,13 @@ class TypesUserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('types_user')->insert([
+        $typesUser = [
             ['user_type' => 1],
             ['user_type' => 2],
             ['user_type' => 3],
             ['user_type' => 4],
-        ]);
+        ];
+
+        DB::table('types_user')->insert($typesUser);
     }
 }

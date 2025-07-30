@@ -15,6 +15,7 @@ return new class extends Migration
             $table->tinyIncrements('id')->unsigned();
             $table->string('state', 50);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

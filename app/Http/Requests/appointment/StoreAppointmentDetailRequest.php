@@ -24,7 +24,7 @@ class StoreAppointmentDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'apointment_id' => 'required|integer|exists:appointments,id',
+            'appointment_id' => 'required|integer|exists:appointments,id',
             'services' => 'required|array|min:1',
             'services.*.service_id' => 'required|integer|exists:services,id',
         ];
@@ -33,9 +33,9 @@ class StoreAppointmentDetailRequest extends FormRequest
     public function messages()
     {
         return [
-            'apointment_id.required' => 'La cita es obligatoria.',
-            'apointment_id.integer' => 'La cita debe ser un número entero.',
-            'apointment_id.exists' => 'La cita seleccionada no existe.',
+            'appointment_id.required' => 'La cita es obligatoria.',
+            'appointment_id.integer' => 'La cita debe ser un número entero.',
+            'appointment_id.exists' => 'La cita seleccionada no existe.',
 
             'services.required' => 'Debe agregar al menos un servicio.',
             'services.array' => 'Los servicios deben estar en un formato de lista.',

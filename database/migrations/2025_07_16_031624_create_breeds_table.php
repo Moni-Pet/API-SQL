@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('type_pet_id');
             $table->string('breed', 50)->unique();
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones    
             $table->foreign('type_pet_id')

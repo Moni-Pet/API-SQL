@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('types_user', function (Blueprint $table) {
             $table->id();
-            $table->enum('user_type', ['administrador', 'trabajador', 'cliente', 'adoptante'])->default('cliente');
+            $table->enum('user_type', ['Administrador', 'Trabajador', 'Cliente', 'Adoptante'])->default('Cliente');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

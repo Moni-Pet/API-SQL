@@ -25,7 +25,7 @@ class UpdateAppointmentDetailRequest extends FormRequest
     {
         return [
             'service_id' => 'sometimes|integer|exists:services,id',
-            'apointment_id' => 'sometimes|integer|exists:appointments,id',
+            'appointment_id' => 'sometimes|integer|exists:appointments,id',
             'price_service' => 'sometimes|numeric|min:0|max:99999.99',
             'discount' => 'sometimes|nullable|numeric|between:0,100',
         ];
@@ -37,8 +37,8 @@ class UpdateAppointmentDetailRequest extends FormRequest
             'service_id.integer' => 'El campo servicio debe ser un número entero.',
             'service_id.exists' => 'El servicio seleccionado no existe.',
 
-            'apointment_id.integer' => 'El campo cita debe ser un número entero.',
-            'apointment_id.exists' => 'La cita seleccionada no existe.',
+            'appointment_id.integer' => 'El campo cita debe ser un número entero.',
+            'appointment_id.exists' => 'La cita seleccionada no existe.',
 
             'price_service.numeric' => 'El precio del servicio debe ser un número.',
             'price_service.min' => 'El precio del servicio no puede ser negativo.',

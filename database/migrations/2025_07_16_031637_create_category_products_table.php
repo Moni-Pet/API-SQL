@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('category_id');
             $table->unsignedSmallInteger('product_id');
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('category_id')

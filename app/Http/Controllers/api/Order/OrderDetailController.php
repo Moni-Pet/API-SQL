@@ -45,12 +45,12 @@ class OrderDetailController extends Controller
         $createdItems = [];
 
         foreach ($items as $item) {
-            $product = Product::find($item['producto_id']);
+            $product = Product::find($item['product_id']);
 
             if (!$product) {
                 return response()->json([
                     'result' => false,
-                    'msg' => "Producto con ID {$item['producto_id']} no encontrado.",
+                    'msg' => "Producto con ID {$item['product_id']} no encontrado.",
                     'error_code' => 1202,
                     'data' => null
                 ], 404);
@@ -63,7 +63,7 @@ class OrderDetailController extends Controller
 
             $createdItems[] = OrderDetail::create([
                 'order_id' => $order_id,
-                'producto_id' => $product->id,
+                'product_id' => $product->id,
                 'quantity' => $quantity,
                 'price' => $subtotal,   
                 'discount' => $discountAmount,
@@ -145,14 +145,14 @@ class OrderDetailController extends Controller
             ], 404);
         }
 
-        $oldProduct = Product::find($orderDetail->producto_id);
+        $oldProduct = Product::find($orderDetail->product_id);
         $oldQuantity = $orderDetail->quantity;
 
-        $newProduct = Product::find($request->producto_id);
+        $newProduct = Product::find($request->product_id);
         if (!$newProduct) {
             return response()->json([
                 'result' => false,
-                'msg' => "Producto con ID {$request->producto_id} no encontrado.",
+                'msg' => "Producto con ID {$request->product_id} no encontrado.",
                 'error_code' => 1202,
                 'data' => null
             ], 404);
@@ -197,7 +197,7 @@ class OrderDetailController extends Controller
 
         $orderDetail->update($request->only([
             'order_id',
-            'producto_id',
+            'product_id',
             'quantity',
             'price',
             'discount'

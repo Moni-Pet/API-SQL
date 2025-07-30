@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('pet_id');
 
-            $table->enum('status', ['pendiente', 'finalizado', 'cancelado']);
+            $table->enum('status', ['Pendiente', 'Finalizado', 'Cancelado']);
             $table->string('descripcion', 250)->nullable();
             $table->decimal('total_price', 7, 2)->default(0.00);
 
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->enum('type_appointment', ['Estetica', 'Medica', 'Adoptiva']);
 
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('user_id')

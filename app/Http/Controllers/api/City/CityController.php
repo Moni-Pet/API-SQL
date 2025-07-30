@@ -75,6 +75,26 @@ class CityController extends Controller
         ], 200);
     }
 
+    public function showByState(int $stateId)
+    {
+        $cities = City::where('state_id', $stateId)->get();
+
+        if ($cities->count() === 0) {
+            return response()->json([
+                'result' => false,
+                'msg' => "No se encontraron ciudades para el estado especificado.",
+                'data' => null
+            ], 404);
+        }
+
+        return response()->json([
+            'result' => true,
+            'msg' => "Ciudades encontradas para el estado especificado.",
+            'error_code' => null,
+            'data' => $cities,
+        ], 200);
+    }
+
     /**
      * Update the specified resource in storage.
      */

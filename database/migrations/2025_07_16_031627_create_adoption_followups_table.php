@@ -24,6 +24,7 @@ return new class extends Migration
             ]);
             $table->string('comment', 250)->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('adoption_id')

@@ -19,7 +19,7 @@ class PetPhotoController extends Controller
      */
     public function index()
     {
-        $petPhotos = PetPhoto::with('Pets')->get();
+        $petPhotos = PetPhoto::with('pets')->get();
 
         if ($petPhotos->count() === 0) {
             return response()->json([
@@ -79,7 +79,7 @@ class PetPhotoController extends Controller
      */
     public function show(int $id)
     {
-        $petPhoto = PetPhoto::with('Pets')->find($id);
+        $petPhoto = PetPhoto::with('pets')->find($id);
 
         if (!$petPhoto) {
             return response()->json([
@@ -98,7 +98,7 @@ class PetPhotoController extends Controller
 
     public function showPetPhotos(int $id) 
     {
-        $petPhotos = PetPhoto::with('Pets')->where('pet_id', $id)->get();
+        $petPhotos = PetPhoto::with('pets')->where('pet_id', $id)->get();
 
         if ($petPhotos->isEmpty()) {
             return response()->json([

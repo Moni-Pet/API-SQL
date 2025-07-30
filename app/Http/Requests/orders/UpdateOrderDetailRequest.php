@@ -25,7 +25,7 @@ class UpdateOrderDetailRequest extends FormRequest
     {
         return [
             'order_id' => 'sometimes|exists:orders,id',
-            'producto_id' => 'sometimes|exists:products,id',
+            'product_id' => 'sometimes|exists:products,id',
             'quantity' => 'sometimes|integer|min:1|max:999',
             'price' => 'sometimes|numeric|between:0,99999.99',
             'discount' => 'sometimes|nullable|numeric|between:0,100',
@@ -37,7 +37,7 @@ class UpdateOrderDetailRequest extends FormRequest
         return [
             'order_id.exists' => 'La orden seleccionada no existe.',
 
-            'producto_id.exists' => 'El producto seleccionado no existe.',
+            'product_id.exists' => 'El producto seleccionado no existe.',
 
             'quantity.integer' => 'La cantidad debe ser un número entero.',
             'quantity.min' => 'La cantidad mínima permitida es 1.',

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Adopter extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable = [
         'user_id', 
         'phone', 
@@ -36,5 +37,14 @@ class Adopter extends Model
     public function adoptions()
     {
         return $this->hasMany(Adoption::class, 'adopter_id');
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($adopter) {
+            $adopter->adoptions()->each(function ($adoption) {
+                $adoption->delete();
+            });
+        });
     }
 }

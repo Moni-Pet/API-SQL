@@ -40,7 +40,7 @@ class AppointmentDetailController extends Controller
     public function store(StoreAppointmentDetailRequest $request)
     {
         $validated = $request->validated();
-        $apointment_id = $validated['apointment_id'];
+        $appointment_id = $validated['appointment_id'];
         $services = $validated['services'];
         $createdServices = [];
 
@@ -60,7 +60,7 @@ class AppointmentDetailController extends Controller
 
             $createdServices[] = AppointmentDetail::create([
                 'service_id' => $service->id,
-                'apointment_id' => $apointment_id,
+                'appointment_id' => $appointment_id,
                 'price_service' => $service->price,
                 'discount' => $discount
             ]);
@@ -101,7 +101,7 @@ class AppointmentDetailController extends Controller
     public function showAppointmentDetails(int $id) 
     {
         $appointmentDetails = AppointmentDetail::with('service')
-            ->where('apointment_id', $id)
+            ->where('appointment_id', $id)
             ->get();
 
         if ($appointmentDetails->isEmpty()) {
@@ -139,7 +139,7 @@ class AppointmentDetailController extends Controller
 
         $data = $request->only([
             'service_id',
-            'apointment_id',
+            'appointment_id',
             'price_service',
             'discount',
         ]);

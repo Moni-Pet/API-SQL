@@ -25,6 +25,7 @@ use App\Http\Controllers\api\Product\ProductController;
 use App\Http\Controllers\api\Service\ServiceController;
 use App\Http\Controllers\api\Service\ServiceTypeController;
 use App\Http\Controllers\api\State\StateController;
+use App\Http\Controllers\api\TypeUserController;
 use App\Http\Controllers\api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteRegistrar;
@@ -84,6 +85,7 @@ Route::get('/states/{id}', [StateController::class, 'show'])->where('id', '[0-9]
 //Cities
 Route::get('/cities', [CityController::class, 'index']);
 Route::get('/cities/{id}', [CityController::class, 'show'])->where('id', '[0-9]+');
+Route::get('/cities/state/{id}', [CityController::class, 'showByState'])->where('id', '[0-9]+');
 
 //Categories Types
 Route::get('/types_products', [CategoryTypeController::class, 'index']);
@@ -140,7 +142,7 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
                 Route::delete('/cities/{id}', [CityController::class, 'destroy'])->where('id', '[0-9]+');
 
                 Route::post('/types_pet', [PetTypeController::class, 'store']);
-                Route::put('/types_pet/{id}', [PetTypeController::class, 'update'])->where('id', '[0-9]+');
+                Route::post('/types_pet/{id}', [PetTypeController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/types_pet/{id}', [PetTypeController::class, 'destroy'])->where('id', '[0-9]+');
 
                 Route::post('/breeds', [BreedController::class, 'store']);
@@ -233,6 +235,9 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
 
             //Rutas compartidas por todos los tipos de usuarios (no publicas)
             Route::group(['middleware' => ['usertype:1,2,3,4']], function () {
+                Route::get('/types_user', [TypeUserController::class, 'index']);
+                Route::get('/types_user/{id}', [TypeUserController::class, 'show'])->where('id', '[0-9]+');
+
                 Route::post('/pets', [PetController::class, 'store']);
                 Route::put('/pets/{id}', [PetController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/pets/{id}', [PetController::class, 'destroy'])->where('id', '[0-9]+');

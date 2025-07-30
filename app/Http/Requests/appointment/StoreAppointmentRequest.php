@@ -26,7 +26,7 @@ class StoreAppointmentRequest extends FormRequest
         return [
             'user_id' => 'required|integer|exists:users,id',
             'pet_id' => 'required|integer|exists:pets,id',
-            'status' => 'required|in:pendiente,finalizado,cancelado',
+            'status' => 'required|in:Pendiente,Finalizado,Cancelado',
             'descripcion' => 'sometimes|nullable|string|max:250|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú0-9\s.,\-#()¿?¡!]*$/',
             'total_price' => 'required|numeric|min:0|max:99999.99',
             'creation_date' => 'sometimes|date_format:Y-m-d H:i:s',
@@ -48,7 +48,7 @@ class StoreAppointmentRequest extends FormRequest
             'pet_id.exists' => 'La mascota seleccionada no existe.',
 
             'status.required' => 'El estado es obligatorio.',
-            'status.in' => 'El estado seleccionado no es válido. Opciones válidas: pendiente, finalizado, cancelado.',
+            'status.in' => 'El estado seleccionado no es válido. Opciones válidas: Pendiente, Finalizado, Cancelado.',
 
             'descripcion.string' => 'La descripción debe ser una cadena de texto.',
             'descripcion.max' => 'La descripción no debe exceder los 250 caracteres.',

@@ -4,21 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AppointmentPet extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'appointment_pets';
 
     protected $fillable = [
-        'apointment_id', 
+        'appointment_id', 
         'pet_id'
     ];
 
     public function appointment()
     {
-        return $this->belongsTo(Appointment::class, 'apointment_id');
+        return $this->belongsTo(Appointment::class, 'appointment_id');
     }
 
     public function pet()

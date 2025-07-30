@@ -39,7 +39,7 @@ class AppointmentPetController extends Controller
     public function store(StoreAppointmentPetRequest $request)
     {
         $appointmentPet = AppointmentPet::create([
-            'apointment_id' => $request->appointment_id,
+            'appointment_id' => $request->appointment_id,
             'pet_id' => $request->pet_id,
         ]);
 

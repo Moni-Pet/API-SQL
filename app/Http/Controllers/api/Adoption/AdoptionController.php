@@ -15,7 +15,7 @@ class AdoptionController extends Controller
      */
     public function index()
     {
-        $adoptions = Adoption::with('adopter.user', 'pet.PetPhothos')->get();
+        $adoptions = Adoption::with('adopter.user', 'pet.petPhotos')->get();
 
         if ($adoptions->count() === 0) {
             return response()->json([
@@ -63,7 +63,7 @@ class AdoptionController extends Controller
      */
     public function show(int $id)
     {
-        $adoption = Adoption::with('adopter.user', 'pet.PetPhothos')->find($id);
+        $adoption = Adoption::with('adopter.user', 'pet.petPhotos')->find($id);
 
         if (!$adoption) {
             return response()->json([
@@ -86,7 +86,7 @@ class AdoptionController extends Controller
      */
     public function showAdoptionByAdopter(int $id)
     {
-        $adoption = Adoption::with('adopter.user', 'pet.PetPhothos')->where('adopter_id', $id)->get();
+        $adoption = Adoption::with('adopter.user', 'pet.petPhotos')->where('adopter_id', $id)->get();
 
         if ($adoption->isEmpty()) {
             return response()->json([

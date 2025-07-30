@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('status', ['pendiente', 'entregado', 'cancelado']);
             $table->string('transferce_code', 100)->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('user_id')

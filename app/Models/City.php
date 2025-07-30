@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class City extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = ['city', 'state_id'];
 
@@ -19,5 +20,12 @@ class City extends Model
     public function adopters()
     {
         return $this->hasMany(Adopter::class, 'city_id');
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($city) {
+            $city->adopters->each->delete();
+        });
     }
 }

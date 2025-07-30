@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('category', 12);
             $table->unsignedSmallInteger('type_category_id');
             $table->timestamps();
+            $table->softDeletes();
 
             //relaciones
             $table->foreign('type_category_id')
