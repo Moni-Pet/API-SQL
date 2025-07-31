@@ -26,7 +26,7 @@ class UpdateAppointmentRequest extends FormRequest
         return [
             'user_id' => 'sometimes|integer|exists:users,id',
             'pet_id' => 'sometimes|integer|exists:pets,id',
-            'status' => 'sometimes|in:Pendiente,Finalizado,Cancelado',
+            'status' => 'sometimes|in:Pendiente,Finalizada,Cancelada',
             'descripcion' => 'sometimes|nullable|string|max:250|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú0-9\s.,\-#()¿?¡!]*$/',
             'total_price' => 'sometimes|numeric|min:0|max:99999.99',
             'creation_date' => 'sometimes|date_format:Y-m-d H:i:s',

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('purchase_date');
             $table->dateTime('pickup_date');
             $table->decimal('price', 7, 2);
-            $table->enum('status', ['pendiente', 'entregado', 'cancelado']);
+            $table->enum('status', ['Pendiente', 'Entregada', 'Cancelada']);
             $table->string('transferce_code', 100)->nullable();
             $table->timestamps();
             $table->softDeletes();

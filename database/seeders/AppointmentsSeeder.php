@@ -31,7 +31,7 @@ class AppointmentsSeeder extends Seeder
             [
                 'user_id' => 2,
                 'pet_id' => 2,
-                'status' => 'Finalizado',
+                'status' => 'Finalizada',
                 'descripcion' => 'Vacunación anual',
                 'total_price' => 500.00,
                 'creation_date' => now()->subDays(10),
@@ -44,7 +44,7 @@ class AppointmentsSeeder extends Seeder
             [
                 'user_id' => 1,
                 'pet_id' => 1,
-                'status' => 'Cancelado',
+                'status' => 'Cancelada',
                 'descripcion' => 'Cita para adopción',
                 'total_price' => 0.00,
                 'creation_date' => now()->subDays(2),

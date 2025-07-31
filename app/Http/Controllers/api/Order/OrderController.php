@@ -46,7 +46,7 @@ class OrderController extends Controller
             'purchase_date' => $purchase_date,
             'pickup_date' => $pickup_date,
             'price' => $request->price,
-            'status' => $request->status,
+            'status' => "Pendiente",
             'transferce_code' => $request->transferce_code
         ]);
 
@@ -126,7 +126,7 @@ class OrderController extends Controller
         $nuevoStatus = $request->status;
         $statusAnterior = $orden->status;
 
-        if ($nuevoStatus === 'cancelado' && $statusAnterior !== 'cancelado') {
+        if ($nuevoStatus === 'Cancelada' && $statusAnterior !== 'Cancelada') {
             $detalles = $orden->details;
             
             foreach ($detalles as $detalle) {

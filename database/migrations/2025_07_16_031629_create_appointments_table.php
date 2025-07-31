@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('pet_id');
 
-            $table->enum('status', ['Pendiente', 'Finalizado', 'Cancelado']);
+            $table->enum('status', ['Pendiente', 'Finalizada', 'Cancelada']);
             $table->string('descripcion', 250)->nullable();
             $table->decimal('total_price', 7, 2)->default(0.00);
 

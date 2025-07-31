@@ -28,7 +28,7 @@ class UpdateOrderRequest extends FormRequest
             'purchase_date' => 'sometimes|date_format:Y-m-d H:i:s',
             'pickup_date' => 'sometimes|nullable|date_format:Y-m-d H:i:s',
             'price' => 'sometimes|numeric|min:0|regex:/^\d+(\.\d{1,2})?$/',
-            'status' => 'sometimes|in:pendiente,entregado,cancelado',
+            'status' => 'sometimes|in:Pendiente,Entregada,Cancelada',
             'transferce_code' => 'sometimes|nullable|string|max:100'
         ];
     }

@@ -28,7 +28,7 @@ class StoreOrderRequest extends FormRequest
             'purchase_date' => 'date_format:Y-m-d H:i:s',
             'pickup_date' => 'sometimes|nullable|date_format:Y-m-d H:i:s',
             'price' => 'required|numeric|min:0|regex:/^\d+(\.\d{1,2})?$/',
-            'status' => 'required|in:pendiente,entregado,cancelado',
+            'status' => 'required|in:Pendiente,Entregada,Cancelada',
             'transferce_code' => 'sometimes|nullable|string|max:100'
         ];
     }
