@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Adopter;
+use App\Models\Pet;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,8 +24,29 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             TypesUserSeeder::class,
+            UsersSeeder::class,
             StatesTableSeeder::class,
             CitiesTableSeeder::class,
+            TypesPetSeeder::class,
+            BreedsSeeder::class,
+            PetsSeeder::class,
+            AdoptersSeeder::class,
+            adoptionSeeder::class,
+            AdoptionFollowupsSeeder::class,
+            typesServicesSeeder::class,
+            ServicesSeeder::class,
+            AppointmentsSeeder::class,
+            AppointmentDetailsSeeder::class,
+            TypesCategorySeeder::class,
+            CategoriesSeeder::class,
+            ProductsSeeder::class,
+            CategoriesProductSeeder::class,
+            ordersSeeder::class,
+            OrderDetailsSeeder::class,
+            GadgetsSeeder::class,
+            ReturnPetSeeder::class,
+            PetPhotosSeeder::class,
+            ProductPhotosSeeder::class,
         ]);
     }
 }
