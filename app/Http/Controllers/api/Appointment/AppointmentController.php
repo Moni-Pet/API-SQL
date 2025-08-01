@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\appointment\StoreAppointmentRequest;
 use App\Http\Requests\appointment\UpdateAppointmentRequest;
 use App\Models\Appointment;
+use App\Notifications\AppointmentCancelledNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
@@ -120,6 +122,18 @@ class AppointmentController extends Controller
                 'msg' => "No se encontró la cita especificada.",
                 'data' => null
             ], 404);
+        }
+        
+        $nuevoStatus = $request->status;
+        $statusAnterior = $appointment->status;
+
+        if ($nuevoStatus === 'Cancelada' && $statusAnterior !== 'Cancelada') {
+            if (auth()->check() && in_array(auth()->user()->user_type_id, [1, 2])) {
+                if ($appointment->user) {
+                    $appointment->user->notify(new AppointmentCancelledNotification($appointment));
+                    event(new \App\Events\AppointmentCancelledEvent($appointment));
+                }
+            }
         }
 
         $appointment->update($request->only([

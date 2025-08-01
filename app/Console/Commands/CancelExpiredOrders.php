@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Notifications\OrderCancelledNotification;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -45,6 +46,11 @@ class CancelExpiredOrders extends Command
 
             $order->status = 'Cancelada';
             $order->save();
+
+            if ($order->user) {
+                $order->user->notify(new OrderCancelledNotification($order));
+                event(new \App\Events\OrderCancelledEvent($order));
+            }
 
             $total++;
         }

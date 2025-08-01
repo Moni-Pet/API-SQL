@@ -42,7 +42,7 @@ class CreateUserRequest extends FormRequest
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\W_]{8,}$/',
                 Password::min(8)->letters()->mixedCase()->numbers()->symbols()
             ],
-            'gender' => 'required|in:masculino,femenino,39 tipos de gays',
+            'gender' => 'required|in:Masculino,Femenino,39 tipos de gays',
             'birth_date' => 'required|date'
         ];
     }

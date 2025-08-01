@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Notifications\AppointmentCancelledNotification;
 use Illuminate\Console\Command;
 use App\Models\Appointment;
 use carbon\Carbon;
@@ -39,6 +40,11 @@ class CancelExpiredAppointments extends Command
             $appointment->status = 'Cancelada';
             $appointment->save();
             $total++;
+
+            if ($appointment->user) {
+                $appointment->user->notify(new AppointmentCancelledNotification($appointment));
+                event(new \App\Events\AppointmentCancelledEvent($appointment));
+            }
         }
 
         $this->info("Se cancelaron $total citas pendientes cuya fecha ya pasó.");

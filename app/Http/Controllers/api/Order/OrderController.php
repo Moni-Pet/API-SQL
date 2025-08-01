@@ -7,6 +7,8 @@ use App\Http\Requests\orders\StoreOrderRequest;
 use App\Http\Requests\orders\UpdateOrderRequest;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Notifications\OrderCancelledNotification;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -133,6 +135,13 @@ class OrderController extends Controller
                 $producto = $detalle->product;
                 $producto->stock += $detalle->quantity;
                 $producto->save();
+            }
+
+            if (auth()->check() && in_array(auth()->user()->user_type_id, [1, 2])) {
+                if ($orden->user) {
+                    $orden->user->notify(new OrderCancelledNotification($orden));
+                    event(new \App\Events\OrderCancelledEvent($orden));
+                }
             }
         }
 

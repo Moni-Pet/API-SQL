@@ -27,9 +27,11 @@ use App\Http\Controllers\api\Service\ServiceTypeController;
 use App\Http\Controllers\api\State\StateController;
 use App\Http\Controllers\api\TypeUserController;
 use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Support\Facades\Storage;
@@ -44,6 +46,9 @@ use Illuminate\Support\Facades\Storage;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::middleware(['auth:sanctum'])->group(function () {
+    Broadcast::routes();
+});
 
 // Rutas sin protección
 //Auth
@@ -237,6 +242,9 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
             Route::group(['middleware' => ['usertype:1,2,3,4']], function () {
                 Route::get('/types_user', [TypeUserController::class, 'index']);
                 Route::get('/types_user/{id}', [TypeUserController::class, 'show'])->where('id', '[0-9]+');
+
+                Route::get('/notifications', [NotificationController::class, 'index']);
+                Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
 
                 Route::post('/pets', [PetController::class, 'store']);
                 Route::put('/pets/{id}', [PetController::class, 'update'])->where('id', '[0-9]+');
