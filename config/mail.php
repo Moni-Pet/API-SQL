@@ -84,7 +84,8 @@ return [
                 'log',
             ],
         ],
-        'sendgrid' => [
+
+	'sendgrid' => [
             'transport' => 'sendgrid',
         ],
     ],
