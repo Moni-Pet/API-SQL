@@ -256,7 +256,7 @@ class AuthController extends Controller
         $user = $request->user();
         if (! $user) {
             return response()->json([
-                'status' => false,
+                'result' => false,
                 'msg' => 'El usuario no fue encontrado. ',
                 'error_code' => 1101,
                 'data' => null
@@ -264,7 +264,7 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            'status' => true,
+            'result' => true,
             'msg' => 'Informacion del usuario encontrada correctamente. ',
             'error_code' => 1101,
             'data' => $user
