@@ -236,7 +236,7 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
 
             // Rutas compartidas
             Route::post('/auth/logout', [AuthController::class, 'logout']);
-            Route::post('/auth/me', [AuthController::class, 'me']);
+            Route::get('/auth/me', [AuthController::class, 'me']);
 
             //Rutas compartidas por todos los tipos de usuarios (no publicas)
             Route::group(['middleware' => ['usertype:1,2,3,4']], function () {
