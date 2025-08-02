@@ -76,7 +76,7 @@ class AuthController extends Controller
 
         if ($user->account_verification) {
             return response()->json([
-                'result' => false,
+                'result' => true,
                 'msg' => 'El correo electrónico ya ha sido verificado.',
                 'error_code' => 1002,
                 'data' => null
@@ -114,7 +114,7 @@ class AuthController extends Controller
         $this->sendVerificationCode($user);
 
         return response()->json([
-            'result' => false,
+            'result' => true,
             'msg' => 'Los datos de inicio de sesión son correctas.',
             'error_code' => null,
             'data' => [
