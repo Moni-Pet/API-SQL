@@ -118,8 +118,8 @@ Route::get('/products/{id}', [ProductController::class, 'show'])->where('id', '[
 Route::group(['middleware' => ['verifiedaccount']], function () {
         // Rutas sin token
         Route::post('/auth/login', [AuthController::class, 'login']);
-        Route::post('/auth/2af/verify', [AuthController::class, 'verifyTAF'])->middleware('verifiedaccount');
-        Route::post('/auth/2af/send', [AuthController::class, 'resendVerificationCode']);
+        Route::post('/auth/2fa/verify', [AuthController::class, 'verifyTAF'])->middleware('verifiedaccount');
+        Route::post('/auth/2fa/send', [AuthController::class, 'resendVerificationCode']);
 
 
         //Rutas con token
