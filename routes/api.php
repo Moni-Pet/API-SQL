@@ -133,7 +133,7 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
             // Rutas Empleado y Admin
             Route::group(['middleware' => ['usertype:1,2']], function () {
                 Route::get('/user', [UserController::class, 'index']);
-                Route::get('/user/{id}', [UserController::class, 'show'])->where('id', '[0-9]+');
+                Route::get('/user-info', [UserController::class, 'show'])->where('id', '[0-9]+');
                 Route::post('/user', [UserController::class, 'store']);
                 Route::put('/user/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/user/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');

@@ -33,9 +33,9 @@ class UserController extends Controller
             'data' => $data
         ], 200);
     }
-    public function show($id_user)
+    public function show(Request $request)
     {
-        $data_user = User::find($id_user);
+        $data_user = User::find($request->user()->id);
         if (! $data_user) {
             return response()->json([
                 'status' => false,
