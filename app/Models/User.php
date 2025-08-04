@@ -72,4 +72,8 @@ class User extends Authenticatable
 	    }
         });
     }
+    public function gadgets()
+    {
+        return $this->belongsToMany(Gadget::class, 'gadget_user')->withTimestamps();
+    }
 }

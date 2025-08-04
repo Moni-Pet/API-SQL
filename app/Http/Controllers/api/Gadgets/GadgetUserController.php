@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\api\Product;
+namespace App\Http\Controllers\api\Gadgets;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\products\StoreGadgetUserRequest;
-use App\Http\Requests\products\UpdateGadgetUserRequest;
+use App\Http\Requests\gadgets\StoreGadgetUserRequest;
+use App\Http\Requests\gadgets\UpdateGadgetUserRequest;
+use App\Models\Gadget;
 use App\Models\GadgetUser;
 use Illuminate\Http\Request;
+
+use function PHPSTORM_META\type;
 
 class GadgetUserController extends Controller
 {
@@ -15,7 +18,7 @@ class GadgetUserController extends Controller
      */
     public function index()
     {
-        $gadgetsUser = GadgetUser::with('product', 'user')->get();
+        $gadgetsUser = GadgetUser::with('gadget.type', 'user')->get();
 
         if ($gadgetsUser->count() === 0) {
             return response()->json([
@@ -38,9 +41,19 @@ class GadgetUserController extends Controller
      */
     public function store(StoreGadgetUserRequest $request)
     {
-        $gadgetUser = GadgetUser::create([
-            'product_id' => $request->product_id,
-            'user_id' => $request->user_id
+        $user_id = $request->user_id ?? auth()->id();
+        $gadget = Gadget::where('mac_address', $request->mac_address)->first();
+        if (GadgetUser::where('gadget_id', $gadget->id)->exists()) {
+            return response()->json([
+                'result' => false,
+                'msg' => 'El gadget ya fue asignado a un usuario',
+                'error_code' => 1405,
+                'data' => null
+            ], 422);
+        }
+        GadgetUser::create([
+            'gadget_id' => $gadget->id,
+            'user_id' => $user_id
         ]);
 
         return response()->json([
@@ -57,7 +70,7 @@ class GadgetUserController extends Controller
 
     public function show(int $id)
     {
-        $gadgetUser = GadgetUser::with('product', 'user')->find($id);
+        $gadgetUser = GadgetUser::with('gadget.type', 'user')->find($id);
 
         if (!$gadgetUser) {
             return response()->json([
@@ -67,7 +80,7 @@ class GadgetUserController extends Controller
                 'data' => null
             ], 404);
         }
-        
+
         return response()->json([
             'result' => true,
             'msg' => "El gadget fue encontrado",
@@ -80,7 +93,7 @@ class GadgetUserController extends Controller
     {
         $userId = $id ?? auth()->id();
 
-        $gadgetUser = GadgetUser::with('product', 'user')->where('user_id', $userId)->get();
+        $gadgetUser = GadgetUser::with('gadget.type', 'user')->where('user_id', $userId)->get();
 
         if ($gadgetUser->isEmpty()) {
             return response()->json([
@@ -89,7 +102,7 @@ class GadgetUserController extends Controller
                 'data' => null
             ], 404);
         }
-        
+
         return response()->json([
             'result' => true,
             'msg' => "Los gadgets del usuario fueron encontrados",
@@ -115,10 +128,10 @@ class GadgetUserController extends Controller
         }
 
         $gadgetUser->update($request->only([
-            'product_id',
+            'gadget_id',
             'user_id'
         ]));
-        
+
         return response()->json([
             'result' => true,
             'msg' => "Gadget modificado correctamente.",

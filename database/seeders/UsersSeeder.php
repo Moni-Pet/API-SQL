@@ -48,14 +48,14 @@ class UsersSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'user_type_id' => 2, // Trabajador
-                'name' => 'Gato',
-                'last_name' => 'Michi',
-                'last_name2' => 'Hernandez',
-                'email' => 'jafetavalos49@gmail.com',
-                'password' => Hash::make('C0ntraS3gura'),
+                'user_type_id' => 1, // Administrador
+                'name' => 'Juan Israel',
+                'last_name' => 'De La Rosa',
+                'last_name2' => 'Carrera',
+                'email' => 'juanisraeldelarosa753@gmail.com',
+                'password' => Hash::make('$Kaneki2486519'),
                 'account_verification' => now(),
-                'gender' => '39 tipos de gays',
+                'gender' => 'Masculino',
                 'birth_date' => '2002-03-04',
                 'two_factor_code' => null,
                 'two_factor_expires_at' => null,
@@ -63,6 +63,22 @@ class UsersSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'user_type_id' => 4, // Administrador
+                'name' => 'Israel',
+                'last_name' => 'De La Rosa',
+                'last_name2' => 'Carrera',
+                'email' => 'israeldelarosa753@gmail.com',
+                'password' => Hash::make('$Kaneki2486519'),
+                'account_verification' => now(),
+                'gender' => 'Masculino',
+                'birth_date' => '2002-03-04',
+                'two_factor_code' => null,
+                'two_factor_expires_at' => null,
+                'remember_token' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
         ]);
     }
 }

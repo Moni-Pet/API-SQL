@@ -13,13 +13,13 @@ class GadgetUser extends Model
     protected $table = 'gadget_users';
 
     protected $fillable = [
-        'product_id', 
+        'gadget_id', 
         'user_id'
     ];
 
-    public function product()
+    public function gadget()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Gadget::class, 'gadget_id');
     }
 
     public function user()

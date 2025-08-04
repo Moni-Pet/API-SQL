@@ -21,7 +21,8 @@ class Pet extends Model
         'height', 
         'description', 
         'status', 
-        'user_id'
+        'user_id',
+        'uid'
     ];
 
     public function breed(){

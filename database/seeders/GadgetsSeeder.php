@@ -14,31 +14,31 @@ class GadgetsSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('gadget_users')->insert([
+       /* DB::table('gadget_users')->insert([
             [
-                'product_id' => 1,
+                'gadget_id' => 1,
                 'user_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'product_id' => 2,
+                'gadget_id' => 2,
                 'user_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'product_id' => 3,
+                'gadget_id' => 3,
                 'user_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'product_id' => 4,
+                'gadget_id' => 4,
                 'user_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        ]);
+        ]);*/
     }
 }

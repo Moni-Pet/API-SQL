@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\products;
+namespace App\Http\Requests\gadgets;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -24,7 +24,7 @@ class StoreGadgetUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => 'required|exists:products,id',
+            'mac_address' => 'required|string|max:17|exists:gadgets,mac_address|regex:/^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$/',
             'user_id' => 'required|exists:users,id'
         ];
     }
@@ -32,8 +32,11 @@ class StoreGadgetUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'product_id.required' => 'El campo producto es obligatorio.',
-            'product_id.exists' => 'El producto seleccionado no existe.',
+            'mac_address.required' => 'La dirección MAC es obligatoria.',
+            'mac_address.string' => 'La dirección MAC debe ser un texto.',
+            'mac_address.max' => 'La dirección MAC no puede superar los 17 caracteres.',
+            'mac_address.exists' => 'El gadget no esta registrado en la bd.',
+            'mac_address.regex' => 'El formato de la MAC address no es válido. (Ej: AA:BB:CC:DD:EE:FF)',
             
             'user_id.required' => 'El campo usuario es obligatorio.',
             'user_id.exists' => 'El usuario seleccionado no existe.',
