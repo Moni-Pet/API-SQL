@@ -127,7 +127,7 @@ class UserController extends Controller
 
         return response()->json([
             'result' => true,
-            'msg' => "Se ha eliminado a " + $user->name + " correctamente.",
+            'msg' => "Se ha eliminado a " . $user->name . " correctamente.",
             'error_code' => null,
             'data' => null,
         ], 200);
