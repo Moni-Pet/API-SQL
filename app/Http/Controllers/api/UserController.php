@@ -78,7 +78,7 @@ class UserController extends Controller
         $user = User::find($id);
         if (! $user) {
             return response()->json([
-                'status' => false,
+                'result' => false,
                 'msg' => 'El recurso solicitado no fue encontrado',
                 'error_code' => 1202,
                 'data' => null
@@ -104,7 +104,7 @@ class UserController extends Controller
         $user->update($data);
 
         return response()->json([
-            'status' => true,
+            'result' => true,
             'msg' => 'Usuario modificado correctamente',
             'error_code' => null,
             'data' => null
