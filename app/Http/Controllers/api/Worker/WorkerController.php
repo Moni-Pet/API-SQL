@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Worker;
+namespace App\Http\Controllers\api\Worker;
 
 use App\Http\Controllers\Controller;
 use App\Models\TypesUser;
