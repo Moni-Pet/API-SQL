@@ -35,7 +35,7 @@ class StorePetRequest extends FormRequest
             'description' => 'required|string|max:200|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s.,;:()\-¡!¿?"\'%#&]+$/',
             'status' => 'required|in:Adoptado,No adoptado,Pendiente,Personal',
             'id_adopter' => 'sometimes|nullable|exists:users,id',
-            'photo' => 'required|image|mimes:jpeg,png,jpg,webp,svg|max:2048',
+            'photo' => 'image|mimes:jpeg,png,jpg,webp,svg|max:2048|nullable'
         ];
     }
 

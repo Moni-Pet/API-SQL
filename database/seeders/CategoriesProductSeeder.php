@@ -40,8 +40,14 @@ class CategoriesProductSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'category_id' => 2,
+                'category_id' => 6,
                 'product_id' => 5,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'category_id' => 7,
+                'product_id' => 6,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

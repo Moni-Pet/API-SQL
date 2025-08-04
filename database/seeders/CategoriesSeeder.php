@@ -45,6 +45,18 @@ class CategoriesSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'category' => 'Comedero',
+                'type_category_id' => 6,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'category' => 'GPS',
+                'type_category_id' => 6,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

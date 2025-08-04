@@ -70,4 +70,8 @@ class User extends Authenticatable
             $user->adopter->delete();
         });
     }
+    public function gadgets()
+    {
+        return $this->belongsToMany(Gadget::class, 'gadget_user')->withTimestamps();
+    }
 }

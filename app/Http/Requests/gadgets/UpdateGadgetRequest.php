@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\products;
+namespace App\Http\Requests\gadgets;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Contracts\Validation\Validator;
 
-class UpdateGadgetUserRequest extends FormRequest
+class UpdateGadgetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,29 +24,29 @@ class UpdateGadgetUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => 'sometimes|exists:products,id',
-            'user_id' => 'sometimes|exists:users,id'
+            'alias' => 'nullable|string|max:255',
+            'pet_id' => 'nullable|exists:pets,id',
         ];
     }
 
     public function messages()
     {
         return [
-            'product_id.exists' => 'El producto seleccionado no existe.',
-            
-            'user_id.exists' => 'El usuario seleccionado no existe.',
+            'alias.string' => 'El alias debe ser una cadena de texto.',
+            'alias.max' => 'El alias no puede superar los 255 caracteres.',
+
+            'pet_id.exists' => 'La mascota seleccionada no existe.',
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
-        $errors = $validator->errors();
-
         throw new HttpResponseException(response()->json([
             'result' => false,
             'msg' => 'Los datos proporcionados no son válidos.',
-            'error_code' =>  1205,
-            'data' => $errors,
+            'error_code' => 1205,
+            'data' => $validator->errors(),
         ], 422));
     }
+    
 }

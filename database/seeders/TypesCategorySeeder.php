@@ -40,6 +40,11 @@ class TypesCategorySeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'type_category' => 'Gadgets',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }
