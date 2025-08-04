@@ -138,8 +138,6 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
                 Route::get('/user', [UserController::class, 'index']);
                 Route::get('/user/{id}', [UserController::class, 'show'])->where('id', '[0-9]+');
                 Route::post('/user', [UserController::class, 'store']);
-                Route::put('/user/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
-                Route::delete('/user/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
 
                 Route::post('/states', [StateController::class, 'store']);
                 Route::put('/states/{id}', [StateController::class, 'update'])->where('id', '[0-9]+');
@@ -243,6 +241,9 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
 
             //Rutas compartidas por todos los tipos de usuarios (no publicas)
             Route::group(['middleware' => ['usertype:1,2,3,4']], function () {
+                Route::put('/user/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
+                Route::delete('/user/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
+
                 Route::get('/types_user', [TypeUserController::class, 'index']);
                 Route::get('/types_user/{id}', [TypeUserController::class, 'show'])->where('id', '[0-9]+');
 
