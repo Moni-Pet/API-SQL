@@ -120,6 +120,7 @@ Route::post('/products/list', [ProductController::class, 'productList']);
 
 
 // Rutas protegidas
+Route::post('/user', [UserController::class, 'store'])->middleware(['auth:sanctum', 'usertype:1,2']);
 Route::group(['middleware' => ['verifiedaccount']], function () {
         // Rutas sin token
         Route::post('/auth/login', [AuthController::class, 'login']);
@@ -141,7 +142,6 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
 
                 Route::get('/user', [UserController::class, 'index']);
                 Route::get('/user/{id}', [UserController::class, 'show'])->where('id', '[0-9]+');
-                Route::post('/user', [UserController::class, 'store']);
                 Route::delete('/user/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
 
                 Route::post('/states', [StateController::class, 'store']);
