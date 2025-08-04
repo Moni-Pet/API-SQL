@@ -114,7 +114,7 @@ class AuthController extends Controller
         $this->sendVerificationCode($user);
 
         return response()->json([
-            'result' => false,
+            'result' => true,
             'msg' => 'Los datos de inicio de sesión son correctas.',
             'error_code' => null,
             'data' => [
@@ -256,7 +256,7 @@ class AuthController extends Controller
         $user = $request->user();
         if (! $user) {
             return response()->json([
-                'status' => false,
+                'result' => false,
                 'msg' => 'El usuario no fue encontrado. ',
                 'error_code' => 1101,
                 'data' => null
@@ -264,10 +264,35 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            'status' => true,
+            'result' => true,
             'msg' => 'Informacion del usuario encontrada correctamente. ',
             'error_code' => 1101,
             'data' => $user
+        ], 200);
+    }
+
+    public function verifyPassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required', 'string']
+        ]);
+
+        $user = $request->user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'result' => false,
+                'msg' => 'La contraseña actual no es correcta.',
+                'error_code'=> 1101,
+                'data' => null
+            ], 422);
+        }
+
+        return response()->json([
+            'result' => true,
+            'msg' => 'Contraseña verificada correctamente.',
+            'error_code' => 1101,
+            'data' => null
         ], 200);
     }
 }

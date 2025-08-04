@@ -39,7 +39,8 @@ class ServiceTypeController extends Controller
     public function store(StoreTypeServiceRequest $request)
     {
         $typeService = ServiceType::create([
-            'type_service' => $request->type_service
+            'type_service' => $request->type_service,
+            'icono' => $request->icono
         ]);
 
         return response()->json([
@@ -91,7 +92,8 @@ class ServiceTypeController extends Controller
         }
 
         $typeService->update($request->only([
-            'type_service'
+            'type_service',
+            'icono'
         ]));
 
         return response()->json([

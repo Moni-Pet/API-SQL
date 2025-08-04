@@ -16,7 +16,7 @@ class Breed extends Model
     ];
 
     public function typePet(){
-        return $this->belongsTo(typePet::class, 'type_pet_id');
+        return $this->belongsTo(TypePet::class, 'type_pet_id');
     }
     public function pets(){
         return $this->hasMany(Pet::class, 'breed_id');

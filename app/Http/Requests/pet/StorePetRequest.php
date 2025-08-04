@@ -32,7 +32,7 @@ class StorePetRequest extends FormRequest
             'size' => 'required|in:Chico,Mediano,Grande',
             'weight' => 'required|numeric|min:0|max:999.99|regex:/^\d{1,3}(\.\d{1,2})?$/',
             'height' => 'required|numeric|min:0|max:999.99|regex:/^\d{1,3}(\.\d{1,2})?$/',
-            'description' => 'required|string|max:200|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s.,;:()\-¡!¿?"\'%#&]+$/',
+            'description' => 'sometimes|nullable|string|max:200|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s.,;:()\-¡!¿?"\'%#&]+$/',
             'status' => 'required|in:Adoptado,No adoptado,Pendiente,Personal',
             'id_adopter' => 'sometimes|nullable|exists:users,id',
             'photo' => 'image|mimes:jpeg,png,jpg,webp,svg|max:2048|nullable'
@@ -73,7 +73,6 @@ class StorePetRequest extends FormRequest
             'height.max' => 'La altura no puede ser mayor a 999.99.',
             'height.regex' => 'La altura debe tener hasta 3 dígitos enteros y 2 decimales.',
 
-            'description.required' => 'La descripción es obligatoria.',
             'description.string' => 'La descripción debe ser una cadena de texto.',
             'description.max' => 'La descripción no debe exceder los 200 caracteres.',
             'description.regex' => 'La descripción contiene caracteres no válidos.',

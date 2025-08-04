@@ -25,6 +25,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|string|min:3|max:249|regex:/^[A-Za-zÁÉÍÓÚÜÑñáéíóúü\s]+$/u',
+            'description' => 'sometimes|nullable|string|max:200|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s.,;:()\-¡!¿?"\'%#&]+$/',
             'price' => 'sometimes|numeric|between:0,99999.99',
             'stock' => 'sometimes|integer|min:0|max:999',
             'discount' => 'nullable|numeric|between:0,100',
@@ -38,6 +39,10 @@ class UpdateProductRequest extends FormRequest
             'name.min' => 'El nombre debe tener al menos 3 caracteres.',
             'name.max' => 'El nombre no debe exceder los 249 caracteres.',
             'name.regex' => 'El nombre solo puede contener letras y espacios.',
+
+            'description.string' => 'La descripción debe ser una cadena de texto.',
+            'description.max' => 'La descripción no debe exceder los 200 caracteres.',
+            'description.regex' => 'La descripción contiene caracteres no válidos.',
 
             'price.numeric' => 'El precio debe ser un valor numérico.',
             'price.between' => 'El precio debe estar entre 0 y 99,999.99.',

@@ -58,7 +58,7 @@ class ServiceController extends Controller
      */
     public function show(int $id)
     {
-        $service = Service::find($id);
+        $service = Service::with('type')->find($id);
 
         if (!$service) {
             return response()->json([
@@ -74,6 +74,24 @@ class ServiceController extends Controller
             'msg' => "Servicio encontrado",
             'error_code' => null,
             'data' => $service,
+        ], 200);
+    }
+
+    public function serviceList(Request $request) {
+        $validated = $request->validate([
+            'serviceIds' => 'required|array',
+            'serviceIds.*' => 'integer|exists:services,id',
+        ]);
+
+        $services = Service::whereIn('id', $validated['serviceIds'])
+            ->with('type')
+            ->get();
+
+        return response()->json([
+            'result' => true,
+            'msg' => "Lista de servicios",
+            'error_code' => null,
+            'data' => $services,
         ], 200);
     }
 

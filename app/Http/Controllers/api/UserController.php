@@ -78,7 +78,7 @@ class UserController extends Controller
         $user = User::find($id);
         if (! $user) {
             return response()->json([
-                'status' => false,
+                'result' => false,
                 'msg' => 'El recurso solicitado no fue encontrado',
                 'error_code' => 1202,
                 'data' => null
@@ -104,14 +104,33 @@ class UserController extends Controller
         $user->update($data);
 
         return response()->json([
-            'status' => true,
+            'result' => true,
             'msg' => 'Usuario modificado correctamente',
             'error_code' => null,
             'data' => null
         ], 201);
     }
-    public function destroy() 
+    public function destroy(int $id) 
     {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'result' => false,
+                'msg' => "No se encontró el usuario especificado.",
+                'error_code' => 1201,
+                'data' => null
+            ], 404);
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'result' => true,
+            'msg' => "Se ha eliminado a " . $user->name . " correctamente.",
+            'error_code' => null,
+            'data' => null,
+        ], 200);
 
     }
     private function sendActivationEmail(User $user)

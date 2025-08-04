@@ -31,6 +31,8 @@ use App\Http\Controllers\api\State\StateController;
 use App\Http\Controllers\api\TypeUserController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\NotificationController;
+use App\Models\User;
+use App\Http\Controllers\api\Worker\WorkerController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Auth;
@@ -44,14 +46,14 @@ use Illuminate\Support\Facades\Storage;
 | API Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
+| Here is where you can register API Routes for your application. These
+| Routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
 |
 */
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Broadcast::routes();
+    Broadcast::Routes();
 });
 
 // Rutas sin protección
@@ -63,16 +65,17 @@ Route::prefix('auth')->group(function () {
 });
 
 // TypesPet
-route::get('/types_pet', [PetTypeController::class, 'index']);
-route::get('/types_pet/{id}', [PetTypeController::class, 'show'])->where('id', '[0-9]+');
+Route::get('/types_pet', [PetTypeController::class, 'index']);
+Route::get('/types_pet/{id}', [PetTypeController::class, 'show'])->where('id', '[0-9]+');
 
 // Breeds
-route::get('/breeds', [BreedController::class, 'index']);
-route::get('/breeds/{id}', [BreedController::class, 'show'])->where('id', '[0-9]+');
+Route::get('/breeds', [BreedController::class, 'index']);
+Route::get('/breeds/{id}', [BreedController::class, 'show'])->where('id', '[0-9]+');
 
 // Pets
-route::get('/pets', [PetController::class, 'index']);
+Route::get('/pets', [PetController::class, 'index']);
 Route::get('/pets/{id}', [PetController::class, 'show'])->where('id', '[0-9]+');
+Route::post('/pets/list', [PetController::class, 'petList']);
 
 //Pet Photos
 Route::get('/pet_photos', [PetPhotoController::class, 'index']);
@@ -86,6 +89,7 @@ Route::get('/type_service/{id}', [ServiceTypeController::class, 'show'])->where(
 //Services
 Route::get('/service', [ServiceController::class, 'index']);
 Route::get('/service/{id}', [ServiceController::class, 'show'])->where('id', '[0-9]+');
+Route::post('/service/list', [ServiceController::class, 'serviceList']);
 
 //States
 Route::get('/states', [StateController::class, 'index']);
@@ -116,16 +120,16 @@ Route::get('/products_photos/product/{id}', [ProductPhotoController::class, 'sho
 //Products
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show'])->where('id', '[0-9]+');
+Route::post('/products/list', [ProductController::class, 'productList']);
 
 
 // Rutas protegidas
-Route::group(
-    ['middleware' => ['verifiedaccount']],
-    function () {
+Route::post('/user', [UserController::class, 'store'])->middleware(['auth:sanctum', 'usertype:1,2']);
+Route::group(['middleware' => ['verifiedaccount']], function () {
         // Rutas sin token
         Route::post('/auth/login', [AuthController::class, 'login']);
-        Route::post('/auth/2af/verify', [AuthController::class, 'verifyTAF'])->middleware('verifiedaccount');
-        Route::post('/auth/2af/send', [AuthController::class, 'resendVerificationCode']);
+        Route::post('/auth/2fa/verify', [AuthController::class, 'verifyTAF'])->middleware('verifiedaccount');
+        Route::post('/auth/2fa/send', [AuthController::class, 'resendVerificationCode']);
 
 
         //Rutas con token
@@ -138,10 +142,10 @@ Route::group(
 
             // Rutas Empleado y Admin
             Route::group(['middleware' => ['usertype:1,2']], function () {
+                Route::get('/worker', [WorkerController::class, 'index']);
+
                 Route::get('/user', [UserController::class, 'index']);
                 Route::get('/user/{id}', [UserController::class, 'show'])->where('id', '[0-9]+');
-                Route::post('/user', [UserController::class, 'store']);
-                Route::put('/user/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/user/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
 
                 Route::post('/states', [StateController::class, 'store']);
@@ -254,10 +258,14 @@ Route::group(
 
             // Rutas compartidas
             Route::post('/auth/logout', [AuthController::class, 'logout']);
-            Route::post('/auth/me', [AuthController::class, 'me']);
+            Route::get('/auth/me', [AuthController::class, 'me']);
 
             //Rutas compartidas por todos los tipos de usuarios (no publicas)
             Route::group(['middleware' => ['usertype:1,2,3,4']], function () {
+                Route::post('/auth/verify_password', [AuthController::class, 'verifyPassword']);
+                Route::put('/user/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
+                Route::delete('/user/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
+
                 Route::get('/types_user', [TypeUserController::class, 'index']);
                 Route::get('/types_user/{id}', [TypeUserController::class, 'show'])->where('id', '[0-9]+');
 

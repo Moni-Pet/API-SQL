@@ -25,6 +25,7 @@ class UpdateTypeServiceRequest extends FormRequest
     {
         return [
             'type_service' => 'required|string|max:12|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
+            'icono' => 'sometimes|nullable|string|max:2083'
         ];
     }
 
@@ -36,6 +37,9 @@ class UpdateTypeServiceRequest extends FormRequest
             'type_service.max' => 'El tipo de servicio no debe exceder los 12 caracteres.',
             'type_service.regex' => 'El tipo de servicio solo puede contener letras, espacios y comillas simples.',
             'type_service.unique' => 'Ya existe un tipo de servicio con ese nombre.',
+
+            'icono.string' => 'El icono debe ser una cadena de texto.',
+            'icono.max' => 'El icono no debe exceder los 2083 caracteres.',
         ];
     }
 

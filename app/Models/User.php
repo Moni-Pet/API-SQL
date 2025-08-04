@@ -67,7 +67,9 @@ class User extends Authenticatable
     protected static function booted()
     {
         static::deleting(function ($user) {
-            $user->adopter->delete();
+	    if($user->adopter){
+		$user->adopter->delete();
+	    }
         });
     }
     public function gadgets()

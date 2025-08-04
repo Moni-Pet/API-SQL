@@ -158,6 +158,24 @@ class PetController extends Controller
         ], 200);
     }
 
+    public function petList(Request $request) {
+        $validated = $request->validate([
+            'petIds' => 'required|array',
+            'pretIds.*' => 'integer|exists:pets,id',
+        ]);
+
+        $pets = Pet::whereIn('id', $validated['petIds'])
+            ->with('breed.typePet', 'user', 'petPhotos')
+            ->get();
+        
+        return response()->json([
+            'result' => true,
+            'msg' => "Listado de mascotas",
+            'error_code' => null,
+            'data' => $pets,
+        ], 200);
+    }
+
     /**
      * Update the specified resource in storage.
      */

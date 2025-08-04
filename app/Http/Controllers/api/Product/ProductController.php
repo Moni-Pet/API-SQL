@@ -7,6 +7,7 @@ use App\Http\Requests\products\StoreProductRequest;
 use App\Http\Requests\products\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -41,6 +42,7 @@ class ProductController extends Controller
     {
         $product = Product::create([
             'name' => $request->name,
+            'description' => $request->description,
             'price' => $request->price,
             'stock' => $request->stock,
             'discount' => $request->filled('discount') ? $request->discount : 0.00
@@ -102,6 +104,24 @@ class ProductController extends Controller
         ], 200);
     }
 
+    public function productList(Request $request) {
+        $validated = $request->validate([
+            'productIds' => 'required|array',
+            'productIds.*' => 'integer|exists:products,id',
+        ]);
+
+        $products = Product::whereIn('id', $validated['productIds'])
+            ->with('productPhotos', 'categories')
+            ->get();
+
+        return response()->json([
+            'result' => true,
+            'msg' => "Lista de productos",
+            'error_code' => null,
+            'data' => $products,
+        ], 200);
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -120,6 +140,7 @@ class ProductController extends Controller
 
         $product->update($request->only([
             'name',
+            'description',
             'price',
             'stock',
             'discount'
