@@ -46,7 +46,23 @@ class UsersSeeder extends Seeder
                 'remember_token' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
+            [
+                'user_type_id' => 2, // Trabajador
+                'name' => 'Gato',
+                'last_name' => 'Michi',
+                'last_name2' => 'Hernandez',
+                'email' => 'jafetavalos49@gmail.com',
+                'password' => Hash::make('C0ntraS3gura'),
+                'account_verification' => now(),
+                'gender' => '39 tipos de gays',
+                'birth_date' => '2002-03-04',
+                'two_factor_code' => null,
+                'two_factor_expires_at' => null,
+                'remember_token' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

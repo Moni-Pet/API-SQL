@@ -28,6 +28,7 @@ use App\Http\Controllers\api\State\StateController;
 use App\Http\Controllers\api\TypeUserController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Worker\WorkerController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Auth;
@@ -135,6 +136,8 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
 
             // Rutas Empleado y Admin
             Route::group(['middleware' => ['usertype:1,2']], function () {
+                Route::get('/worker', [WorkerController::class, 'index']);
+
                 Route::get('/user', [UserController::class, 'index']);
                 Route::get('/user/{id}', [UserController::class, 'show'])->where('id', '[0-9]+');
                 Route::post('/user', [UserController::class, 'store']);
