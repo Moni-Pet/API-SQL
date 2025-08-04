@@ -41,13 +41,13 @@ use Illuminate\Support\Facades\Storage;
 | API Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
+| Here is where you can register API Routes for your application. These
+| Routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
 |
 */
 Route::middleware(['auth:sanctum'])->group(function () {
-    Broadcast::routes();
+    Broadcast::Routes();
 });
 
 // Rutas sin protección
@@ -59,16 +59,17 @@ Route::prefix('auth')->group(function () {
 });
 
 // TypesPet
-route::get('/types_pet', [PetTypeController::class, 'index']);
-route::get('/types_pet/{id}', [PetTypeController::class, 'show'])->where('id', '[0-9]+');
+Route::get('/types_pet', [PetTypeController::class, 'index']);
+Route::get('/types_pet/{id}', [PetTypeController::class, 'show'])->where('id', '[0-9]+');
 
 // Breeds
-route::get('/breeds', [BreedController::class, 'index']);
-route::get('/breeds/{id}', [BreedController::class, 'show'])->where('id', '[0-9]+');
+Route::get('/breeds', [BreedController::class, 'index']);
+Route::get('/breeds/{id}', [BreedController::class, 'show'])->where('id', '[0-9]+');
 
 // Pets
-route::get('/pets', [PetController::class, 'index']);
+Route::get('/pets', [PetController::class, 'index']);
 Route::get('/pets/{id}', [PetController::class, 'show'])->where('id', '[0-9]+');
+Route::post('/pets/list', [PetController::class, 'petList']);
 
 //Pet Photos
 Route::get('/pet_photos', [PetPhotoController::class, 'index']);
@@ -82,6 +83,7 @@ Route::get('/type_service/{id}', [ServiceTypeController::class, 'show'])->where(
 //Services
 Route::get('/service', [ServiceController::class, 'index']);
 Route::get('/service/{id}', [ServiceController::class, 'show'])->where('id', '[0-9]+');
+Route::post('/service/list', [ServiceController::class, 'serviceList']);
 
 //States
 Route::get('/states', [StateController::class, 'index']);
@@ -112,6 +114,7 @@ Route::get('/products_photos/product/{id}', [ProductPhotoController::class, 'sho
 //Products
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show'])->where('id', '[0-9]+');
+Route::post('/products/list', [ProductController::class, 'productList']);
 
 
 // Rutas protegidas

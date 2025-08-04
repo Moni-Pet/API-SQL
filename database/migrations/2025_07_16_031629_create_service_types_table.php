@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('types_services', function (Blueprint $table) {
             $table->smallIncrements('id')->unsigned();
             $table->string('type_service', 12);
+            $table->string('icono', 2083)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

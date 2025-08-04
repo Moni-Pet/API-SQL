@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('size', ['Chico', 'Mediano', 'Grande']);
             $table->decimal('weight', 5, 2);
             $table->decimal('height', 5, 2);
-            $table->string('description', 200);
+            $table->string('description', 200)->nullable();
             $table->enum('status', ['Adoptado', 'No adoptado', 'Pendiente', 'Personal']);
             $table->unsignedInteger('user_id')->nullable();
             $table->timestamps();

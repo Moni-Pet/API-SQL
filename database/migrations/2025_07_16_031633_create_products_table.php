@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->smallIncrements('id')->unsigned();
             $table->string('name', 249);
+            $table->string('description', 200)->nullable();
             $table->decimal('price', 6, 2);
             $table->unsignedSmallInteger('stock');
             $table->decimal('discount', 6, 2)->default(0.00);

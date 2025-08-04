@@ -32,7 +32,7 @@ class UpdatePetRequest extends FormRequest
             'size' => 'sometimes|in:Chico,Mediano,Grande',
             'weight' => 'sometimes|numeric|min:0|max:999.99|regex:/^\d{1,3}(\.\d{1,2})?$/',
             'height' => 'sometimes|numeric|min:0|max:999.99|regex:/^\d{1,3}(\.\d{1,2})?$/',
-            'description' => 'sometimes|string|max:200|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s.,;:()\-¡!¿?"\'%#&]+$/',
+            'description' => 'sometimes|nullable|string|max:200|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s.,;:()\-¡!¿?"\'%#&]+$/',
             'status' => 'sometimes|in:Adoptado,No adoptado,Pendiente, Personal',
             'id_adopter' => 'sometimes|nullable|exists:users,id'
         ];

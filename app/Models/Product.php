@@ -11,11 +11,11 @@ class Product extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name', 
+        'name',
+        'description', 
         'price', 
         'stock', 
         'discount'
-    
     ];
 
     public function gadgetUsers()
