@@ -110,8 +110,27 @@ class UserController extends Controller
             'data' => null
         ], 201);
     }
-    public function destroy() 
+    public function destroy(int $id) 
     {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'result' => false,
+                'msg' => "No se encontró el usuario especificado.",
+                'error_code' => 1201,
+                'data' => null
+            ], 404);
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'result' => true,
+            'msg' => "Se ha eliminado a " + $user->name + " correctamente.",
+            'error_code' => null,
+            'data' => null,
+        ], 200);
 
     }
     private function sendActivationEmail(User $user)

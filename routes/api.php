@@ -29,6 +29,7 @@ use App\Http\Controllers\api\TypeUserController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Worker\WorkerController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Auth;
@@ -141,6 +142,7 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
                 Route::get('/user', [UserController::class, 'index']);
                 Route::get('/user/{id}', [UserController::class, 'show'])->where('id', '[0-9]+');
                 Route::post('/user', [UserController::class, 'store']);
+                Route::delete('/user/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
 
                 Route::post('/states', [StateController::class, 'store']);
                 Route::put('/states/{id}', [StateController::class, 'update'])->where('id', '[0-9]+');
