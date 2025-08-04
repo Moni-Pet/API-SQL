@@ -270,4 +270,29 @@ class AuthController extends Controller
             'data' => $user
         ], 200);
     }
+
+    public function verifyPassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required', 'string']
+        ]);
+
+        $user = $request->user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'result' => false,
+                'msg' => 'La contraseña actual no es correcta.',
+                'error_code'=> 1101,
+                'data' => null
+            ], 422);
+        }
+
+        return response()->json([
+            'result' => true,
+            'msg' => 'Contraseña verificada correctamente.',
+            'error_code' => 1101,
+            'data' => null
+        ], 200);
+    }
 }

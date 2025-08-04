@@ -241,6 +241,7 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
 
             //Rutas compartidas por todos los tipos de usuarios (no publicas)
             Route::group(['middleware' => ['usertype:1,2,3,4']], function () {
+                Route::post('/auth/verify_password', [AuthController::class, 'verifyPassword']);
                 Route::put('/user/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/user/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
 

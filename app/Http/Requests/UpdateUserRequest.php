@@ -36,7 +36,15 @@ class UpdateUserRequest extends FormRequest
                 'unique:users,email,' . $this->route('id') // importante: usa el id del usuario actual
             ],
             'gender' => 'sometimes|in:masculino,femenino,39 tipos de gays',
-            'birth_date' => 'sometimes|date'
+            'birth_date' => 'sometimes|date',
+            'password' => [
+                'sometimes',
+                'string',
+                'confirmed',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\W_]{8,}$/',
+                Password::min(8)->letters()->mixedCase()->numbers()->symbols()
+            ],
+            
         ];
     }
 
