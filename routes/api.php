@@ -28,7 +28,7 @@ use App\Http\Controllers\api\State\StateController;
 use App\Http\Controllers\api\TypeUserController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\Worker\WorkerController;
+use App\Http\Controllers\api\Worker\WorkerController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Auth;
