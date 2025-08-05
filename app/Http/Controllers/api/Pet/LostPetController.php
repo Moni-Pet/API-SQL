@@ -15,7 +15,7 @@ class LostPetController extends Controller
      */
     public function index()
     {
-        $lost = LostPet::with(['pet', 'users'])->where('status',  true)->get();
+        $lost = LostPet::with(['pet', 'user'])->where('status',  true)->get();
         if($lost->isEmpty()){
             return response()->json([
                 'result' => false,
@@ -42,7 +42,7 @@ class LostPetController extends Controller
      */
     public function show(Request $request)
     {
-        $lost = LostPet::with(['pet', 'users'])->where('status',  true)->where('user_id', $request->user()->id)->get();
+        $lost = LostPet::with(['pet', 'user', 'userFind'])->where('status',  true)->where('user_id', $request->user()->id)->get();
         if($lost->isEmpty()){
             return response()->json([
                 'result' => false,
