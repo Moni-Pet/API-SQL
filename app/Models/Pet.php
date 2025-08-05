@@ -43,8 +43,11 @@ class Pet extends Model
         return $this->hasMany(AppointmentPet::class, 'pet_id');
     }
     public function petPhotos() {
-        return $this->hasMany(PetPhoto::class, 'pet_id');
-        
+        return $this->hasMany(PetPhoto::class, 'pet_id'); 
+    }
+
+    public function lostPets() {
+        return $this->hasMany(LostPet::class, 'pet_id'); 
     }
 
     protected static function booted()
