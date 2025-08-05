@@ -15,7 +15,7 @@ class PetTypeController extends Controller
      */
     public function index()
     {
-        $typesPet = TypePet::with(['breed' => function ($query) {
+        $typesPet = TypePet::with(['breed.pets' => function ($query) {
             $query->withCount('pets');
         }])->get();
 
