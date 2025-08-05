@@ -15,7 +15,7 @@ class BreedController extends Controller
      */
     public function index()
     {
-        $breeds = Breed::with(['typePet', 'pets'])->get();
+        $breeds = Breed::with(['typePet', 'pets.petPhotos'])->get();
 
         if ($breeds->count() === 0) {
             return response()->json([
