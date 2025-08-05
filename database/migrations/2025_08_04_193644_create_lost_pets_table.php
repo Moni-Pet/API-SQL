@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('lost_pets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('pet_id')->constrained('pets')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('pet_id')->constrained('pets');
             $table->string('lat');
             $table->string('lon');
             $table->string('description')->nullable();
-            $table->foreignId('user_find_id')->nullable()->constrained('users')->cascadeOnUpdate()->cascadeOnDelete(); // quien encontró (opcional)
+            $table->foreignId('user_find_id')->nullable()->constrained('users'); 
             $table->datetime('lost_date');
             $table->boolean('status');
             $table->timestamps();
