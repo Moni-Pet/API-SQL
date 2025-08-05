@@ -282,7 +282,7 @@ class AuthController extends Controller
         if (!Hash::check($request->current_password, $user->password)) {
             return response()->json([
                 'result' => false,
-                'msg' => 'La contraseña actual no es correcta.',
+                'msg' => 'Credenciales no correctas.',
                 'error_code'=> 1101,
                 'data' => null
             ], 422);
