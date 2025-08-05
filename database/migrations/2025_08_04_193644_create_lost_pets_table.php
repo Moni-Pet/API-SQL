@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedInteger('user_id');
-            $table->unsignedBigInteger('pet_id');
+            $table->unsignedInteger('pet_id');
             $table->unsignedInteger('user_find_id')->nullable();
 
             $table->string('lat');
