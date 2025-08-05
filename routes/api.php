@@ -17,6 +17,7 @@ use App\Http\Controllers\api\Gadgets\GadgetUserController;
 use App\Http\Controllers\api\Order\OrderController;
 use App\Http\Controllers\api\Order\OrderDetailController;
 use App\Http\Controllers\api\Pet\BreedController;
+use App\Http\Controllers\api\Pet\LostPetController;
 use App\Http\Controllers\api\Pet\PetController;
 use App\Http\Controllers\api\Pet\PetTypeController;
 use App\Http\Controllers\api\Photo\PetPhotoController;
@@ -122,6 +123,9 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show'])->where('id', '[0-9]+');
 Route::post('/products/list', [ProductController::class, 'productList']);
 
+//Lost
+Route::get('/lost', [LostPetController::class, 'index']);
+
 
 // Rutas protegidas
 Route::post('/user', [UserController::class, 'store'])->middleware(['auth:sanctum', 'usertype:1,2']);
@@ -134,6 +138,8 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
 
         //Rutas con token
         Route::group(['middleware' => ['auth:sanctum']], function () {
+            
+            Route::get('/lost-find', [LostPetController::class, 'show']);
 
             // Rutas admin
             Route::group(['middleware' => ['usertype:1']], function () {
