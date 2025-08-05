@@ -15,7 +15,7 @@ class ServiceTypeController extends Controller
      */
     public function index()
     {
-        $typeServices = ServiceType::all();
+        $typeServices = ServiceType::with('services')->get();
 
         if ($typeServices->count() === 0) {
             return response()->json([
