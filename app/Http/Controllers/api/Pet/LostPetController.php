@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\Pet;
 use App\Http\Controllers\Controller;
 use App\Models\LostPet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use function PHPSTORM_META\map;
 
@@ -34,7 +35,31 @@ class LostPetController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|exists:users,id',
+            'pet_id' => 'required|exists:pets,id',
+            'lat' => 'required|string',
+            'lon' => 'required|string',
+            'description' => 'nullable|string',
+            'lost_date' => 'required|date',
+            'status' => 'required|boolean',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'result' => false,
+                'msg' => 'Datos inválidos',
+                'data' => $validator->errors(),
+            ], 422);
+        }
+
+        $lostPet = LostPet::create($validator->validated());
+
+        return response()->json([
+            'result' => true,
+            'msg' => 'Reporte generado.',
+            'data' => $lostPet,
+        ], 201);
     }
 
     /**
@@ -57,19 +82,64 @@ class LostPetController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Display the specified resource.
      */
-    public function edit(string $id)
+    public function foundPet(Request $request, string $id)
     {
-        //
+        $lost = LostPet::find($id);
+        if(!$lost){
+            return response()->json([
+                'result' => false,
+                'msg' => "No existe el reporte de desaparición."
+            ], 404);
+        }
+        $lost->user_find_id = $request->user()->id;
+        $lost->save();
+        return response()->json([
+            'result' => true,
+            'msg' => "Se ha encontrado a la mascota."
+        ]);
     }
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $lost = LostPet::find($id);
+        if(!$lost){
+            return response()->json([
+                'result' => false,
+                'msg' => "No hay reportes de desaparición"
+            ], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|exists:users,id',
+            'pet_id' => 'required|exists:pets,id',
+            'lat' => 'required|string',
+            'lon' => 'required|string',
+            'description' => 'nullable|string',
+            'lost_date' => 'required|date',
+            'status' => 'required|boolean',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'result' => false,
+                'msg' => 'Datos inválidos',
+                'data' => $validator->errors(),
+            ], 422);
+        }
+
+        $lost->update($validator->validated());
+
+
+        
+        return response()->json([
+            'result' => true,
+            'msg' => "Reporte actualizado.",
+            'data' => $lost
+        ]);
     }
 
     /**
@@ -77,6 +147,17 @@ class LostPetController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $lost = LostPet::find($id);
+        if(!$lost){
+            return response()->json([
+                'result' => false,
+                'msg' => "No existe el reporte de desaparición."
+            ], 404);
+        }
+        $lost->delete();
+        return response()->json([
+            'result' => true,
+            'msg' => "Reporte eliminado."
+        ]);
     }
 }

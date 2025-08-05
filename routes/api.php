@@ -140,8 +140,12 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
         Route::group(['middleware' => ['auth:sanctum']], function () {
             
             Route::get('/lost-find', [LostPetController::class, 'show']);
-
-            // Rutas admin
+            Route::delete('/lost/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
+            Route::put('/lost/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
+            Route::post('/lost', [UserController::class, 'store']);
+            Route::put('/found-pet/{id}', [UserController::class, 'foundPet'])->where('id', '[0-9]+');
+            
+                // Rutas admin
             Route::group(['middleware' => ['usertype:1']], function () {
                 //
             });
