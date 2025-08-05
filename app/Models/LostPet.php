@@ -27,7 +27,7 @@ class LostPet extends Model
     }
     public function userFind()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_find_id');
     }
     public function pet()
     {
