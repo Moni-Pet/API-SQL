@@ -13,15 +13,21 @@ return new class extends Migration
     {
         Schema::create('lost_pets', function (Blueprint $table) {
             $table->id();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('pet_id')->references('id')->on('pets');
+
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('pet_id');
+            $table->unsignedBigInteger('user_find_id')->nullable();
+
             $table->string('lat');
             $table->string('lon');
             $table->string('description')->nullable();
-            $table->foreign('user_find_id')->references('id')->on('users');
             $table->datetime('lost_date');
             $table->boolean('status');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('pet_id')->references('id')->on('pets')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('user_find_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
