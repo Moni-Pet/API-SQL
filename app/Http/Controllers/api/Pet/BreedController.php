@@ -57,7 +57,7 @@ class BreedController extends Controller
      */
     public function show(int $id)
     {
-        $breed = Breed::with(['typePet', 'pets'])->find($id);
+        $breed = Breed::with(['typePet', 'pets.petPhotos'])->find($id);
 
         if(!$breed) {
             return response()->json([
