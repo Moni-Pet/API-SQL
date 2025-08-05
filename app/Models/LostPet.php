@@ -23,15 +23,15 @@ class LostPet extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function userFind()
     {
-        return $this->hasOne(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function pet()
     {
-        return $this->hasOne(Pet::class, 'pet_id');
+        return $this->belongsTo(Pet::class, 'pet_id');
     }
 
 }

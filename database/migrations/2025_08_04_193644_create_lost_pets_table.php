@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('lat');
             $table->string('lon');
             $table->string('description')->nullable();
-            $table->foreignId('user_find_id')->nullable()->constrained('users'); 
+            $table->foreignId('user_find_id')->nullable()->constrained('users');
             $table->datetime('lost_date');
             $table->boolean('status');
             $table->timestamps();
