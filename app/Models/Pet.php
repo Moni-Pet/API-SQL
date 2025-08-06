@@ -53,6 +53,10 @@ class Pet extends Model
         return $this->hasMany(Gadget::class, 'pet_id');
     }
 
+    public function lostPets() {
+        return $this->hasMany(LostPet::class, 'pet_id'); 
+    }
+
     protected static function booted()
     {
         static::deleting(function ($pet) {

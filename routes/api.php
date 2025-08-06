@@ -18,6 +18,7 @@ use App\Http\Controllers\api\Gadgets\GpsGadgetController;
 use App\Http\Controllers\api\Order\OrderController;
 use App\Http\Controllers\api\Order\OrderDetailController;
 use App\Http\Controllers\api\Pet\BreedController;
+use App\Http\Controllers\api\Pet\LostPetController;
 use App\Http\Controllers\api\Pet\PetController;
 use App\Http\Controllers\api\Pet\PetTypeController;
 use App\Http\Controllers\api\Photo\PetPhotoController;
@@ -123,6 +124,9 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show'])->where('id', '[0-9]+');
 Route::post('/products/list', [ProductController::class, 'productList']);
 
+//Lost
+Route::get('/lost', [LostPetController::class, 'index']);
+
 
 // Rutas protegidas
 Route::post('/user', [UserController::class, 'store'])->middleware(['auth:sanctum', 'usertype:1,2']);
@@ -137,8 +141,14 @@ Route::group(
 
         //Rutas con token
         Route::group(['middleware' => ['auth:sanctum']], function () {
-
-            // Rutas admin
+            
+            Route::get('/lost-find', [LostPetController::class, 'show']);
+            Route::delete('/lost/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
+            Route::put('/lost/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
+            Route::post('/lost', [UserController::class, 'store']);
+            Route::put('/found-pet/{id}', [UserController::class, 'foundPet'])->where('id', '[0-9]+');
+            
+                // Rutas admin
             Route::group(['middleware' => ['usertype:1']], function () {
                 //
             });
