@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\Gadgets\Admin;
 
+use App\Helpers\FastApiHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\gadgets\StoreGadgetRequest;
 use App\Http\Requests\gadgets\UpdateGadgetRequest;
@@ -9,13 +10,21 @@ use App\Models\Gadget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
+use function PHPUnit\Framework\isEmpty;
+
 class GadgetsController extends Controller
 {
+    protected $fastApiUrl;
+
+    public function __construct()
+    {
+        $this->fastApiUrl = config('services.fastapi.url'); // Usa el .env vía services.php
+    }
     public function index()
     {
-        $gadgets = Gadget::with('type', 'user', 'pet');
+        $gadgets = Gadget::with('type');
 
-        if (! $gadgets) {
+        if (isEmpty($gadgets)) {
             return response()->json([
                 'status' => false,
                 'msg' => 'Los recursos solicitados no fueron encontrados',
@@ -37,12 +46,27 @@ class GadgetsController extends Controller
             'gadget_type_id' => $request['gadget_type_id'],
             'alias' => $request['alias'] ?? 'desconocido'
         ]);
-        $fastapiUrl = env('FASTAPI_URL');
-        Http::post("$fastapiUrl/tracking-status", [
-            'mac_address' => $gadget->mac_address,
-            'tracking_enabled' => false // o false, depende cómo lo definas
-        ]);
+        if ($request->gadget_type_id == 1) {
+            $response = FastApiHelper::request('post', 'gps/tracking-status', [
+                'mac_address' => $request->mac_address,
+                'tracking_enabled' => false
+            ]);
 
+            if ($response['success']) {
+                return response()->json([
+                    'result' => true,
+                    'msg' => $response['msg'],
+                    'error_code'=>$response['error_code'],
+                    'data' => $response['data']
+                ]);
+            }
+            return response()->json([
+                'result' => false,
+                'msg' => $response['msg'],
+                'error_code' => $response['error_code'],
+                'data' => $response['data']
+            ], $response['status']);
+        }
         return response()->json([
             'result' => true,
             'msg' => "Gadget creado correctamente",

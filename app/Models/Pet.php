@@ -8,24 +8,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pet extends Model
 {
-     use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'breed_id', 
-        'name', 
-        'birthday', 
-        'gender', 
-        'spayed', 
-        'size', 
-        'weight', 
-        'height', 
-        'description', 
-        'status', 
+        'breed_id',
+        'name',
+        'birthday',
+        'gender',
+        'spayed',
+        'size',
+        'weight',
+        'height',
+        'description',
+        'status',
         'user_id',
         'uid'
     ];
 
-    public function breed(){
+    public function breed()
+    {
         return $this->belongsTo(Breed::class, 'breed_id');
     }
     public function user()
@@ -42,9 +43,14 @@ class Pet extends Model
     {
         return $this->hasMany(AppointmentPet::class, 'pet_id');
     }
-    public function petPhotos() {
+    public function petPhotos()
+    {
         return $this->hasMany(PetPhoto::class, 'pet_id');
-        
+    }
+
+    public function gadgets()
+    {
+        return $this->hasMany(Gadget::class, 'pet_id');
     }
 
     protected static function booted()
