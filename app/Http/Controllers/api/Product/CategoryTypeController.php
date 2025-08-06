@@ -15,7 +15,7 @@ class CategoryTypeController extends Controller
      */
     public function index()
     {
-        $categoryTypes = CategoryType::all();
+        $categoryTypes = CategoryType::with('categories')->get();
 
         if ($categoryTypes->count() === 0) {
             return response()->json([
