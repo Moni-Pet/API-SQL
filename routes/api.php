@@ -12,6 +12,7 @@ use App\Http\Controllers\api\City\CityController;
 use App\Http\Controllers\api\EmailController;
 use App\Http\Controllers\api\Gadgets\Admin\GadgetsController;
 use App\Http\Controllers\api\Gadgets\Admin\GadgetTypeController;
+use App\Http\Controllers\api\Gadgets\FeederGadgetController;
 use App\Http\Controllers\api\Gadgets\GadgetPetController;
 use App\Http\Controllers\api\Gadgets\GadgetUserController;
 use App\Http\Controllers\api\Gadgets\GpsGadgetController;
@@ -141,14 +142,14 @@ Route::group(
 
         //Rutas con token
         Route::group(['middleware' => ['auth:sanctum']], function () {
-            
+
             Route::get('/lost-find', [LostPetController::class, 'show']);
             Route::delete('/lost/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
             Route::put('/lost/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
             Route::post('/lost', [UserController::class, 'store']);
             Route::put('/found-pet/{id}', [UserController::class, 'foundPet'])->where('id', '[0-9]+');
-            
-                // Rutas admin
+
+            // Rutas admin
             Route::group(['middleware' => ['usertype:1']], function () {
                 //
             });
@@ -256,7 +257,6 @@ Route::group(
                 Route::post('/gadget_type', [GadgetTypeController::class, 'store']);
                 Route::put('/gadget_type/{id}', [GadgetTypeController::class, 'update'])->where('id', '[0-9]+');;
                 Route::delete('/gadget_type/{id}', [GadgetTypeController::class, 'destroy'])->where('id', '[0-9]+');;
-            
             });
 
             // Rutas User
@@ -275,7 +275,6 @@ Route::group(
                 Route::patch('/gps/toggle-tracking/{id}', [GpsGadgetController::class, 'toggleTracking']);
                 Route::get('/gps/tracking-status/{id}', [GpsGadgetController::class, 'trackingStatus']);
                 Route::get('/gps/ubicacion/{id}', [GpsGadgetController::class, 'ubicacionActual']);
-           
             });
 
 
@@ -346,12 +345,14 @@ Route::group(
                 Route::get('/gadget_pet/{id}', [GadgetPetController::class, 'showGadgetsPet']);
                 Route::put('/gadget_pet/{id}', [GadgetPetController::class, 'updatePetGadget']);
                 Route::delete('/gadget_pet/{id}', [GadgetPetController::class, 'deletePetGadget']);
-            
+
                 Route::patch('/gps/toggle-tracking/{id}', [GpsGadgetController::class, 'toggleTracking']);
                 Route::get('/gps/tracking-status/{id}', [GpsGadgetController::class, 'trackingStatus']);
                 Route::get('/gps/ubicacion/{id}', [GpsGadgetController::class, 'ubicacionActual']);
                 Route::get('/gps/pet', [GpsGadgetController::class, 'showUserPetsWithGps']);
-                
+
+                Route::post('/feeder/{id}', [FeederGadgetController::class, 'store']); // Enviar horarios y cantidad
+                Route::get('feeder/{id}', [FeederGadgetController::class, 'show']);
             });
         });
     }

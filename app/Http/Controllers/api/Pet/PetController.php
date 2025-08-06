@@ -49,10 +49,10 @@ class PetController extends Controller
      */
     public function store(StorePetRequest $request)
     {
-        Http::delete("{$this->fastApiUrl}/rfid");
-        $uid = $this->esperarUidDesdeFastAPI();
+        //Http::delete("{$this->fastApiUrl}/rfid");
+        //$uid = $this->esperarUidDesdeFastAPI();
 
-        if (!$uid) {
+        /*if (!$uid) {
             return response()->json([
                 'result' => false,
                 'msg' => 'No se pudo leer el UID RFID en el tiempo esperado.',
@@ -70,21 +70,20 @@ class PetController extends Controller
                 ],
                 'data' => null
             ], 422);
-        }
+        }*/
 
         $pet = Pet::create([
             'breed_id' => $request->breed_id,
             'name' => $request->name,
             'birthday' => $request->birthday,
             'gender' => $request->gender,
-            'spayed' => $request->spayed,
-            'size' => $request->size,
             'weight' => $request->weight,
             'height' => $request->height,
             'description' => $request->description,
             'status' => $request->status,
+            'spayed' => $request->spayed,
             'user_id' => $request->user_id,
-            'uid' => $uid
+            'uid' => null
         ]);
 
         $petName = preg_replace('/\s+/', '_', strtolower($pet->name));
