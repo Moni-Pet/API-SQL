@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Storage;
 
 class PetController extends Controller
 {
+    protected $fastApiUrl;
+
+    public function __construct()
+    {
+        $this->fastApiUrl = config('services.fastapi.url');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -42,7 +49,7 @@ class PetController extends Controller
      */
     public function store(StorePetRequest $request)
     {
-        Http::delete('http://192.168.100.8:8000/api/v1/rfid/');
+        Http::delete("{$this->fastApiUrl}/rfid");
         $uid = $this->esperarUidDesdeFastAPI();
 
         if (!$uid) {
@@ -288,7 +295,7 @@ class PetController extends Controller
     {
         $start = now();
         do {
-            $response = Http::timeout(2)->get('http://192.168.100.8:8000/api/v1/rfid/');
+            $response = Http::timeout(2)->get("{$this->fastApiUrl}/rfid/");
 
             if ($response->ok() && !empty($response['uid'])) {
                 return $response['uid'];

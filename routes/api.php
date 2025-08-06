@@ -14,6 +14,7 @@ use App\Http\Controllers\api\Gadgets\Admin\GadgetsController;
 use App\Http\Controllers\api\Gadgets\Admin\GadgetTypeController;
 use App\Http\Controllers\api\Gadgets\GadgetPetController;
 use App\Http\Controllers\api\Gadgets\GadgetUserController;
+use App\Http\Controllers\api\Gadgets\GpsGadgetController;
 use App\Http\Controllers\api\Order\OrderController;
 use App\Http\Controllers\api\Order\OrderDetailController;
 use App\Http\Controllers\api\Pet\BreedController;
@@ -129,7 +130,9 @@ Route::get('/lost', [LostPetController::class, 'index']);
 
 // Rutas protegidas
 Route::post('/user', [UserController::class, 'store'])->middleware(['auth:sanctum', 'usertype:1,2']);
-Route::group(['middleware' => ['verifiedaccount']], function () {
+Route::group(
+    ['middleware' => ['verifiedaccount']],
+    function () {
         // Rutas sin token
         Route::post('/auth/login', [AuthController::class, 'login']);
         Route::post('/auth/2fa/verify', [AuthController::class, 'verifyTAF'])->middleware('verifiedaccount');
@@ -205,7 +208,7 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
 
                 Route::get('/details_order', [OrderDetailController::class, 'index']);
 
-                Route::get('adopter', [AdopterController::class, 'index']); 
+                Route::get('adopter', [AdopterController::class, 'index']);
                 Route::get('adopter/{id}', [AdopterController::class, 'show'])->where('id', '[0-9]+');
                 Route::post('adopter', [AdopterController::class, 'store']);
                 Route::put('adopter/{id}', [AdopterController::class, 'update'])->where('id', '[0-9]+');
@@ -243,12 +246,12 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
                 Route::get('/pets/consultar-rfid', [PetController::class, 'consultarPorRFID']);
 
                 Route::delete('/products_photos/{id}', [ProductPhotoController::class, 'destroy'])->where('id', '[0-9]+');
-           
+
                 Route::get('/gadget', [GadgetsController::class, 'index']);
                 Route::post('/gadget', [GadgetsController::class, 'store']);
                 Route::put('/gadget/{id}', [GadgetsController::class, 'update'])->where('id', '[0-9]+');;
                 Route::delete('/gadget/{id}', [GadgetsController::class, 'destroy'])->where('id', '[0-9]+');;
-            
+
                 Route::get('/gadget_type', [GadgetTypeController::class, 'index']);
                 Route::post('/gadget_type', [GadgetTypeController::class, 'store']);
                 Route::put('/gadget_type/{id}', [GadgetTypeController::class, 'update'])->where('id', '[0-9]+');;
@@ -265,6 +268,16 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
             Route::group(['middleware' => ['usertype:4']], function () {
                 //
             });
+
+            // Rutas Adoptante y User
+            Route::group(['middleware' => ['usertype:3, 4']], function () {
+                //
+                Route::patch('/gps/toggle-tracking/{id}', [GpsGadgetController::class, 'toggleTracking']);
+                Route::get('/gps/tracking-status/{id}', [GpsGadgetController::class, 'trackingStatus']);
+                Route::get('/gps/ubicacion/{id}', [GpsGadgetController::class, 'ubicacionActual']);
+           
+            });
+
 
             // Rutas compartidas
             Route::post('/auth/logout', [AuthController::class, 'logout']);
@@ -333,6 +346,12 @@ Route::group(['middleware' => ['verifiedaccount']], function () {
                 Route::get('/gadget_pet/{id}', [GadgetPetController::class, 'showGadgetsPet']);
                 Route::put('/gadget_pet/{id}', [GadgetPetController::class, 'updatePetGadget']);
                 Route::delete('/gadget_pet/{id}', [GadgetPetController::class, 'deletePetGadget']);
+            
+                Route::patch('/gps/toggle-tracking/{id}', [GpsGadgetController::class, 'toggleTracking']);
+                Route::get('/gps/tracking-status/{id}', [GpsGadgetController::class, 'trackingStatus']);
+                Route::get('/gps/ubicacion/{id}', [GpsGadgetController::class, 'ubicacionActual']);
+                Route::get('/gps/pet', [GpsGadgetController::class, 'showUserPetsWithGps']);
+                
             });
         });
     }

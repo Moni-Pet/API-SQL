@@ -34,5 +34,8 @@ return [
     'sendgrid' => [
         'api_key' => env('SENDGRID_API_KEY'),
     ],
+    'fastapi' => [
+        'url' => env('FASTAPI_URL', 'http://localhost:8000/api/v1'),
+    ],
 
 ];
