@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::with('typeCategory')->get;
+        $category = Category::with('typeCategory')->get();
 
         if ($category->count() === 0) {
             return response()->json([
