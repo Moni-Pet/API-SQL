@@ -16,7 +16,7 @@ class AppointmentDetailController extends Controller
      */
     public function index()
     {
-        $appontmentDetails = AppointmentDetail::with('service')->get();
+        $appontmentDetails = AppointmentDetail::with('service.type')->get();
 
         if ($appontmentDetails->isEmpty()) {
             return response()->json([
@@ -79,7 +79,7 @@ class AppointmentDetailController extends Controller
      */
     public function show(int $id)
     {
-        $appointmentDetail = AppointmentDetail::with('service')->find($id);
+        $appointmentDetail = AppointmentDetail::with('service.type')->find($id);
 
         if (!$appointmentDetail) {
             return response()->json([
