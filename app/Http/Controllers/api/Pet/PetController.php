@@ -124,7 +124,7 @@ class PetController extends Controller
     {
         $pet = Pet::with('breed.typePet', 'user', 'petPhotos')->find($id);
 
-        if ($pet->count() === 0) {
+        if (!$pet) {
             return response()->json([
                 'result' => false,
                 'msg' => "El recurso solicitado no fue encontrado.",
