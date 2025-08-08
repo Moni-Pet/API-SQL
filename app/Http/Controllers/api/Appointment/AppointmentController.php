@@ -17,7 +17,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $appointments = Appointment::with('user', 'details.service', 'appointmentPets')->get();
+        $appointments = Appointment::with('user', 'details.service.type', 'appointmentPets')->get();
 
         if ($appointments->count() === 0) {
             return response()->json([
@@ -89,7 +89,7 @@ class AppointmentController extends Controller
     {
         $userId = $id ?? auth()->id();
 
-        $appointments = Appointment::with('user', 'pet', 'details.service', 'appointmentPets')
+        $appointments = Appointment::with('user', 'pet', 'details.service.type', 'appointmentPets')
             ->where('user_id', $userId)
             ->get();
 
