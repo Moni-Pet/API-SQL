@@ -80,7 +80,7 @@ class PetController extends Controller
             'weight' => $request->weight,
             'height' => $request->height,
             'description' => $request->description,
-            'status' => $request->status,
+            'status' => "Personal",
             'spayed' => $request->spayed,
             'user_id' => $request->user_id,
             'uid' => null
