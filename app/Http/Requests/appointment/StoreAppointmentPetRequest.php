@@ -25,7 +25,8 @@ class StoreAppointmentPetRequest extends FormRequest
     {
         return [
             'appointment_id' => 'required|integer|exists:appointments,id',
-            'pet_id' => 'required|integer|exists:pets,id',
+            'pet_id' => 'required|array|min:1',
+            'pet_id.*' => 'integer|exists:pets,id',  
         ];
     }
 
@@ -36,9 +37,11 @@ class StoreAppointmentPetRequest extends FormRequest
             'appointment_id.integer' => 'El ID de la cita debe ser un número entero.',
             'appointment_id.exists' => 'La cita seleccionada no existe.',
 
-            'pet_id.required' => 'La mascota es obligatoria.',
-            'pet_id.integer' => 'El ID de la mascota debe ser un número entero.',
-            'pet_id.exists' => 'La mascota seleccionada no existe.',
+            'pet_id.required' => 'La lista de mascotas es obligatoria.',
+            'pet_id.array' => 'Las mascotas deben enviarse en un arreglo.',
+            'pet_id.min' => 'Debe haber al menos una mascota seleccionada.',
+            'pet_id.*.integer' => 'Cada ID de mascota debe ser un número entero.',
+            'pet_id.*.exists' => 'Una o más mascotas seleccionadas no existen.',
         ];
     }
 
