@@ -17,7 +17,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $appointments = Appointment::with('user', 'pet', 'details.service.type', 'appointmentPets')->get();
+        $appointments = Appointment::with('user', 'pet.breed.typePet', 'user', 'pet.petPhotos', 'details.service.type', 'appointmentPets')->get();
 
         if ($appointments->count() === 0) {
             return response()->json([
@@ -67,7 +67,7 @@ class AppointmentController extends Controller
      */
     public function show(int $id)
     {
-        $appointment = Appointment::with('user', 'pet', 'details.service.type', 'appointmentPets')->find($id);
+        $appointment = Appointment::with('user', 'pet.breed.typePet', 'user', 'pet.petPhotos', 'details.service.type', 'appointmentPets')->find($id);
 
         if (!$appointment) {
             return response()->json([
