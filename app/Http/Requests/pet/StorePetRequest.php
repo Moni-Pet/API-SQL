@@ -33,7 +33,6 @@ class StorePetRequest extends FormRequest
             'weight' => 'required|numeric|min:0|max:999.99|regex:/^\d{1,3}(\.\d{1,2})?$/',
             'height' => 'required|numeric|min:0|max:999.99|regex:/^\d{1,3}(\.\d{1,2})?$/',
             'description' => 'sometimes|nullable|string|max:200|regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s.,;:()\-¡!¿?"\'%#&]+$/',
-            'id_adopter' => 'sometimes|nullable|exists:users,id',
             'photo' => 'required|image|mimes:jpeg,png,jpg,webp,svg|max:2048'
         ];
     }
@@ -78,8 +77,6 @@ class StorePetRequest extends FormRequest
 
             'status.required' => 'El estado es obligatorio.',
             'status.in' => 'El estado debe ser Adoptado, No adoptado, Pendiente o Personal.',
-
-            'id_adopter.exists' => 'El adoptante seleccionado no es válido.',
 
             'photo.required' => 'La foto es obligatoria.',
             'photo.image' => 'El archivo debe ser una imagen válida.',

@@ -82,7 +82,7 @@ class PetController extends Controller
             'description' => $request->description,
             'status' => "Personal",
             'spayed' => $request->spayed,
-            'user_id' => $request->user_id,
+            'user_id' => $request->user()->id,
             'uid' => null
         ]);
 
