@@ -54,6 +54,19 @@ class AppointmentsSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'user_id' => 5,
+                'pet_id' => null,
+                'status' => 'Pendiente',
+                'descripcion' => 'Cita para adopción',
+                'total_price' => 0.00,
+                'creation_date' => now()->subDays(2),
+                'date' => now()->addDays(2),
+                'transferce_code' => null,
+                'type_appointment' => 'Adoptiva',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }
