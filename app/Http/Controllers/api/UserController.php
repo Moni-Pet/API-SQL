@@ -100,8 +100,17 @@ class UserController extends Controller
             $user->save();
             $this->sendActivationEmail($user);
         }
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
         // Log::info('Datos que se van a actualizar:', $data);
         $user->update($data);
+
+        if ($request->filled('password')) {
+            $user->save();
+        }
 
         return response()->json([
             'result' => true,
