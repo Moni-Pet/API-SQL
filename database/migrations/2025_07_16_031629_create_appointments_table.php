@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('pet_id');
+            $table->unsignedInteger('pet_id')->nullable();
 
             $table->enum('status', ['Pendiente', 'Finalizada', 'Cancelada']);
             $table->string('descripcion', 250)->nullable();

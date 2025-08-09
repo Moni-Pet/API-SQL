@@ -25,10 +25,10 @@ class StoreAppointmentRequest extends FormRequest
     {
         return [
             'user_id' => 'required|integer|exists:users,id',
-            'pet_id' => 'required|integer|exists:pets,id',
+            'pet_id' => 'sometimes|integer|exists:pets,id',
             'status' => 'required|in:Pendiente,Finalizada,Cancelada',
             'descripcion' => 'sometimes|nullable|string|max:250|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú0-9\s.,\-#()¿?¡!]*$/',
-            'total_price' => 'required|numeric|min:0|max:99999.99',
+            'total_price' => 'sometimes|numeric|min:0|max:99999.99',
             'creation_date' => 'sometimes|date_format:Y-m-d H:i:s',
             'date' => 'required|date_format:Y-m-d H:i:s',
             'transferce_code' => 'sometimes|nullable|string|max:100',
