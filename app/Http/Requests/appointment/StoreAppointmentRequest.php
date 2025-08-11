@@ -24,7 +24,6 @@ class StoreAppointmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|integer|exists:users,id',
             'pet_id' => 'sometimes|integer|exists:pets,id',
             'status' => 'required|in:Pendiente,Finalizada,Cancelada',
             'descripcion' => 'sometimes|nullable|string|max:250|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú0-9\s.,\-#()¿?¡!]*$/',

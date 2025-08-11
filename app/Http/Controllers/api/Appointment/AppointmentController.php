@@ -43,7 +43,7 @@ class AppointmentController extends Controller
         $creation_date = now();
 
         $appointment = Appointment::create([
-            'user_id' => $request->user_id,
+            'user_id' => $request->user()->id,
             'pet_id' => $request->pet_id,
             'status' => "Pendiente",
             'descripcion' => $request->descripcion,
