@@ -86,11 +86,11 @@ class ProductController extends Controller
     public function show(int $id)
     {
         $product = Product::with(['productPhotos', 'categories' => function ($query) {
-            $query->whereNull('deleted_at')  
-                ->withPivot('id');  
-    
-        }])->find($id);
-        
+                $query->whereNull('deleted_at')  
+                    ->withPivot('id');  
+            }
+        ])->find($id);
+                
         if (!$product) {
             return response()->json([
                 'result' => false,
