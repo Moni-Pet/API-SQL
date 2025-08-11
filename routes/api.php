@@ -18,7 +18,7 @@ use App\Http\Controllers\api\Gadgets\GadgetUserController;
 use App\Http\Controllers\api\Gadgets\GpsGadgetController;
 use App\Http\Controllers\api\Order\OrderController;
 use App\Http\Controllers\api\Order\OrderDetailController;
-use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\api\PaymentController;
 use App\Http\Controllers\api\Pet\BreedController;
 use App\Http\Controllers\api\Pet\LostPetController;
 use App\Http\Controllers\api\Pet\PetController;
