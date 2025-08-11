@@ -248,7 +248,8 @@ Route::group(
 
                 Route::delete('/pet_photos/{id}', [PetPhotoController::class, 'destroy'])->where('id', '[0-9]+');
                 Route::get('/pets/consultar-rfid', [PetController::class, 'consultarPorRFID']);
-
+                
+                Route::post('/pets/admin', [PetController::class, 'storeAdmin']);
                 Route::delete('/products_photos/{id}', [ProductPhotoController::class, 'destroy'])->where('id', '[0-9]+');
 
                 Route::get('/gadget', [GadgetsController::class, 'index']);

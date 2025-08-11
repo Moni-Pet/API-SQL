@@ -246,6 +246,52 @@ class PetController extends Controller
         ], 200);
     }
 
+    public function storeAdmin(StorePetRequest $request)
+    {
+        $pet = Pet::create([
+            'breed_id' => $request->breed_id,
+            'name' => $request->name,
+            'birthday' => $request->birthday,
+            'gender' => $request->gender,
+            'weight' => $request->weight,
+            'height' => $request->height,
+            'description' => $request->description,
+            'status' => "No adoptado",
+            'spayed' => $request->spayed,
+            'user_id' => null,
+            'uid' => null
+        ]);
+
+        $petName = preg_replace('/\s+/', '_', strtolower($pet->name));
+
+        $file = $request->file('photo');
+        $extension = $file->getClientOriginalExtension();
+        $filename = $petName . '_' . uniqid() . '.' . $extension;
+
+        $path = $file->storeAs('pets', $filename, 'digitalocean');
+
+        if (!$path) {
+            return response()->json([
+                'result' => false,
+                'msg' => 'Error al subir la foto.',
+                'data' => null,
+            ], 500);
+        }
+
+        $url = Storage::url($path);
+
+        $petPhoto = PetPhoto::create([
+            'pet_id' => $pet->id,
+            'photo_link' => $url,
+        ]);
+
+        return response()->json([
+            'result' => true,
+            'msg' => "Mascota creada correctamente.",
+            'error_code' => null,
+            'data' => null
+        ], 201);
+    }
     public function consultarPorRFID()
     {
         // Eliminar primero cualquier UID viejo (opcional, si quieres empezar limpio)
