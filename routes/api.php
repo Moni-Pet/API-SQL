@@ -18,6 +18,7 @@ use App\Http\Controllers\api\Gadgets\GadgetUserController;
 use App\Http\Controllers\api\Gadgets\GpsGadgetController;
 use App\Http\Controllers\api\Order\OrderController;
 use App\Http\Controllers\api\Order\OrderDetailController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\api\Pet\BreedController;
 use App\Http\Controllers\api\Pet\LostPetController;
 use App\Http\Controllers\api\Pet\PetController;
@@ -348,6 +349,10 @@ Route::group(
 
                 Route::post('/feeder/{id}', [FeederGadgetController::class, 'store']); // Enviar horarios y cantidad
                 Route::get('feeder/{id}', [FeederGadgetController::class, 'show']);
+
+                //Stripe
+                Route::post('/stripe/create-payment-intent', [PaymentController::class, 'createPaymentIntent']);
+                Route::post('/stripe/confirm-payment', [PaymentController::class, 'confirmPayment']);
             });
         });
     }
