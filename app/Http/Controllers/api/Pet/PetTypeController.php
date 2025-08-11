@@ -57,7 +57,7 @@ class PetTypeController extends Controller
      */
     public function show(int $id)
     {
-        $typePet = TypePet::find($id)->with(['breed']);
+        $typePet = TypePet::where('id', $id)->with(['breed'])->first();
         
         if(!$typePet) {
             return response()->json([
