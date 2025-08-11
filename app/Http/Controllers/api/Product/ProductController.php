@@ -85,8 +85,10 @@ class ProductController extends Controller
      */
     public function show(int $id)
     {
-        $product = Product::with('productPhotos', 'categories')->find($id);
-
+        $product = Product::with(['categories' => function ($query) {
+            $query->withPivot('id');
+        }])->find($id);
+        
         if (!$product) {
             return response()->json([
                 'result' => false,
