@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\api\AuthController;
+use App\Mail\Code2af_verification;
 
 class UserController extends Controller
 {
@@ -133,6 +135,27 @@ class UserController extends Controller
         ], 200);
 
     }
+
+    public function recoveryPass(Request $request){
+        $user = User::where('email', $request->email)->first();
+        if (! $user) {
+            return response()->json([
+                'status' => false,
+                'msg' => 'El recurso solicitado no fue encontrado',
+                'error_code' => 1202,
+                'data' => null
+            ], 404);
+        }
+        $this->sendVerificationCode($user);
+
+        return response()->json([
+            'status' => true,
+            'msg' => 'El usuario fue encontrado correctamente.',
+            'error_code' => null,
+            'data' => $user
+        ], 200);
+    }
+
     private function sendActivationEmail(User $user)
     {
         $url = URL::temporarySignedRoute(
@@ -141,5 +164,16 @@ class UserController extends Controller
             ['email' => $user->email]
         );
         Mail::to($user->email)->send(new Account_activation($url, $user->name));
+    }
+
+    private function sendVerificationCode(User $user)
+    {
+        $twoFactorCode = rand(100000, 999999);
+        $user->two_factor_code = Hash::make($twoFactorCode);
+        $user->two_factor_expires_at = now()->addMinutes(10);
+        $user->save();
+
+        Mail::to($user->email)->send(new Code2af_verification($user->name, $twoFactorCode));
+        return null;
     }
 }

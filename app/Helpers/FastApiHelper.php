@@ -10,10 +10,10 @@ class FastApiHelper
     public static function request(string $method, string $endpoint, array $payload = [])
     {
         try {
-            $baseUrl = config('services.fastapi.url'); // desde .env
+            $baseUrl = config('services.fastapi.url');
             $url = rtrim($baseUrl, '/') . '/' . ltrim($endpoint, '/');
 
-            $response = Http::timeout(10)->{$method}($url, $payload);
+            $response = Http::timeout(seconds: 10)->{$method}($url, $payload);
 
             $data = $response->json();
 

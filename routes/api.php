@@ -33,9 +33,12 @@ use App\Http\Controllers\api\Service\ServiceTypeController;
 use App\Http\Controllers\api\State\StateController;
 use App\Http\Controllers\api\TypeUserController;
 use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\apiNoSql\ReportsController;
 use App\Http\Controllers\NotificationController;
 use App\Models\User;
 use App\Http\Controllers\api\Worker\WorkerController;
+use App\Http\Controllers\apiNoSql\CommentsController;
+use App\Http\Controllers\apiNoSql\MedicalHistoryController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Auth;
@@ -353,6 +356,23 @@ Route::group(
 
                 Route::post('/feeder/{id}', [FeederGadgetController::class, 'store']); // Enviar horarios y cantidad
                 Route::get('feeder/{id}', [FeederGadgetController::class, 'show']);
+
+
+
+                Route::post('/reports',  [ReportsController::class, 'store']);
+                Route::get('/reports/{id?}',   [ReportsController::class, 'index']);
+                Route::get('/reports/show/{index}/{id?}',    [ReportsController::class, 'show']);
+                Route::delete('/reports/delete/{index}/{id?}', [ReportsController::class, 'destroy']);
+
+                Route::post('/medical-history',  [MedicalHistoryController::class, 'store']);
+                Route::get('/medical-history/{id?}',   [MedicalHistoryController::class, 'index']);
+                Route::get('/medical-history/show/{pet_id}/{index}',    [MedicalHistoryController::class, 'show']);
+                Route::delete('/medical-history/delete/{pet_id}/{index}', [MedicalHistoryController::class, 'destroy']);
+
+
+                Route::post('/comments', [CommentsController::class, 'store']); 
+                Route::get('/comments/{product_id}', [CommentsController::class, 'index']);
+                Route::delete('/comments/delete/{product_id}/{index}', [CommentsController::class, 'destroy']);
             });
         });
     }
