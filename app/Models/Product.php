@@ -40,9 +40,6 @@ class Product extends Model
     protected static function booted()
     {   
         static::deleting(function ($product) {
-            if ($product->gadgetUsers()->exists()) {
-                $product->gadgetUsers->each->delete();
-            }
             if ($product->productPhotos()->exists()) {
                 $product->productPhotos->each->delete();
             }
