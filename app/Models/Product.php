@@ -37,13 +37,19 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class, 'category_products', 'product_id', 'category_id');
     }
-
     protected static function booted()
-    {
+    {   
         static::deleting(function ($product) {
-            $product->gadgetUsers->each->delete();
-            $product->productPhotos->each->delete();
-            $product->detailsOrders->each->delete();
+            if ($product->gadgetUsers()->exists()) {
+                $product->gadgetUsers->each->delete();
+            }
+            if ($product->productPhotos()->exists()) {
+                $product->productPhotos->each->delete();
+            }
+            if ($product->detailsOrders()->exists()) {
+                $product->detailsOrders->each->delete();
+            }
         });
     }
+
 }
