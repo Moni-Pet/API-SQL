@@ -56,17 +56,14 @@ class OrderDetailController extends Controller
                 ], 404);
             }
 
-            $unitPrice = $product->price;
             $quantity = $item['quantity'];
-            $subtotal = $unitPrice * $quantity;
-            $discountAmount = ($subtotal * $product->discount) / 100;
 
             $createdItems[] = OrderDetail::create([
                 'order_id' => $order_id,
                 'product_id' => $product->id,
                 'quantity' => $quantity,
-                'price' => $subtotal,   
-                'discount' => $discountAmount,
+                'price' => $product->price,   
+                'discount' => $product->discount,
             ]);
 
             $product->stock = max(0, $product->stock - $quantity);

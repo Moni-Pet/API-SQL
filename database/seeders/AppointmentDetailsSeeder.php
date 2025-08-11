@@ -40,5 +40,20 @@ class AppointmentDetailsSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        DB::table('appointment_pets')->insert([
+            [
+                'pet_id' => 2,
+                'appointment_id' => 3,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'pet_id' => 4,
+                'appointment_id' => 4,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }

@@ -38,4 +38,9 @@ return [
         'url' => env('FASTAPI_URL', 'http://localhost:8000/api/v1'),
     ],
 
+    'stripe' => [
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+    ],
+
 ];

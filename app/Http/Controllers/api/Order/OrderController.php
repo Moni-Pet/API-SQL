@@ -56,7 +56,9 @@ class OrderController extends Controller
             'result' => true,
             'msg' => 'Orden creada correctamente.',
             'error_code' => null,
-            'data' => null
+            'data' => [
+                'order_id' => $order->id
+            ]
         ], 201);
     }
 

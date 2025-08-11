@@ -18,6 +18,7 @@ use App\Http\Controllers\api\Gadgets\GadgetUserController;
 use App\Http\Controllers\api\Gadgets\GpsGadgetController;
 use App\Http\Controllers\api\Order\OrderController;
 use App\Http\Controllers\api\Order\OrderDetailController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\api\Pet\BreedController;
 use App\Http\Controllers\api\Pet\LostPetController;
 use App\Http\Controllers\api\Pet\PetController;
@@ -242,7 +243,6 @@ Route::group(
 
                 Route::get('/appointment_pets', [AppointmentPetController::class, 'index']);
                 Route::get('/appointment_pets/{id}', [AppointmentPetController::class, 'show'])->where('id', '[0-9]+');
-                Route::post('/appointment_pets', [AppointmentPetController::class, 'store']);
                 Route::put('/appointment_pets/{id}', [AppointmentPetController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/appointment_pets/{id}', [AppointmentPetController::class, 'destroy'])->where('id', '[0-9]+');
 
@@ -304,9 +304,12 @@ Route::group(
 
                 Route::get('/appointment', [AppointmentController::class, 'index']);
                 Route::get('/appointment/{id}', [AppointmentController::class, 'show'])->where('id', '[0-9]+');
+                Route::get('/appointment/user/{id?}', [AppointmentController::class, 'showUserAppointments'])->where('id', '[0-9]+');
                 Route::post('/appointment', [AppointmentController::class, 'store']);
                 Route::put('/appointment/{id}', [AppointmentController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/appointment/{id}', [AppointmentController::class, 'destroy'])->where('id', '[0-9]+');
+
+                Route::post('/appointment_pets', [AppointmentPetController::class, 'store']);
 
                 Route::get('/gadget_user/user/{id?}', [GadgetUserController::class, 'showGadgetsUser']);
                 Route::post('/gadget_user', [GadgetUserController::class, 'store']);
@@ -324,13 +327,6 @@ Route::group(
                 Route::post('/details_order', [OrderDetailController::class, 'store']);
                 Route::put('/details_order/{id}', [OrderDetailController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/details_order/{id}', [OrderDetailController::class, 'destroy'])->where('id', '[0-9]+');
-
-                Route::get('/appointment', [AppointmentController::class, 'index']);
-                Route::get('/appointment/{id}', [AppointmentController::class, 'show'])->where('id', '[0-9]+');
-                Route::get('/appointment/user/{id?}', [AppointmentController::class, 'showUserAppointments'])->where('id', '[0-9]+');
-                Route::post('/appointment', [AppointmentController::class, 'store']);
-                Route::put('/appointment/{id}', [AppointmentController::class, 'update'])->where('id', '[0-9]+');
-                Route::delete('/appointment/{id}', [AppointmentController::class, 'destroy'])->where('id', '[0-9]+');
 
                 Route::get('/appointment_details/{id}', [AppointmentDetailController::class, 'show'])->where('id', '[0-9]+');
                 Route::get('/appointment_details/appointment/{id}', [AppointmentDetailController::class, 'showAppointmentDetails'])->where('id', '[0-9]+');
@@ -373,6 +369,9 @@ Route::group(
                 Route::post('/comments', [CommentsController::class, 'store']); 
                 Route::get('/comments/{product_id}', [CommentsController::class, 'index']);
                 Route::delete('/comments/delete/{product_id}/{index}', [CommentsController::class, 'destroy']);
+                //Stripe
+                Route::post('/stripe/create-payment-intent', [PaymentController::class, 'createPaymentIntent']);
+                Route::post('/stripe/confirm-payment', [PaymentController::class, 'confirmPayment']);
             });
         });
     }

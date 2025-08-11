@@ -56,13 +56,11 @@ class AppointmentDetailController extends Controller
                 ], 404);
             }
             
-            $discount = ($service->price * $service->discounts) / 100;
-
             $createdServices[] = AppointmentDetail::create([
                 'service_id' => $service->id,
                 'appointment_id' => $appointment_id,
                 'price_service' => $service->price,
-                'discount' => $discount
+                'discount' => $service->discount
             ]);
         }
 

@@ -17,19 +17,19 @@ class PetPhotosSeeder extends Seeder
         DB::table('pet_photos')->insert([
             [
                 'pet_id' => 1,
-                'photo_link' => 'https://monipetresources.sfo3.digitaloceanspaces.com/pets/max_688ad9c9a80aa.jpeg',
+                'photo_link' => 'https://monipetresources.sfo3.digitaloceanspaces.com/pets/max_68983e6574fb9.jpg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'pet_id' => 2,
-                'photo_link' => 'https://monipetresources.sfo3.digitaloceanspaces.com/pets/luna_688ad9e68ae16.jpeg',
+                'photo_link' => 'https://monipetresources.sfo3.digitaloceanspaces.com/pets/luna_68981ca0b7c8f.jpeg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'pet_id' => 3,
-                'photo_link' => 'https://monipetresources.sfo3.digitaloceanspaces.com/pets/mishi_688ad9f82469b.jpeg',
+                'photo_link' => 'https://monipetresources.sfo3.digitaloceanspaces.com/pets/mishi_6899b47536e5c.jpeg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

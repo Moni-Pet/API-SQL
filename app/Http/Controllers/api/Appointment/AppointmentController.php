@@ -58,7 +58,9 @@ class AppointmentController extends Controller
             'result' => true,
             'msg' => 'Cita creada correctamente.',
             'error_code' => null,
-            'data' => null
+            'data' =>[
+                'appointment_id' => $appointment->id
+            ]
         ], 201);
     }
 
