@@ -43,7 +43,8 @@ class CreateUserRequest extends FormRequest
                 Password::min(8)->letters()->mixedCase()->numbers()->symbols()
             ],
             'gender' => 'required|in:Masculino,Femenino,39 tipos de gays',
-            'birth_date' => 'required|date'
+            'birth_date' => 'required|date',
+            'account_verification' => 'sometimes|date',
         ];
     }
     public function messages()
@@ -82,10 +83,14 @@ class CreateUserRequest extends FormRequest
             'password.symbols' => 'La contraseña debe contener al menos un símbolo.',
 
             'gender.required' => 'El género es obligatorio.',
-            'gender.in' => 'El género seleccionado no es válido.',
+            'gender.in' => 'El género seleccionado no es válido, debe ser Masculino, Femenino o 39 tipos de gays.',
 
             'birth_date.required' => 'La fecha de nacimiento es obligatoria.',
             'birth_date.date' => 'La fecha de nacimiento debe debe tener un formato válido.',
+
+            'account_verification.date' => 'La fecha de verificación debe debe tener un formato válido.',
+
+
         ];
     }
 
