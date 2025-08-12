@@ -25,6 +25,12 @@ class recoveryPassword extends FormRequest
     public function rules(): array
     {
         return [
+            'email' => [
+                'required',
+                'email',
+                'exists:users,email',
+                'regex:/^[^@]+@[^@]+\.[^@]+$/'   
+            ],
             'password' => [
                 'sometimes',
                 'string',
@@ -38,6 +44,11 @@ class recoveryPassword extends FormRequest
     public function messages()
     {
         return  [
+            'email.required' => 'El correo electronico es obligatorio',
+            'email.email'=> 'El correo electronico debe tener un formato valido',
+            'email.exists'=> 'EL correo electronico no pertenece a ningun usuario registrado',
+            'email.regex'=> 'El correo electronico debe tener un formato valido',
+            
             'password.string' => 'La contraseña debe tener un formato válido.',
             'password.confirmed' => 'Las contraseñas no coinciden.',
             'password.regex' => 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un símbolo.',
