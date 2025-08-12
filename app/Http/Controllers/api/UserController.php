@@ -75,6 +75,7 @@ class UserController extends Controller
             'data' => null
         ], 201);
     }
+
     public function update(UpdateUserRequest $request, $id)
     {
         $user = User::find($id);
@@ -147,7 +148,8 @@ class UserController extends Controller
 
     public function recoveryPass(Request $request){
         $user = User::where('email', $request->email)->first();
-        if (! $user) {
+
+        if (!$user) {
             return response()->json([
                 'status' => false,
                 'msg' => 'El recurso solicitado no fue encontrado',
@@ -155,13 +157,20 @@ class UserController extends Controller
                 'data' => null
             ], 404);
         }
-        $this->sendVerificationCode($user);
+        
+        $fields =[
+            'password'
+        ];
+
+        $data = $request->only($fields);
+
+        $user->update($data);
 
         return response()->json([
             'status' => true,
-            'msg' => 'El usuario fue encontrado correctamente.',
+            'msg' => 'Contraseña actualizada.',
             'error_code' => null,
-            'data' => $user
+            'data' => null
         ], 200);
     }
 
