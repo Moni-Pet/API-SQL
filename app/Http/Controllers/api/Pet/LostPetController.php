@@ -42,7 +42,6 @@ class LostPetController extends Controller
             'lon' => 'required|string',
             'description' => 'nullable|string',
             'lost_date' => 'required|date',
-            'status' => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -53,7 +52,15 @@ class LostPetController extends Controller
             ], 422);
         }
 
-        $lostPet = LostPet::create($validator->validated());
+        $lostPet = LostPet::create([
+            'user_id' => $request->user()->id,
+            'pet_id' => $request->pet_id,
+            'lat' => $request->lat,
+            'lon' => $request->lon,
+            'description' => $request->description,
+            'lost_date' => $request->lost_date,
+            'status' => false,
+        ]);
 
         return response()->json([
             'result' => true,

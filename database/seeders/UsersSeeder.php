@@ -33,6 +33,22 @@ class UsersSeeder extends Seeder
             ],
             [
                 'user_type_id' => 3, // Cliente
+                'name' => 'Monipet',
+                'last_name' => 'Ventas',
+                'last_name2' => '',
+                'email' => 'chivasmonipet@gmail.com',
+                'password' => Hash::make('$Monipet'),
+                'account_verification' => now(),
+                'gender' => '39 tipos de gays',
+                'birth_date' => '2004-09-03',
+                'two_factor_code' => null,
+                'two_factor_expires_at' => null,
+                'remember_token' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_type_id' => 3, // Cliente
                 'name' => 'Jessica',
                 'last_name' => 'Juarez',
                 'last_name2' => null,
