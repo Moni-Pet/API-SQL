@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('types_pet', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('type_pet', '12')->unique();
-            $table->string('icono', 2083);
+            $table->text('icono');
             $table->timestamps();
             $table->softDeletes();
         });
