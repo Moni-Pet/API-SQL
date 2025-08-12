@@ -25,7 +25,7 @@ class UpdatePetTypeRequest extends FormRequest
     {
         return [
             'type_pet' => 'sometimes|string|max:12|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
-            'icono' => 'sometimes|string|max:2083'
+            'icono' => 'sometimes|string|max:65535'
         ];
     }
 
@@ -38,7 +38,7 @@ class UpdatePetTypeRequest extends FormRequest
             'type_pet.unique' => 'Ya existe este tipo de mascota.',
 
             'icono.string' => 'El icono debe ser una cadena de texto.',
-            'icono.max' => 'El icono no debe exceder los 2083 caracteres.',
+            'icono.max' => 'El icono no debe exceder los 65535 caracteres.',
         ];
     }
 

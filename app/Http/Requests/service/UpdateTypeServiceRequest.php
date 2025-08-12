@@ -39,7 +39,7 @@ class UpdateTypeServiceRequest extends FormRequest
             'type_service.unique' => 'Ya existe un tipo de servicio con ese nombre.',
 
             'icono.string' => 'El icono debe ser una cadena de texto.',
-            'icono.max' => 'El icono no debe exceder los 2083 caracteres.',
+            'icono.max' => 'El icono no debe exceder los 65535 caracteres.',
         ];
     }
 

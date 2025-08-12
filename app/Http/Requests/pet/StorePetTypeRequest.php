@@ -40,7 +40,7 @@ class StorePetTypeRequest extends FormRequest
 
             'icono.required' => 'El icono es obligatorio.',
             'icono.string' => 'El icono debe ser una cadena de texto.',
-            'icono.max' => 'El icono no debe exceder los 2083 caracteres.',
+            'icono.max' => 'El icono no debe exceder los 65535 caracteres.',
         ];
     }
 
