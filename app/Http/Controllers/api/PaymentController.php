@@ -123,7 +123,13 @@ class PaymentController extends Controller
                         $detail->save();
                     }
                 }
-
+                return response()->json([
+                    'result' => true,
+                    'msg' => "Pago confirmado y registro creado correctamente.",
+                    'error_code' => null,
+                    'data' => null
+                ], 201);
+                
                 return response()->json(['message' => 'Pago confirmado y registro creado correctamente.']);
             }
 
