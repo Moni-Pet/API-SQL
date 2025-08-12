@@ -69,6 +69,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/email/verify', [EmailController::class, 'activateAccount'])->name('activate.account');
     Route::post('/email/resend-verification', [AuthController::class, 'resendEmailVerification']);
+    Route::post('/recovery-pass', [UserController::class,  'recoveryPass']);
 });
 
 // TypesPet
