@@ -49,7 +49,7 @@ class StoreOrderRequest extends FormRequest
             'price.regex' => 'El precio debe tener hasta dos decimales.',
 
             'status.required' => 'El estado es obligatorio.',
-            'status.in' => 'El estado debe ser uno de los siguientes: pendiente, entregado o cancelado.',
+            'status.in' => 'El estado debe ser uno de los siguientes: Pendiente, Entregada o Cancelada.',
 
             'transferce_code.string' => 'El código de transferencia debe ser una cadena de texto.',
             'transferce_code.max' => 'El código de transferencia no debe exceder los 100 caracteres.',
