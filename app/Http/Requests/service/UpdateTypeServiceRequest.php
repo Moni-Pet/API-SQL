@@ -25,7 +25,7 @@ class UpdateTypeServiceRequest extends FormRequest
     {
         return [
             'type_service' => 'required|string|max:12|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
-            'icono' => 'sometimes|nullable|string|max:2083'
+            'icono' => 'sometimes|nullable|string|max:65535'
         ];
     }
 
