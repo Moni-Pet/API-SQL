@@ -25,7 +25,7 @@ class UpdateBreedRequest extends FormRequest
     {
         return [
             'type_pet_id' => 'sometimes|exists:types_pet,id',
-            'breed' => 'sometimes|string|max:50|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
+            'breed' => 'sometimes|string|max:50|unique:breeds,breed|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/',
         ];
     }
 
