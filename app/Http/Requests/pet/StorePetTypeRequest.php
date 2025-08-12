@@ -25,7 +25,7 @@ class StorePetTypeRequest extends FormRequest
     {
         return [
             'type_pet' => 'required|string|max:12|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/|unique:types_pet,type_pet',
-            'icono' => 'required|string|max:2083'
+            'icono' => 'required|string|max:65535'
         ];
     }
 
