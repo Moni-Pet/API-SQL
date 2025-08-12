@@ -64,7 +64,8 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'gender' => $request->gender,
-            'birth_date' => $request->birth_date
+            'birth_date' => $request->birth_date,
+            'account_verification' => $request->account_verification
         ]);
 
         $this->sendActivationEmail($user);
