@@ -16,7 +16,7 @@ class LostPetController extends Controller
      */
     public function index()
     {
-        $lost = LostPet::with(['pet.petPhotos', 'pet.breed', 'user'])->where('status',  true)->get();
+        $lost = LostPet::with(['pet.petPhotos', 'pet.breed', 'user'])->where('status',  false)->get();
         if($lost->isEmpty()){
             return response()->json([
                 'result' => false,
