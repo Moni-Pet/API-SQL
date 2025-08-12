@@ -159,13 +159,9 @@ class UserController extends Controller
             ], 404);
         }
         
-        $fields =[
-            'password'
-        ];
-
-        $data = $request->only($fields);
-
-        $user->update($data);
+        $user = User::update([
+            'password' => Hash::make($request->password),
+        ]);
 
         return response()->json([
             'status' => true,
