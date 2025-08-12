@@ -133,6 +133,7 @@ Route::post('/products/list', [ProductController::class, 'productList']);
 //Lost
 Route::get('/lost', [LostPetController::class, 'index']);
 
+Route::get('/comments/{product_id}', [CommentsController::class, 'index']);
 
 // Rutas protegidas
 Route::post('/user', [UserController::class, 'store'])->middleware(['auth:sanctum', 'usertype:1,2']);
@@ -369,7 +370,6 @@ Route::group(
 
 
                 Route::post('/comments', [CommentsController::class, 'store']); 
-                Route::get('/comments/{product_id}', [CommentsController::class, 'index']);
                 Route::delete('/comments/delete/{product_id}/{index}', [CommentsController::class, 'destroy']);
                 //Stripe
                 Route::post('/stripe/create-payment-intent', [PaymentController::class, 'createPaymentIntent']);
