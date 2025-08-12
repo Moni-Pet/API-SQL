@@ -21,7 +21,7 @@
           <tr>
             <td style="padding:30px; text-align:left; color: #2b2d2f;">
                 <h1 style="font-size:24px; font-weight:bold; text-align:center; margin:0 0 20px;">Hola, {{ $name }}!!! 🐾</h1>
-              <p style="font-size:16px; margin-bottom:20px;">Tu codigo de verificación en dos pasos es el siguiente:</p>
+              <p style="font-size:16px; margin-bottom:20px;">Tu codigo de verificación:</p>
               <p style="text-align:center; margin-bottom:10px;font-size:30px;font-weight:bold;">
                 {{ $code }}
               </p>
