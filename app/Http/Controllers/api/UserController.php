@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\api\AuthController;
+use App\Http\Requests\recoveryPassword;
 use App\Mail\Code2af_verification;
 
 class UserController extends Controller
@@ -146,7 +147,7 @@ class UserController extends Controller
 
     }
 
-    public function recoveryPass(Request $request){
+    public function recoveryPass(recoveryPassword $request){
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
