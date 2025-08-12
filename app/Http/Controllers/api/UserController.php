@@ -160,7 +160,7 @@ class UserController extends Controller
             ], 404);
         }
         
-        $user = User::update([
+        $user->update([
             'password' => Hash::make($request->password),
         ]);
 
