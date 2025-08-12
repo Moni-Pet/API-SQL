@@ -25,7 +25,7 @@ class StoreTypeServiceRequest extends FormRequest
     {
         return [
             'type_service' => 'required|string|max:12|regex:/^[A-Za-zÑñÁÉÍÓÚáéíóú\s\']+$/|unique:types_services,type_service',
-            'icono' => 'sometimes|nullable|string|max:2083'
+            'icono' => 'sometimes|nullable|string|max:65535'
         ];
     }
 
