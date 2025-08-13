@@ -185,8 +185,8 @@ class ProductController extends Controller
 
     public function productStats()
     {
-        $products = Product::withCount('detailsOrders')->orderByDesc('details_orders_count')       // ordena de mayor a menor
-        ->with('detailsOrders')->take(4)->get();
+        $products = Product::withCount('detailsOrders')->has('detailsOrders')
+        ->orderByDesc('details_orders_count')->with('detailsOrders')->take(4)->get();
 
         if($products->count() <= 0){
             return response()->json([

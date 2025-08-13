@@ -154,7 +154,8 @@ class ServiceController extends Controller
 
     public function serviceStats()
     {
-        $services = Service::with('details')->get();
+        $services = Service::withCount('details')->has('details')
+        ->orderByDesc('details_count')->with('details')->take(4)->get();
 
         if($services->count() <= 0){
             return response()->json([
