@@ -24,7 +24,7 @@ class StoreAdopterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id|unique:adopters,user_id',
             'phone' => 'required|string|size:10|regex:/^\d{10}$/',
             'street' => 'required|string|max:250|regex:/^[A-Za-zÑñÁ-Úá-ú0-9\s,\.\-\#]+$/',
             'neighborhood' => 'required|string|max:100|regex:/^[A-Za-zÑñÁ-Úá-ú0-9\s,\.\-\#]+$/',
