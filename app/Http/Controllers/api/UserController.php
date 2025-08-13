@@ -23,14 +23,14 @@ class UserController extends Controller
         $data = User::all();
         if (! $data) {
             return response()->json([
-                'status' => false,
+                'result' => false,
                 'msg' => 'Los recursos solicitados no fueron encontrados',
                 'error_code' => 1201,
                 'data' => null
             ], 404);
         }
         return response()->json([
-            'status' => true,
+            'result' => true,
             'msg' => 'Los usuarios fueron encontrados correctamente.',
             'error_code' => null,
             'data' => $data
@@ -41,14 +41,14 @@ class UserController extends Controller
         $data_user = User::find($id_user);
         if (! $data_user) {
             return response()->json([
-                'status' => false,
+                'result' => false,
                 'msg' => 'El recurso solicitado no fue encontrado',
                 'error_code' => 1202,
                 'data' => null
             ], 404);
         }
         return response()->json([
-            'status' => true,
+            'result' => true,
             'msg' => 'El usuario fue encontrado correctamente.',
             'error_code' => null,
             'data' => $data_user
@@ -153,7 +153,7 @@ class UserController extends Controller
 
         if (!$user) {
             return response()->json([
-                'status' => false,
+                'result' => false,
                 'msg' => 'El recurso solicitado no fue encontrado',
                 'error_code' => 1202,
                 'data' => null
@@ -165,7 +165,7 @@ class UserController extends Controller
         ]);
 
         return response()->json([
-            'status' => true,
+            'result' => true,
             'msg' => 'Contraseña actualizada.',
             'error_code' => null,
             'data' => null
