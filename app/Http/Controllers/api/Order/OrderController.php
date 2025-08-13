@@ -187,4 +187,20 @@ class OrderController extends Controller
             'data' => null
         ], 200);
     }
+
+    public function ordersToday()
+    {
+        $appointments = Order::with('user', 'details.product.productPhotos')->where('date', now())->get();
+        if($appointments->count() <= 0){
+            return response()->json([
+                'result' => false,
+                'msg' => "No hay citas para el día de hoy"
+            ], 404);
+        }
+        return response()->json([
+                'result' => true,
+                'msg' => "Citas para el día de hoy",
+                'data' => $appointments
+        ]);
+    }
 }

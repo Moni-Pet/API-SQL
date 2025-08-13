@@ -210,6 +210,8 @@ Route::group(
 
                 Route::get('/gadget_user', [GadgetUserController::class, 'index']);
                 Route::get('/gadget_user/{id}', [GadgetUserController::class, 'show'])->where('id', '[0-9]+');
+                
+                Route::get('/orders_today', [OrderController::class, 'ordersToday']);
 
                 Route::get('/order', [OrderController::class, 'index']);
 
@@ -240,6 +242,8 @@ Route::group(
                 Route::post('/adoption_followups', [AdoptionFollowupController::class, 'store']);
                 Route::put('/adoption_followups/{id}', [AdoptionFollowupController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/adoption_followups/{id}', [AdoptionFollowupController::class, 'destroy'])->where('id', '[0-9]+');
+
+                Route::get('/appointment_today', [AppointmentController::class, 'appointmentsToday']);
 
                 Route::get('/appointment_details', [AppointmentDetailController::class, 'index']);
 

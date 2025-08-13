@@ -182,4 +182,20 @@ class AppointmentController extends Controller
             'data' => null
         ], 200);
     }
+
+    public function appointmentsToday()
+    {
+        $appointments = Appointment::with('user', 'pet.breed.typePet', 'user', 'pet.petPhotos', 'details.service.type',  'appointmentPets.pet.breed.typePet', 'appointmentPets.pet.petPhotos')->where('date', now())->get();
+        if($appointments->count() <= 0){
+            return response()->json([
+                'result' => false,
+                'msg' => "No hay citas para el día de hoy"
+            ], 404);
+        }
+        return response()->json([
+                'result' => true,
+                'msg' => "Citas para el día de hoy",
+                'data' => $appointments
+        ]);
+    }
 }
