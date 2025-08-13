@@ -185,10 +185,12 @@ class ProductController extends Controller
 
     public function productStats()
     {
-        $products = Product::select('products.*')
-            ->join('order_details', 'products.id', '=', 'order_details.product_id')
-            ->selectRaw('SUM(order_details.quantity * order_details.price) as total_sales')
-            ->groupBy('products.id')->orderByDesc('total_sales')->with('detailsOrders')->take(4)->get();
+        $products = Product::select('products.id', 'products.name', 'products.description', 'products.price', 'products.stock', 'products.discount')
+    ->join('order_details', 'products.id', '=', 'order_details.product_id')
+    ->selectRaw('SUM(order_details.quantity * order_details.price) as total_sales')
+    ->groupBy('products.id', 'products.name', 'products.description', 'products.price', 'products.stock', 'products.discount')
+    ->orderByDesc('total_sales')->with('detailsOrders')->take(4)->get();
+
 
         if($products->count() <= 0){
             return response()->json([
