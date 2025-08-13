@@ -62,7 +62,7 @@ class AdopterController extends Controller
      */
     public function show(int $id)
     {
-        $adopter = Adopter::with('city', 'state', 'user', 'adoptions.pet.breed.typePet')->find($id);
+        $adopter = Adopter::with('city', 'state', 'user', 'adoptions.pet.breed.typePet')->where('user_id', $id)->first;
 
         if (!$adopter) {
             return response()->json([
