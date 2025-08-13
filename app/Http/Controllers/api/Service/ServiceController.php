@@ -151,4 +151,22 @@ class ServiceController extends Controller
             'data' => null,
         ], 200);
     }
+
+    public function serviceStats()
+    {
+        $services = Service::with('details')->get();
+
+        if($services->count() <= 0){
+            return response()->json([
+                'result' => false,
+                'msg' => "No hay estadisticas de los servicios"
+            ], 404);
+        }
+
+        return response()->json([
+            'result' => true,
+            'msg' => "Los servicios más comprados",
+            'data' => $services
+        ]);
+    }
 }

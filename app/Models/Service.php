@@ -21,4 +21,8 @@ class Service extends Model
     {
         return $this->belongsTo(ServiceType::class, 'type_service_id');
     }
+    public function details()
+    {
+        return $this->hasMany(AppointmentDetail::class, 'service_id');
+    }
 }

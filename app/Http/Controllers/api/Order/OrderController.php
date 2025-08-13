@@ -190,8 +190,8 @@ class OrderController extends Controller
 
     public function ordersToday()
     {
-        $appointments = Order::with('user', 'details.product.productPhotos')->whereDate('pickup_date', now())->get();
-        if($appointments->count() <= 0){
+        $orders = Order::with('user', 'details.product.productPhotos')->whereDate('pickup_date', now())->get();
+        if($orders->count() <= 0){
             return response()->json([
                 'result' => false,
                 'msg' => "No hay ordenes para el día de hoy"
@@ -200,7 +200,7 @@ class OrderController extends Controller
         return response()->json([
                 'result' => true,
                 'msg' => "Ordenes para el día de hoy",
-                'data' => $appointments
+                'data' => $orders
         ]);
     }
 }

@@ -182,4 +182,22 @@ class ProductController extends Controller
             'data' => null,
         ], 200);
     }
+
+    public function productStats()
+    {
+        $products = Product::with('detailsOrders')->get();
+
+        if($products->count() <= 0){
+            return response()->json([
+                'result' => false,
+                'msg' => "No hay estadisticas de los productos"
+            ], 404);
+        }
+
+        return response()->json([
+            'result' => true,
+            'msg' => "Los productos más vendidos",
+            'data' => $products
+        ]);
+    }
 }
