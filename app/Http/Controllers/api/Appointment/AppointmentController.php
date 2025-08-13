@@ -185,7 +185,7 @@ class AppointmentController extends Controller
 
     public function appointmentsToday()
     {
-        $appointments = Appointment::with('user', 'pet.breed.typePet', 'user', 'pet.petPhotos', 'details.service.type',  'appointmentPets.pet.breed.typePet', 'appointmentPets.pet.petPhotos')->where('date', now())->get();
+        $appointments = Appointment::with('user', 'pet.breed.typePet', 'user', 'pet.petPhotos', 'details.service.type',  'appointmentPets.pet.breed.typePet', 'appointmentPets.pet.petPhotos')->whereDate('date', now())->get();
         if($appointments->count() <= 0){
             return response()->json([
                 'result' => false,
