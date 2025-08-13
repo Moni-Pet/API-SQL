@@ -25,6 +25,8 @@ class CommentsController extends Controller
         $comment = [
             'productId' => (int) $request['product_id'],
             'comments' => [
+                'title'=> $request['title'],
+                'rate'=>$request['rate'],
                 'userId' => auth()->id(),
                 'comment' => $request['comment'],
                 'date' => now()

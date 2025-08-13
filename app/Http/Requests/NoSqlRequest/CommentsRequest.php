@@ -24,6 +24,8 @@ class CommentsRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'title' => '',
+            'rate' => '',
             'product_id' =>'',
             'comment' => ''
         ];
