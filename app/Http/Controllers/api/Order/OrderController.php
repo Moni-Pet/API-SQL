@@ -42,9 +42,9 @@ class OrderController extends Controller
     {
         $purchase_date = now();
         $pickup_date = $purchase_date->copy()->addDays(3)->setTime(10, 0); 
-        
+        $user_id = ($request->user_id != null ? $request->user_id : $request->user()->id);
         $order = Order::create([
-            'user_id' => $request->user_id,
+            'user_id' => $user_id,
             'purchase_date' => $purchase_date,
             'pickup_date' => $pickup_date,
             'price' => $request->price,

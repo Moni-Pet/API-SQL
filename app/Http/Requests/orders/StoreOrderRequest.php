@@ -24,7 +24,7 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'sometimes|exists:users,id',
             'purchase_date' => 'date_format:Y-m-d H:i:s',
             'pickup_date' => 'sometimes|nullable|date_format:Y-m-d H:i:s',
             'price' => 'required|numeric|min:0|regex:/^\d+(\.\d{1,2})?$/',
@@ -36,7 +36,6 @@ class StoreOrderRequest extends FormRequest
     public function messages()
     {
         return [
-            'user_id.required' => 'El campo usuario es obligatorio.',
             'user_id.exists' => 'El usuario seleccionado no existe.',
             
             'purchase_date.date_format' => 'La fecha de compra debe tener el formato: YYYY-MM-DD HH:MM:SS.',
