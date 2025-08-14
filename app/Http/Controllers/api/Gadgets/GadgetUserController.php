@@ -168,7 +168,7 @@ class GadgetUserController extends Controller
     //Gadget del usuario con sus mascotas
     public function showGadgetsPets(Request $request)
     {
-        $gadgets = GadgetUser::with(['gadget.pet.breed.typePet', 'gadget.pet.petPhotos'])->where('user_id', $request->user()->id)->get();
+        $gadgets = GadgetUser::with(['gadget.pet.breed.typePet', 'gadget.pet.petPhotos', 'gadget.type'])->where('user_id', $request->user()->id)->get();
 
         if ($gadgets->isEmpty()) {
             return response()->json([
