@@ -19,15 +19,24 @@ class PaymentController extends Controller
     {
         Stripe::setApiKey(config('services.stripe.secret'));
 
-        $amount = $request->input('amount');
-        $metadata = $request->input('metadata');
+        $amount = floatval($request->input('amount'));
+        $metadata = $request->input('metadata', []);
+
+        if ($amount < 5) {
+            return response()->json(['error' => 'El monto mínimo permitido es $5 MXN'], 400);
+        }
+
+        $metadataForStripe = [];
+        foreach ($metadata as $key => $value) {
+            $metadataForStripe[$key] = is_array($value) ? json_encode($value) : (string) $value;
+        }
 
         try {
             $paymentIntent = PaymentIntent::create([
                 'amount' => intval(round($amount * 100)),
                 'currency' => 'mxn',
                 'payment_method_types' => ['card'],
-                'metadata' => $metadata,
+                'metadata' => $metadataForStripe,
             ]);
 
             return response()->json([
@@ -58,7 +67,9 @@ class PaymentController extends Controller
 
                     $totalCalculated = 0;
                     foreach ($products as $prod) {
-                        $totalCalculated += $prod['price'] * $prod['quantity'];
+                        $discount = $prod['discount'] ?? 0;
+                        $discountMultiplier = 1 - ($discount / 100);
+                        $totalCalculated += ($prod['price'] * $discountMultiplier) * $prod['quantity'];
                     }
                     $totalCalculated = round($totalCalculated, 2);
                     $amountReceived = round($paymentIntent->amount_received / 100, 2);
@@ -68,7 +79,7 @@ class PaymentController extends Controller
                     }
 
                     $order = new Order();
-                    $order->user_id = $userId;
+                    $order->user_id = ($request->user_id != null ? $request->user_id : $request->user()->id);
                     $order->purchase_date = $purchase_date;
                     $order->pickup_date = $pickup_date;
                     $order->price = $totalCalculated;
@@ -102,7 +113,7 @@ class PaymentController extends Controller
                     }
 
                     $appointment = new Appointment();
-                    $appointment->user_id = $userId;
+                    $appointment->user_id = ($request->user_id != null ? $request->user_id : $request->user()->id);
                     $appointment->pet_id = $request->input('pet_id');
                     $appointment->descripcion = $request->input('descripcion');
                     $appointment->creation_date = $purchase_date;
