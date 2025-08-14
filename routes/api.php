@@ -70,8 +70,8 @@ Route::prefix('auth')->group(function () {
     Route::get('/email/verify', [EmailController::class, 'activateAccount'])->name('activate.account');
     Route::post('/email/resend-verification', [AuthController::class, 'resendEmailVerification']);
     Route::put('/recovery-pass', [UserController::class,  'recoveryPass']);
-    Route::post('send_code', [UserController::class, 'sendCode']);
 });
+Route::post('send_code', [UserController::class, 'sendCode']);
 
 // TypesPet
 Route::get('/types_pet', [PetTypeController::class, 'index']);
