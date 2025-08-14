@@ -70,6 +70,7 @@ Route::prefix('auth')->group(function () {
     Route::get('/email/verify', [EmailController::class, 'activateAccount'])->name('activate.account');
     Route::post('/email/resend-verification', [AuthController::class, 'resendEmailVerification']);
     Route::put('/recovery-pass', [UserController::class,  'recoveryPass']);
+    Route::post('send_code', [UserController::class, 'sendCode']);
 });
 
 // TypesPet
@@ -294,7 +295,6 @@ Route::group(
             Route::post('/auth/logout', [AuthController::class, 'logout']);
             Route::get('/auth/me', [AuthController::class, 'me']);
             Route::put('change_mail', [UserController::class, 'changeMail']);
-            Route::post('send_code', [UserController::class, 'sendCode']);
 
             //Rutas compartidas por todos los tipos de usuarios (no publicas)
             Route::group(['middleware' => ['usertype:1,2,3,4']], function () {
