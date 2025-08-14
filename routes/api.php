@@ -291,10 +291,10 @@ Route::group(
                 Route::get('/gps/ubicacion/{id}', [GpsGadgetController::class, 'ubicacionActual']);
 
                 //Mascotas de un usuario con sus gadgets
-                Route::get('/gadgets_user', [GadgetPetController::class, 'showGadgetsPets']);
+                Route::get('/pets_gadgets', [GadgetPetController::class, 'showGadgetsPets']);
 
                 //Gadget del usuario con sus mascotas
-                Route::get('/pets_gadgets', [GadgetUserController::class, 'showGadgetsPets']);
+                Route::get('/gadgets_user', [GadgetUserController::class, 'showGadgetsPets']);
 
             });
 
