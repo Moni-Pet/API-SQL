@@ -182,14 +182,14 @@ class UserController extends Controller
         Mail::to($user->email)->send(new Account_activation($url, $user->name));
     }
 
-    private function sendVerificationCode(User $user)
+    private function sendVerificationCode(User $user, Request $request)
     {
         $twoFactorCode = rand(100000, 999999);
         $user->two_factor_code = Hash::make($twoFactorCode);
         $user->two_factor_expires_at = now()->addMinutes(10);
         $user->save();
 
-        Mail::to($user->email)->send(new Code2af_verification($user->name, $twoFactorCode));
+        Mail::to($request->email)->send(new Code2af_verification($user->name, $twoFactorCode));
         return null;
     }
 
@@ -222,6 +222,26 @@ class UserController extends Controller
             'error_code' => null,
             'data' => null
         ], 200);
+    }
+
+    public function sendCode(Request $request)
+    {
+        $user = User::find($request->user()->id);
+        if (! $user) {
+            return response()->json([
+                'result' => 'false',
+                'msg' => 'El usuario no fue encontrado.',
+                'code' => 1101,
+                'data' => null
+            ], 404);
+        }
+        $this->sendVerificationCode($user, $request);
+        return response()->json([
+            'result' => true,
+            'msg' => 'Codigo enviado correctamente.',
+            'error_code' => null,
+            'data' => null
+        ]);
     }
 
 }
