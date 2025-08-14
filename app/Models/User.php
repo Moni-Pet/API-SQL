@@ -63,13 +63,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Adopter::class, 'user_id');
     }
-
     protected static function booted()
     {
         static::deleting(function ($user) {
-	    if($user->adopter){
-		$user->adopter->delete();
-	    }
+            if ($user->adopter) {
+                $user->adopter->delete();
+            }
         });
     }
     public function gadgets()

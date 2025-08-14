@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\Adoption;
 
+use App\Helpers\FastApiHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\adoption\StoreAdoptionRequest;
 use App\Http\Requests\adoption\UpdateAdoptionRequest;
@@ -39,7 +40,7 @@ class AdoptionController extends Controller
     public function store(StoreAdoptionRequest $request)
     {
         $date = now();
-        $delivery_date = $date->copy()->addDays(3)->setTime(13, 0); 
+        $delivery_date = $date->copy()->addDays(3)->setTime(13, 0);
 
         $adoption = Adoption::create([
             'adopter_id' => $request->adopter_id,
@@ -49,6 +50,13 @@ class AdoptionController extends Controller
             'notes' => $request->notes,
             'delivery_date' => $delivery_date
         ]);
+        if ($request->adoption_status == 'realizada') {
+            $payload = [
+                'adopterId' => $request->adopter_id,
+                'petId'     => $request->pet_id,
+            ];
+            FastApiHelper::request('post', '/chat/init', $payload);
+        }
 
         return response()->json([
             'result' => true,

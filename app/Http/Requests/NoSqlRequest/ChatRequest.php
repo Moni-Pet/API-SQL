@@ -24,7 +24,29 @@ class ChatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'text' => ''
+            'user_id'    => 'required|integer|exists:users,id',
+            'pet_id' => 'required|integer|exists:pets,id',
+            'text'       => 'required|string|max:500',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'user_id.required'    => 'Debes especificar el usuario.',
+            'user_id.integer'     => 'El usuario debe ser un ID numérico.',
+            'user_id.exists'      => 'El usuario seleccionado no existe.',
+
+            'mascota_id.required' => 'Debes especificar la mascota.',
+            'mascota_id.integer'  => 'La mascota debe ser un ID numérico.',
+            'mascota_id.exists'   => 'La mascota seleccionada no existe.',
+
+            'sender.required'     => 'Debes indicar quién envía el mensaje.',
+            'sender.string'       => 'El emisor debe ser texto.',
+            'sender.in'           => 'El emisor debe ser "user" o "admin".',
+
+            'text.required'       => 'El mensaje no puede estar vacío.',
+            'text.string'         => 'El mensaje debe ser texto.',
+            'text.max'            => 'El mensaje no puede exceder 500 caracteres.',
         ];
     }
     protected function failedValidation(Validator $validator)

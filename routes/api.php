@@ -34,6 +34,7 @@ use App\Http\Controllers\api\Service\ServiceTypeController;
 use App\Http\Controllers\api\State\StateController;
 use App\Http\Controllers\api\TypeUserController;
 use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\apiNoSql\ChatController;
 use App\Http\Controllers\apiNoSql\ReportsController;
 use App\Http\Controllers\NotificationController;
 use App\Models\User;
@@ -212,7 +213,7 @@ Route::group(
 
                 Route::get('/gadget_user', [GadgetUserController::class, 'index']);
                 Route::get('/gadget_user/{id}', [GadgetUserController::class, 'show'])->where('id', '[0-9]+');
-                
+
                 Route::get('/orders_today', [OrderController::class, 'ordersToday']);
                 Route::get('/order/stats', [ProductController::class, 'productStats']);
 
@@ -258,7 +259,7 @@ Route::group(
 
                 Route::delete('/pet_photos/{id}', [PetPhotoController::class, 'destroy'])->where('id', '[0-9]+');
                 Route::get('/pets/consultar-rfid', [PetController::class, 'consultarPorRFID']);
-                
+
                 Route::post('/pets/admin', [PetController::class, 'storeAdmin']);
                 Route::delete('/products_photos/{id}', [ProductPhotoController::class, 'destroy'])->where('id', '[0-9]+');
 
@@ -289,6 +290,16 @@ Route::group(
                 Route::patch('/gps/toggle-tracking/{id}', [GpsGadgetController::class, 'toggleTracking']);
                 Route::get('/gps/tracking-status/{id}', [GpsGadgetController::class, 'trackingStatus']);
                 Route::get('/gps/ubicacion/{id}', [GpsGadgetController::class, 'ubicacionActual']);
+            });
+
+            // Rutas Adoptante y Admin
+            Route::group(['middleware' => ['usertype:1, 4']], function () {
+                //
+                Route::post('/chat/send', [ChatController::class, 'send']);                       
+                Route::get('/chat/conversations', [ChatController::class, 'adminConversations']);
+                Route::get('/chat/pets/{adopterId?}', [ChatController::class, 'listUserPets']);
+                Route::get('/chat/history/{petId}/{adopterId}', [ChatController::class, 'history']);
+                Route::patch('/chat/seen/{petdId}/{adopterId?}', [ChatController::class, 'markSeen']);
             });
 
 
@@ -377,7 +388,7 @@ Route::group(
                 Route::delete('/medical-history/delete/{pet_id}/{index}', [MedicalHistoryController::class, 'destroy']);
 
 
-                Route::post('/comments', [CommentsController::class, 'store']); 
+                Route::post('/comments', [CommentsController::class, 'store']);
                 Route::delete('/comments/delete/{product_id}/{index}', [CommentsController::class, 'destroy']);
                 //Stripe
                 Route::post('/stripe/create-payment-intent', [PaymentController::class, 'createPaymentIntent']);
