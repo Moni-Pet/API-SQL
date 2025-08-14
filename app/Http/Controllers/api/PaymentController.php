@@ -58,8 +58,7 @@ class PaymentController extends Controller
 
                     $totalCalculated = 0;
                     foreach ($products as $prod) {
-                        $priceAfterDiscount = $prod['price'] - ($prod['discount'] ?? 0);
-                        $totalCalculated += $priceAfterDiscount * $prod['quantity'];
+                        $totalCalculated += $prod['price'] * $prod['quantity'];
                     }
                     $totalCalculated = round($totalCalculated, 2);
                     $amountReceived = round($paymentIntent->amount_received / 100, 2);

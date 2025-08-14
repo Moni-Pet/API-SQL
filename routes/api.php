@@ -290,6 +290,13 @@ Route::group(
                 Route::patch('/gps/toggle-tracking/{id}', [GpsGadgetController::class, 'toggleTracking']);
                 Route::get('/gps/tracking-status/{id}', [GpsGadgetController::class, 'trackingStatus']);
                 Route::get('/gps/ubicacion/{id}', [GpsGadgetController::class, 'ubicacionActual']);
+
+                //Mascotas de un usuario con sus gadgets
+                Route::get('/pets_gadgets', [GadgetPetController::class, 'showGadgetsPets']);
+
+                //Gadget del usuario con sus mascotas
+                Route::get('/gadgets_user', [GadgetUserController::class, 'showGadgetsPets']);
+
             });
 
             // Rutas Adoptante y Admin

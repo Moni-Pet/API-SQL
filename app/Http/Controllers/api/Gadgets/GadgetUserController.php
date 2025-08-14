@@ -165,4 +165,26 @@ class GadgetUserController extends Controller
             'data' => null,
         ], 200);
     }
+    //Gadget del usuario con sus mascotas
+    public function showGadgetsPets(Request $request)
+    {
+        $gadgets = GadgetUser::with(['gadget.pet.breed.typePet', 'gadget.pet.petPhotos'])->where('user_id', $request->user()->id)->get();
+
+        if ($gadgets->isEmpty()) {
+            return response()->json([
+                'result' => false,
+                'msg' => 'No cuentas con gadgets.',
+                'error_code' => 1407,
+                'data' => null
+            ], 404);
+        }
+
+        return response()->json([
+            'result' => true,
+            'msg' => 'Gadgets encontrados.',
+            'error_code' => null,
+            'data' => $pets
+        ], 200);
+    }
+    
 }

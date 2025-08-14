@@ -18,11 +18,6 @@ class Product extends Model
         'discount'
     ];
 
-    public function gadgetUsers()
-    {
-        return $this->hasMany(GadgetUser::class, 'product_id');
-    }
-
     public function productPhotos()
     {
         return $this->hasMany(ProductPhoto::class, 'product_id');
