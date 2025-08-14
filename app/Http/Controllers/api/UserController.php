@@ -192,4 +192,36 @@ class UserController extends Controller
         Mail::to($user->email)->send(new Code2af_verification($user->name, $twoFactorCode));
         return null;
     }
+
+    public function changeMail(Request $request)
+    {
+        $user = User::find($request->user()->id);
+        if (! $user) {
+            return response()->json([
+                'result' => false,
+                'msg' => 'El usuario no fue encontrado.',
+                'error_code' => 1101,
+                'data' => null
+            ], 404);
+        }
+        if (! Hash::check($request->code, $user->two_factor_code) || now()->gt($user->two_factor_expires_at)) {
+            return response()->json([
+                'result' => false,
+                'msg' => 'El código de verificación es inválido o ha expirado.',
+                'error_code' => 1003,
+                'data' => null
+            ], 403);
+        }
+        
+        $user->email = $request->email;
+        $user->save();
+
+        return response()->json([
+            'result' => true,
+            'msg' => 'Correo verificado correctamente.',
+            'error_code' => null,
+            'data' => null
+        ], 200);
+    }
+
 }
