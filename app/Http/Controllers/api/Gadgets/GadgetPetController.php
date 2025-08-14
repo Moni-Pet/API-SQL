@@ -40,7 +40,7 @@ class GadgetPetController extends Controller
         if ($pets->isEmpty()) {
             return response()->json([
                 'result' => false,
-                'msg' => 'No cuentas con mascotas.',
+                'msg' => 'No cuentas con mascotas con gadgets.',
                 'error_code' => 1407,
                 'data' => null
             ], 404);
@@ -48,7 +48,7 @@ class GadgetPetController extends Controller
 
         return response()->json([
             'result' => true,
-            'msg' => 'Mascotas encontradas.',
+            'msg' => 'Mascotas con gadgets encontradas.',
             'error_code' => null,
             'data' => $pets
         ], 200);
