@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Requests\recoveryPassword;
 use App\Mail\Code2af_verification;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -195,6 +196,18 @@ class UserController extends Controller
 
     public function changeMail(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+            'code' => "required|string|regex:/^\d{6}$/",
+            'email' => "required|email|regex:/^[^@]+@[^@]+\.[^@]+$/"
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'result' => false,
+                'msg' => 'Los datos proporcionados no son válidos.',
+                'error_code' => 1101,
+                'data' => null
+            ], 401);
+        }
         $user = User::find($request->user()->id);
         if (! $user) {
             return response()->json([
