@@ -194,7 +194,7 @@ class UserController extends Controller
         return null;
     }
 
-    public function changeMail(Request $request)
+    public function changeEmail(Request $request)
     {
         $validator = Validator::make($request->all(),[
             'code' => "required|string|regex:/^\d{6}$/",

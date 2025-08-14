@@ -72,6 +72,7 @@ Route::prefix('auth')->group(function () {
     Route::put('/recovery-pass', [UserController::class,  'recoveryPass']);
 });
 Route::post('send_code', [UserController::class, 'sendCode'])->middleware('auth:sanctum');
+Route::put('change_email', [UserController::class, 'changeEmail'])->middleware('auth:sanctum');
 
 // TypesPet
 Route::get('/types_pet', [PetTypeController::class, 'index']);
@@ -294,7 +295,6 @@ Route::group(
             // Rutas compartidas
             Route::post('/auth/logout', [AuthController::class, 'logout']);
             Route::get('/auth/me', [AuthController::class, 'me']);
-            Route::put('change_mail', [UserController::class, 'changeMail']);
 
             //Rutas compartidas por todos los tipos de usuarios (no publicas)
             Route::group(['middleware' => ['usertype:1,2,3,4']], function () {
