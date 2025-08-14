@@ -205,7 +205,7 @@ class UserController extends Controller
                 'result' => false,
                 'msg' => 'Los datos proporcionados no son válidos.',
                 'error_code' => 1101,
-                'data' => null
+                'data' => $validator->errors()
             ], 401);
         }
         $user = User::find($request->user()->id);
