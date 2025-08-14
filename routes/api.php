@@ -71,7 +71,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/email/resend-verification', [AuthController::class, 'resendEmailVerification']);
     Route::put('/recovery-pass', [UserController::class,  'recoveryPass']);
 });
-Route::post('send_code', [UserController::class, 'sendCode']);
+Route::post('send_code', [UserController::class, 'sendCode'])->middleware('auth:sanctum');
 
 // TypesPet
 Route::get('/types_pet', [PetTypeController::class, 'index']);
