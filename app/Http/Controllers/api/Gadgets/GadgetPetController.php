@@ -35,7 +35,7 @@ class GadgetPetController extends Controller
     //Mascotas de un usuario con sus gadgets
     public function showGadgetsPets(Request $request)
     {
-        $pets = Pet::with(['gadgets', 'breed.typePet', 'petPhotos', 'type'])->where('user_id', $request->user()->id)->get();
+        $pets = Pet::with(['gadgets.type', 'breed.typePet', 'petPhotos'])->where('user_id', $request->user()->id)->get();
 
         if ($pets->isEmpty()) {
             return response()->json([
