@@ -66,7 +66,7 @@ class FeederGadgetController extends Controller
         $response = FastApiHelper::request('get', 'comedero/comedero-config', [
             'mac_address' => $gadget->mac_address
         ]);
-
+ 
         return response()->json([
             'result' => $response['success'],
             'msg' => $response['msg'],

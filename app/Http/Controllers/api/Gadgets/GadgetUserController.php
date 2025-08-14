@@ -183,7 +183,7 @@ class GadgetUserController extends Controller
             'result' => true,
             'msg' => 'Gadgets encontrados.',
             'error_code' => null,
-            'data' => $pets
+            'data' => $gadgets
         ], 200);
     }
     

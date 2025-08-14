@@ -20,9 +20,9 @@ class ReportsController extends Controller
                 'place' => $request->place
             ]
         ];
-        
+
         $response = FastApiHelper::request('post', '/reports', $report);
-        
+
         return response()->json([
             'result' => $response['success'],
             'msg' => $response['msg'],
@@ -31,7 +31,7 @@ class ReportsController extends Controller
         ], $response['status']);
     }
 
-    public function index(?int $user_id = null) 
+    public function index(?int $user_id = null)
     {
         $userId = $user_id ?? auth()->id();
         $response = FastApiHelper::request('get', "/reports/{$userId}");
@@ -43,7 +43,7 @@ class ReportsController extends Controller
         ], $response['status']);
     }
 
-    public function show(int $index,?int $user_id = null) 
+    public function show(int $index, ?int $user_id = null)
     {
         $userId = $user_id ?? auth()->id();
         $response = FastApiHelper::request('get', "/reports/{$userId}/{$index}");
@@ -55,7 +55,7 @@ class ReportsController extends Controller
         ], $response['status']);
     }
 
-    public function destroy(int $index,?int $user_id = null)
+    public function destroy(int $index, ?int $user_id = null)
     {
         $userId = $user_id ?? auth()->id();
         $response = FastApiHelper::request('delete', "/reports/{$userId}/{$index}");
@@ -65,5 +65,16 @@ class ReportsController extends Controller
             'error_code' => $response['error_code'],
             'data' => $response['data'],
         ], $response['status']);
+    }
+    public function all()
+    {
+        $res = FastApiHelper::request('get', '/reports/all');
+
+        return response()->json([
+            'result'     => $res['success'],
+            'msg'        => $res['msg'],
+            'error_code' => $res['error_code'],
+            'data'       => $res['data'],
+        ], $res['status']);
     }
 }
