@@ -25,7 +25,7 @@ class StoreGadgetUserRequest extends FormRequest
     {
         return [
             'mac_address' => 'required|string|max:17|exists:gadgets,mac_address|regex:/^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$/',
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'sometimes|exists:users,id'
         ];
     }
 
@@ -38,7 +38,6 @@ class StoreGadgetUserRequest extends FormRequest
             'mac_address.exists' => 'El gadget no esta registrado en la bd.',
             'mac_address.regex' => 'El formato de la MAC address no es válido. (Ej: AA:BB:CC:DD:EE:FF)',
             
-            'user_id.required' => 'El campo usuario es obligatorio.',
             'user_id.exists' => 'El usuario seleccionado no existe.',
         ];
     }
