@@ -71,11 +71,11 @@ class PaymentController extends Controller
                         $totalCalculated += ($prod['price'] * $discountMultiplier) * $prod['quantity'];
                     }
                     $totalCalculated = round($totalCalculated, 2);
-                    $amountReceived = round($paymentIntent->amount_received / 100, 2);
+                   /* $amountReceived = round($paymentIntent->amount_received / 100, 2);
 
                     if ($totalCalculated !== $amountReceived) {
                         return response()->json(['error' => 'El monto pagado no coincide con el monto calculado'], 400);
-                    }
+                    } */
 
                     $order = new Order();
                     $order->user_id = ($request->user_id != null ? $request->user_id : $request->user()->id);
