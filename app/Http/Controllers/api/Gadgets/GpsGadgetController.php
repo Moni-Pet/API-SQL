@@ -27,10 +27,7 @@ class GpsGadgetController extends Controller
         }
 
         // Obtener el estado actual
-        $estadoResponse = FastApiHelper::request('get', 'gps/status/tracking-status', [
-            'mac_address' => $gadget->mac_address
-        ]);
-
+        $estadoResponse = FastApiHelper::request('get', 'gps/status/tracking-status/{$gadget->mac_address}");
         if (! $estadoResponse['success']) {
             return response()->json([
                 'result' => false,
