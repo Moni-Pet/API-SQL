@@ -113,8 +113,9 @@ class PaymentController extends Controller
                         $totalPrice = 0;
                         foreach ($services as $service) {
                             $price = floatval($service['price']);
-                            $discount = floatval($service['discount'] ?? 0);
-                            $totalPrice += $price - $discount;
+                            $discountPercent = floatval($service['discount'] ?? 0);
+                            $priceAfterDiscount = $price * (1 - $discountPercent / 100);
+                            $totalPrice += $priceAfterDiscount;
                         }
                         $appointment->total_price = $totalPrice;
 
