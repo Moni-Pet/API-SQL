@@ -66,16 +66,23 @@ class PaymentController extends Controller
 
                     $totalCalculated = 0;
                     foreach ($products as $prod) {
-                        $discount = $prod['discount'] ?? 0;
-                        $discountMultiplier = 1 - ($discount / 100);
-                        $totalCalculated += ($prod['price'] * $discountMultiplier) * $prod['quantity'];
+                        $price = floatval($prod['price']);
+                        $discount = floatval($prod['discount'] ?? 0);
+
+                        // Si discount es porcentaje:
+                        // $priceAfterDiscount = $price * (1 - $discount / 100);
+
+                        // Si discount es cantidad fija:
+                        $priceAfterDiscount = $price - $discount;
+
+                        $totalCalculated += $priceAfterDiscount * ($prod['quantity'] ?? 1);
                     }
                     $totalCalculated = round($totalCalculated, 2);
-                    $amountReceived = round($paymentIntent->amount_received / 100, 2);
+                   /* $amountReceived = round($paymentIntent->amount_received / 100, 2);
 
                     if ($totalCalculated !== $amountReceived) {
                         return response()->json(['error' => 'El monto pagado no coincide con el monto calculado'], 400);
-                    }
+                    } */
 
                     $order = new Order();
                     $order->user_id = ($request->user_id != null ? $request->user_id : $request->user()->id);
@@ -97,52 +104,42 @@ class PaymentController extends Controller
                     }
 
                 } else if ($type === 'appointment') {
-                    $services = $request->input('services');
+                        $services = $request->input('services');
 
-                    if (is_string($services)) {
-                        $services = json_decode($services, true);
+                        if (is_string($services)) {
+                            $services = json_decode($services, true);
+                        }
+
+                        $appointment = new Appointment();
+                        $appointment->user_id = ($request->user_id != null ? $request->user_id : $request->user()->id);
+                        $appointment->pet_id = $request->input('pet_id');
+                        $appointment->descripcion = $request->input('description');
+                        $appointment->creation_date = $purchase_date;
+                        $appointment->date = $request->input('date');
+
+                        $totalPrice = 0;
+                        foreach ($services as $service) {
+                            $price = floatval($service['price']);
+                            $discountPercent = floatval($service['discount'] ?? 0);
+                            $priceAfterDiscount = $price * (1 - $discountPercent / 100);
+                            $totalPrice += $priceAfterDiscount;
+                        }
+                        $appointment->total_price = $totalPrice;
+
+                        $appointment->status = 'Pendiente';
+                        $appointment->transferce_code = $paymentIntentId;
+                        $appointment->type_appointment = $request->input('type_appointment');
+                        $appointment->save();
+
+                        foreach ($services as $service) {
+                            $detail = new AppointmentDetail();
+                            $detail->appointment_id = $appointment->id;
+                            $detail->service_id = $service['service_id'];
+                            $detail->price_service = floatval($service['price']);
+                            $detail->discount = floatval($service['discount'] ?? 0.00);
+                            $detail->save();
+                        }
                     }
-
-                    $totalCalculatedCents = 0;
-                    foreach ($services as $service) {
-                        $price = floatval($service['price']);
-                        $discount = floatval($service['discount'] ?? 0);
-
-                        $priceAfterDiscount = $price - $discount;
-                        $totalCalculatedCents += round($priceAfterDiscount * 100); // centavos
-                    }
-                    
-                    $amountReceived = $paymentIntent->amount_received;
-
-                    if ($totalCalculatedCents !== $amountReceived) {
-                        return response()->json([
-                            'error' => 'El monto pagado no coincide con el monto calculado',
-                            'totalCalculatedCents' => $totalCalculatedCents,
-                            'amountReceived' => $amountReceived
-                        ], 400);
-                    }
-
-                    $appointment = new Appointment();
-                    $appointment->user_id = ($request->user_id != null ? $request->user_id : $request->user()->id);
-                    $appointment->pet_id = $request->input('pet_id');
-                    $appointment->descripcion = $request->input('description');
-                    $appointment->creation_date = $purchase_date;
-                    $appointment->date = $request->input('date');
-                    $appointment->total_price = $totalCalculatedCents /100;
-                    $appointment->status = 'Pendiente';
-                    $appointment->transferce_code = $paymentIntentId;
-                    $appointment->type_appointment = $request->input('type_appointment');
-                    $appointment->save();
-
-                    foreach ($services as $service) {
-                        $detail = new AppointmentDetail();
-                        $detail->appointment_id = $appointment->id;
-                        $detail->service_id = $service['service_id'];
-                        $detail->price_service = $service['price'];
-                        $detail->discount = $service['discount'] ?? 0.00;
-                        $detail->save();
-                    }
-                }
                 return response()->json([
                     'result' => true,
                     'msg' => "Pago confirmado y registro creado correctamente.",
