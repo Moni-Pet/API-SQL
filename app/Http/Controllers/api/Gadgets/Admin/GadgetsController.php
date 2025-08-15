@@ -22,7 +22,7 @@ class GadgetsController extends Controller
     }
     public function index()
     {
-        $gadgets = Gadget::with('type');
+        $gadgets = Gadget::with('type')->get();
 
         if (isEmpty($gadgets)) {
             return response()->json([
