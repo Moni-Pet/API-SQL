@@ -25,7 +25,7 @@ class StoreGadgetTypeRequest extends FormRequest
     {
         return [
             'gadget_type' => 'required|string|max:50|unique:gadget_types,gadget_type',
-            'photo' => 'nullable|image|max:2048',
+            'photo' => 'required|image|max:2048',
         ];
     }
 

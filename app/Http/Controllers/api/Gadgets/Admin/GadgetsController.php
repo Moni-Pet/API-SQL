@@ -47,7 +47,7 @@ class GadgetsController extends Controller
             'alias' => $request['alias'] ?? 'desconocido'
         ]);
         if ($request->gadget_type_id == 1) {
-            $response = FastApiHelper::request('post', 'gps/tracking-status', [
+            $response = FastApiHelper::request('post', 'gps/create/tracking-status', [
                 'mac_address' => $request->mac_address,
                 'tracking_enabled' => false
             ]);
