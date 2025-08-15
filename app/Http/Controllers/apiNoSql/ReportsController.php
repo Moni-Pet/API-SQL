@@ -87,7 +87,7 @@ class ReportsController extends Controller
 
         $users = User::query()
             ->whereIn('id', $userIds)
-            ->select(['id', 'name', 'email'])
+            ->select(['id', 'name',  'last_name',  'last_name2', 'email'])
             ->get()
             ->keyBy('id');
 
