@@ -80,11 +80,6 @@ class ReportsController extends Controller
     public function allWithUsers()
     {
         $res = FastApiHelper::request('get', '/reports/obtener/all/reports');
-
-        if (!($res['success'] ?? false)) {
-            return response()->json($res, $res['status'] ?? 500);
-        }
-
         $items = $res['data'] ?? [];
 
         $userIds = collect($items)->pluck('userId')->filter()->unique()->values();
