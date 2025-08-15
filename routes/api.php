@@ -388,7 +388,7 @@ Route::group(
                 Route::get('/reports/{id?}',   [ReportsController::class, 'index']);
                 Route::get('/reports/show/{index}/{id?}',    [ReportsController::class, 'show']);
                 Route::delete('/reports/delete/{index}/{id?}', [ReportsController::class, 'destroy']);
-                Route::get('/reports/all/reports', [ReportsController::class, 'all']);
+                Route::get('/reports/all/reports', [ReportsController::class, 'allWithUsers']);
 
                 Route::post('/medical-history',  [MedicalHistoryController::class, 'store']);
                 Route::get('/medical-history/{id?}',   [MedicalHistoryController::class, 'index']);
