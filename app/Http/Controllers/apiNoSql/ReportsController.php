@@ -68,7 +68,7 @@ class ReportsController extends Controller
     }
     public function all()
     {
-        $res = FastApiHelper::request('get', '/reports/all');
+        $res = FastApiHelper::request('get', '/reports/obtener/all/reports');
 
         return response()->json([
             'result'     => $res['success'],
