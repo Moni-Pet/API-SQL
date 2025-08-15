@@ -66,15 +66,10 @@ class PaymentController extends Controller
 
                     $totalCalculated = 0;
                     foreach ($products as $prod) {
-                        $price = floatval($prod['price']);
-                        $discount = floatval($prod['discount'] ?? 0);
+                        $price = floatval($prod['price']); // precio original
+                        $discountPercent = floatval($prod['discount'] ?? 0);
 
-                        // Si discount es porcentaje:
-                        // $priceAfterDiscount = $price * (1 - $discount / 100);
-
-                        // Si discount es cantidad fija:
-                        $priceAfterDiscount = $price - $discount;
-
+                        $priceAfterDiscount = $price * (1 - ($discountPercent / 100));
                         $totalCalculated += $priceAfterDiscount * ($prod['quantity'] ?? 1);
                     }
                     $totalCalculated = round($totalCalculated, 2);
