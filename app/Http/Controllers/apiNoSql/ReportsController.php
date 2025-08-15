@@ -77,4 +77,42 @@ class ReportsController extends Controller
             'data'       => $res['data'],
         ], $res['status']);
     }
+    public function allWithUsers()
+    {
+        $res = FastApiHelper::request('get', '/reports/all');
+
+        if (!($res['success'] ?? false)) {
+            return response()->json($res, $res['status'] ?? 500);
+        }
+
+        $items = $res['data'] ?? [];
+
+        $userIds = collect($items)->pluck('userId')->filter()->unique()->values();
+
+        $users = User::query()
+            ->whereIn('id', $userIds)
+            ->select(['id', 'name', 'email'])
+            ->get()
+            ->keyBy('id');
+
+        $data = collect($items)->map(function ($row) use ($users) {
+            $uid = $row['userId'] ?? null;
+            $user = $uid ? ($users[$uid] ?? null) : null;
+
+            return [
+                'user'    => $user ? [
+                    'id'    => $user->id,
+                    'name'  => $user->name,
+                    'email' => $user->email,
+                ] : null,
+                'reports' => $row['reports'] ?? [],
+            ];
+        })->values();
+        return response()->json([
+            'result'     => true,
+            'msg'        => 'Reportes con datos de usuario',
+            'error_code' => null,
+            'data'       => $data,
+        ], 200);
+    }
 }
