@@ -24,7 +24,7 @@ class GadgetsController extends Controller
     {
         $gadgets = Gadget::with('type')->get();
 
-        if (isEmpty($gadgets)) {
+        if (!$gadgets) {
             return response()->json([
                 'status' => false,
                 'msg' => 'Los recursos solicitados no fueron encontrados',
