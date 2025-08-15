@@ -50,7 +50,6 @@ class PaymentController extends Controller
     public function confirmPayment(Request $request)
     {
         $paymentIntentId = $request->input('paymentIntentId');
-        $userId = Auth::id();
 
         Stripe::setApiKey(config('services.stripe.secret'));
 
@@ -104,25 +103,32 @@ class PaymentController extends Controller
                         $services = json_decode($services, true);
                     }
 
-                    $totalCalculated = 0;
+                    $totalCalculatedCents = 0;
                     foreach ($services as $service) {
-                        $priceAfterDiscount = $service['price'] - ($service['discount'] ?? 0);
-                        $totalCalculated += $priceAfterDiscount;
-                    }
-                    $totalCalculated = round($totalCalculated, 2);
-                    $amountReceived = round($paymentIntent->amount_received / 100, 2);
+                        $price = floatval($service['price']);
+                        $discount = floatval($service['discount'] ?? 0);
 
-                    if ($totalCalculated !== $amountReceived) {
-                        return response()->json(['error' => 'El monto pagado no coincide con el monto calculado'], 400);
+                        $priceAfterDiscount = $price - $discount;
+                        $totalCalculatedCents += round($priceAfterDiscount * 100); // centavos
+                    }
+                    
+                    $amountReceived = $paymentIntent->amount_received;
+
+                    if ($totalCalculatedCents !== $amountReceived) {
+                        return response()->json([
+                            'error' => 'El monto pagado no coincide con el monto calculado',
+                            'totalCalculatedCents' => $totalCalculatedCents,
+                            'amountReceived' => $amountReceived
+                        ], 400);
                     }
 
                     $appointment = new Appointment();
                     $appointment->user_id = ($request->user_id != null ? $request->user_id : $request->user()->id);
                     $appointment->pet_id = $request->input('pet_id');
-                    $appointment->descripcion = $request->input('descripcion');
+                    $appointment->descripcion = $request->input('description');
                     $appointment->creation_date = $purchase_date;
                     $appointment->date = $request->input('date');
-                    $appointment->total_price = $totalCalculated;
+                    $appointment->total_price = $totalCalculatedCents /100;
                     $appointment->status = 'Pendiente';
                     $appointment->transferce_code = $paymentIntentId;
                     $appointment->type_appointment = $request->input('type_appointment');
