@@ -97,8 +97,12 @@ class PaymentController extends Controller
                         $detail->save();
                     }
 
-                } elseif ($type === 'appointment') {
+                } else if ($type === 'appointment') {
                     $services = $request->input('services');
+
+                    if (is_string($services)) {
+                        $services = json_decode($services, true);
+                    }
 
                     $totalCalculated = 0;
                     foreach ($services as $service) {
