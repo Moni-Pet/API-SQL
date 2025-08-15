@@ -100,6 +100,8 @@ class ReportsController extends Controller
                     'id'    => $user->id,
                     'name'  => $user->name,
                     'email' => $user->email,
+                    'last_name' => $user->last_name,
+                    'last_name2' => $user->last_name2,
                 ] : null,
                 'reports' => $row['reports'] ?? [],
             ];
