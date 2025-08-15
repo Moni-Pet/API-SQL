@@ -15,7 +15,7 @@ class AdopterController extends Controller
      */
     public function index()
     {
-        $adopters = Adopter::with('city', 'state', 'user')->get();
+        $adopters = Adopter::with('city', 'state', 'user', 'adoptions.pet.breed.typePet')->get();
 
         if ($adopters->count() === 0) {
             return response()->json([
