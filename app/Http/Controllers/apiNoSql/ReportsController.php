@@ -5,6 +5,7 @@ namespace App\Http\Controllers\apiNoSql;
 use App\Helpers\FastApiHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NoSqlRequest\ReportsRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ReportsController extends Controller
