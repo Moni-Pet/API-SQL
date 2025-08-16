@@ -108,7 +108,7 @@ class PaymentController extends Controller
                         $appointment = new Appointment();
                         $appointment->user_id = ($request->user_id != null ? $request->user_id : $request->user()->id);
                         $appointment->pet_id = $request->input('pet_id');
-                        $appointment->descripcion = $request->input('description');
+                        $appointment->descripcion = $request->input('descripcion');
                         $appointment->creation_date = $purchase_date;
                         $appointment->date = $request->input('date');
 
